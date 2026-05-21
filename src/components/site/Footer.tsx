@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { GraduationCap, MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowRight } from "lucide-react";
+import { GraduationCap, MapPin, Phone, Mail, ArrowRight } from "lucide-react";
 import { SITE } from "@/lib/site-data";
 
 const cols = [
@@ -66,14 +66,14 @@ export function Footer() {
               student development since {SITE.estd}.
             </p>
             <div className="mt-6 flex gap-3">
-              {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((I, i) => (
+              {["FB","X","IG","IN","YT"].map((s) => (
                 <a
-                  key={i}
+                  key={s}
                   href="#"
-                  aria-label="social"
-                  className="size-9 rounded-full grid place-items-center bg-white/5 hover:bg-gold hover:text-primary-deep transition-colors"
+                  aria-label={s}
+                  className="size-9 rounded-full grid place-items-center bg-white/5 hover:bg-gold hover:text-primary-deep transition-colors text-[10px] font-bold"
                 >
-                  <I className="size-4" />
+                  {s}
                 </a>
               ))}
             </div>
