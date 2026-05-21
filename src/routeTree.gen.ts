@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VisionMissionRouteImport } from './routes/vision-mission'
 import { Route as TransportRouteImport } from './routes/transport'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PrincipalMessageRouteImport } from './routes/principal-message'
 import { Route as PlacementRouteImport } from './routes/placement'
 import { Route as NewsRouteImport } from './routes/news'
@@ -36,6 +37,11 @@ const VisionMissionRoute = VisionMissionRouteImport.update({
 const TransportRoute = TransportRouteImport.update({
   id: '/transport',
   path: '/transport',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrincipalMessageRoute = PrincipalMessageRouteImport.update({
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/news': typeof NewsRoute
   '/placement': typeof PlacementRoute
   '/principal-message': typeof PrincipalMessageRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/transport': typeof TransportRoute
   '/vision-mission': typeof VisionMissionRoute
 }
@@ -156,6 +163,7 @@ export interface FileRoutesByTo {
   '/news': typeof NewsRoute
   '/placement': typeof PlacementRoute
   '/principal-message': typeof PrincipalMessageRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/transport': typeof TransportRoute
   '/vision-mission': typeof VisionMissionRoute
 }
@@ -177,6 +185,7 @@ export interface FileRoutesById {
   '/news': typeof NewsRoute
   '/placement': typeof PlacementRoute
   '/principal-message': typeof PrincipalMessageRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/transport': typeof TransportRoute
   '/vision-mission': typeof VisionMissionRoute
 }
@@ -199,6 +208,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/placement'
     | '/principal-message'
+    | '/sitemap.xml'
     | '/transport'
     | '/vision-mission'
   fileRoutesByTo: FileRoutesByTo
@@ -219,6 +229,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/placement'
     | '/principal-message'
+    | '/sitemap.xml'
     | '/transport'
     | '/vision-mission'
   id:
@@ -239,6 +250,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/placement'
     | '/principal-message'
+    | '/sitemap.xml'
     | '/transport'
     | '/vision-mission'
   fileRoutesById: FileRoutesById
@@ -260,6 +272,7 @@ export interface RootRouteChildren {
   NewsRoute: typeof NewsRoute
   PlacementRoute: typeof PlacementRoute
   PrincipalMessageRoute: typeof PrincipalMessageRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TransportRoute: typeof TransportRoute
   VisionMissionRoute: typeof VisionMissionRoute
 }
@@ -278,6 +291,13 @@ declare module '@tanstack/react-router' {
       path: '/transport'
       fullPath: '/transport'
       preLoaderRoute: typeof TransportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/principal-message': {
@@ -412,9 +432,20 @@ const rootRouteChildren: RootRouteChildren = {
   NewsRoute: NewsRoute,
   PlacementRoute: PlacementRoute,
   PrincipalMessageRoute: PrincipalMessageRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TransportRoute: TransportRoute,
   VisionMissionRoute: VisionMissionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
