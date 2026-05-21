@@ -80,6 +80,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Vidyutha Institute of Technology" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Vidyutha Institute of Technology — Engineering the Future" },
+      { name: "twitter:title", content: "Vidyutha Institute of Technology — Engineering the Future" },
+      { property: "og:description", content: "Premier engineering institution offering B.Tech, M.Tech, MBA, MCA & Ph.D. programmes with 98% placements and NAAC A++ accreditation." },
+      { name: "twitter:description", content: "Premier engineering institution offering B.Tech, M.Tech, MBA, MCA & Ph.D. programmes with 98% placements and NAAC A++ accreditation." },
     ],
     links: [
       {
