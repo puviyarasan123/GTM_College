@@ -160,5 +160,68 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-hero { background: var(--gradient-hero); }
+  .bg-gradient-gold { background: var(--gradient-gold); }
+  .bg-gradient-soft { background: var(--gradient-soft); }
+  .shadow-elegant { box-shadow: var(--shadow-elegant); }
+  .shadow-gold { box-shadow: var(--shadow-gold); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .text-gold { color: var(--gold); }
+  .bg-gold { background-color: var(--gold); }
+  .border-gold { border-color: var(--gold); }
+  .glass {
+    background: color-mix(in oklab, white 70%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid color-mix(in oklab, white 50%, transparent);
+  }
+  .glass-dark {
+    background: color-mix(in oklab, var(--primary-deep) 40%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid color-mix(in oklab, white 12%, transparent);
+  }
+  .text-balance { text-wrap: balance; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 45s linear infinite; }
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float { animation: float-y 6s ease-in-out infinite; }
+
+@keyframes ken-burns {
+  0% { transform: scale(1) translate(0,0); }
+  100% { transform: scale(1.12) translate(-2%, -1%); }
+}
+.animate-kenburns { animation: ken-burns 18s ease-out infinite alternate; }
+
+@keyframes glow-pulse {
+  0%,100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.animate-glow { animation: glow-pulse 4s ease-in-out infinite; }
+
+/* Swiper overrides */
+.swiper-pagination-bullet { background: var(--gold) !important; opacity: 0.5; }
+.swiper-pagination-bullet-active { opacity: 1 !important; }
+.swiper-button-prev, .swiper-button-next {
+  color: var(--gold) !important;
+}
   }
 }
