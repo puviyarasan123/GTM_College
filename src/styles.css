@@ -62,26 +62,41 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 1rem;
+  /* Royal heritage palette */
+  --background: oklch(0.99 0.005 250);
+  --foreground: oklch(0.18 0.06 265);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.18 0.06 265);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --popover-foreground: oklch(0.18 0.06 265);
+  /* Royal Blue ~ #0a2a66 */
+  --primary: oklch(0.32 0.13 263);
+  --primary-foreground: oklch(0.99 0 0);
+  --primary-deep: oklch(0.22 0.11 265);
+  --primary-glow: oklch(0.46 0.16 260);
+  /* Gold ~ #c9a44a */
+  --gold: oklch(0.78 0.13 85);
+  --gold-foreground: oklch(0.22 0.11 265);
+  --gold-deep: oklch(0.66 0.14 80);
+  --secondary: oklch(0.96 0.01 255);
+  --secondary-foreground: oklch(0.22 0.11 265);
+  --muted: oklch(0.96 0.01 255);
+  --muted-foreground: oklch(0.48 0.04 257);
+  --accent: oklch(0.78 0.13 85);
+  --accent-foreground: oklch(0.22 0.11 265);
+  --destructive: oklch(0.58 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.91 0.014 255);
+  --input: oklch(0.93 0.012 255);
+  --ring: oklch(0.46 0.16 260);
+  /* Gradients & effects */
+  --gradient-hero: linear-gradient(135deg, oklch(0.22 0.11 265) 0%, oklch(0.32 0.13 263) 60%, oklch(0.46 0.16 260) 100%);
+  --gradient-gold: linear-gradient(135deg, oklch(0.82 0.13 88), oklch(0.66 0.14 80));
+  --gradient-soft: linear-gradient(180deg, oklch(0.99 0.005 250), oklch(0.96 0.015 255));
+  --shadow-elegant: 0 20px 60px -20px color-mix(in oklab, oklch(0.22 0.11 265) 35%, transparent);
+  --shadow-gold: 0 16px 40px -16px color-mix(in oklab, oklch(0.66 0.14 80) 50%, transparent);
+  --shadow-card: 0 4px 18px -6px color-mix(in oklab, oklch(0.22 0.11 265) 12%, transparent);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
