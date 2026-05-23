@@ -1,10 +1,10 @@
 export const SITE = {
-  name: "Vidyutha Institute of Technology",
-  short: "VIT — Vidyutha",
+  name: "GTM COLLEGE",
+  short: "GTM",
   tagline: "Architects of the Future",
   estd: 1994,
   phone: "+91 44 2837 4500",
-  email: "admissions@vidyutha.edu.in",
+  email: "admissions@gtmc.edu.in",
   address: "University Road, Academic District, Chennai, Tamil Nadu 600119",
 };
 
@@ -117,7 +117,7 @@ export const FACULTY = [
 
 export const NEWS = [
   { date: "May 18, 2026", category: "Admissions", title: "B.Tech 2025–26 application window opens for all branches", excerpt: "Online applications are now live; merit scholarships up to 100% available based on board and entrance exam scores." },
-  { date: "May 10, 2026", category: "Research", title: "Vidyutha bags 3 patents in autonomous-systems research", excerpt: "Faculty-led team at the AI lab patents three novel approaches in perception and SLAM for indoor robotics." },
+  { date: "May 10, 2026", category: "Research", title: "GTM COLLEGE bags 3 patents in autonomous-systems research", excerpt: "Faculty-led team at the AI lab patents three novel approaches in perception and SLAM for indoor robotics." },
   { date: "Apr 28, 2026", category: "Placements", title: "Microsoft picks 42 students from CSE & IT departments", excerpt: "Annual on-campus recruitment drive concludes with the highest single-recruiter intake in five years." },
   { date: "Apr 14, 2026", category: "Events", title: "TechVision 2026 — National Symposium on Industry 4.0", excerpt: "Two-day symposium hosted 1,200+ delegates across 60 institutions, headlined by industry leaders." },
   { date: "Apr 02, 2026", category: "Awards", title: "NAAC A++ re-accreditation conferred", excerpt: "Institution scores 3.78/4.00 on the seven NAAC quality criteria, retaining A++ for a third consecutive cycle." },
@@ -131,10 +131,10 @@ export const EVENTS = [
 ];
 
 export const TESTIMONIALS = [
-  { name: "Aditi Sharma", batch: "B.Tech CSE, 2022", company: "Software Engineer, Google", quote: "Vidyutha gave me the technical depth and the network that shaped my career. The faculty pushed me to think beyond the syllabus." },
+  { name: "Aditi Sharma", batch: "B.Tech CSE, 2022", company: "Software Engineer, Google", quote: "GTM COLLEGE gave me the technical depth and the network that shaped my career. The faculty pushed me to think beyond the syllabus." },
   { name: "Rahul Verma", batch: "B.Tech ECE, 2021", company: "Hardware Engineer, Intel", quote: "The labs and the mentorship here are world-class. I built my first real chip prototype in my third year." },
   { name: "Sneha Iyer", batch: "MBA, 2023", company: "Consultant, Deloitte", quote: "The placement cell didn't just find me a job — they prepared me to walk into a boardroom on day one." },
-  { name: "Karthik Subramanian", batch: "B.Tech Mech, 2020", company: "Founder, RoboMakers", quote: "I left Vidyutha with a co-founder, a product, and the confidence to raise my first round." },
+  { name: "Karthik Subramanian", batch: "B.Tech Mech, 2020", company: "Founder, RoboMakers", quote: "I left GTM COLLEGE with a co-founder, a product, and the confidence to raise my first round." },
 ];
 
 export const FACILITIES = [

@@ -39,9 +39,9 @@ export function Navbar() {
               <div className="absolute -inset-1 rounded-xl bg-gold/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
             </div>
             <div className="leading-tight">
-              <div className="text-[15px] font-extrabold text-primary tracking-tight">Vidyutha</div>
+              <div className="text-[15px] font-extrabold text-primary tracking-tight">GTM</div>
               <div className="text-[9px] uppercase tracking-[0.22em] text-muted-foreground font-semibold">
-                Institute of Technology
+                COLLEGE
               </div>
             </div>
           </Link>
