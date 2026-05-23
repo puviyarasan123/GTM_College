@@ -24,9 +24,9 @@ import { Reveal, Section, SectionHeader } from "@/components/site/PageShell";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Vidyutha Institute of Technology — Architects of the Future" },
+      { title: "GTM COLLEGE — Architects of the Future" },
       { name: "description", content: "Premier engineering institution. NAAC A++, 98% placements, 250+ PhD faculty, ₹54 LPA highest package. Apply for 2025–26." },
-      { property: "og:title", content: "Vidyutha Institute of Technology" },
+      { property: "og:title", content: "GTM COLLEGE" },
       { property: "og:description", content: "Engineering the future of global technology. Admissions open." },
     ],
     links: [{ rel: "canonical", href: "/" }],
@@ -134,7 +134,7 @@ function Index() {
       <Section className="grid lg:grid-cols-2 gap-16 items-center">
         <Reveal>
           <div className="relative">
-            <img src={aboutCampus} alt="Vidyutha campus" width={1600} height={1000} loading="lazy" className="rounded-3xl shadow-elegant w-full object-cover aspect-4/3" />
+            <img src={aboutCampus} alt="GTM campus" width={1600} height={1000} loading="lazy" className="rounded-3xl shadow-elegant w-full object-cover aspect-4/3" />
             <div className="absolute -bottom-6 -right-6 glass rounded-2xl p-6 shadow-elegant w-56 hidden md:block">
               <div className="flex items-center gap-3"><Trophy className="size-6 text-gold-deep" /><div className="text-xs text-muted-foreground">Est. 1994</div></div>
               <div className="text-2xl font-extrabold text-primary mt-2">30+ Years</div>
@@ -145,7 +145,7 @@ function Index() {
         <Reveal delay={0.1}>
           <SectionHeader eyebrow="About the Institute" title="A legacy of engineering excellence since 1994." />
           <p className="text-muted-foreground leading-relaxed text-lg">
-            Vidyutha Institute of Technology stands as one of India's most ambitious engineering communities — combining
+            GTM COLLEGE stands as one of India's most ambitious engineering communities — combining
             rigorous academic foundations with industry-grade research, global partnerships and a relentless focus on
             student outcomes. Our 110-acre campus is home to 15,000+ learners across UG, PG and doctoral programmes.
           </p>
