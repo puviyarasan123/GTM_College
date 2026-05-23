@@ -55,9 +55,9 @@ export function Footer() {
                 <GraduationCap className="size-6" />
               </div>
               <div>
-                <div className="text-lg font-extrabold tracking-tight">Vidyutha</div>
+                <div className="text-lg font-extrabold tracking-tight">GTM</div>
                 <div className="text-[9px] uppercase tracking-[0.22em] text-white/60 font-semibold">
-                  Institute of Technology
+                  COLLEGE
                 </div>
               </div>
             </Link>
