@@ -2,18 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade, Pagination, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/effect-fade";
-import "swiper/css/pagination";
 import {
   ArrowRight, Award, BookOpen, Building2, Calendar, ChevronRight, GraduationCap,
-  MapPin, Quote, Sparkles, Star, Trophy, Users,
+  MapPin, Star, Trophy, Users,
 } from "lucide-react";
 import heroCampus from "@/assets/hero-campus.jpg";
-import heroLibrary from "@/assets/hero-library.jpg";
-import heroLab from "@/assets/hero-lab.jpg";
 import aboutCampus from "@/assets/about-campus.jpg";
 import {
   STATS, DEPARTMENTS, COURSES, RECRUITERS, PLACEMENT_HIGHLIGHTS,
@@ -34,10 +27,11 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const heroSlides = [
-  { img: heroCampus, eyebrow: "Admissions 2025–26 Open", title: "Engineering the future of global technology.", sub: "Join India's most ambitious engineering community — built on rigorous academics, world-class research, and 98% placements." },
-  { img: heroLibrary, eyebrow: "NAAC A++ Accredited", title: "Where knowledge becomes craft.", sub: "Half a million digital journals. 250+ PhD faculty. A library that never sleeps." },
-  { img: heroLab, eyebrow: "Industry-Grade Labs", title: "Build what the world needs next.", sub: "NVIDIA compute, robotics suites, biotech wet labs and a dedicated startup incubator." },
+const HERO_STATS = [
+  { v: "98.4%", l: "Placement Success" },
+  { v: "₹54 LPA", l: "Highest Package" },
+  { v: "500+", l: "Recruiters Yearly" },
+  { v: "150+", l: "Research Patents" },
 ];
 
 function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -68,45 +62,91 @@ function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: strin
 function Index() {
   return (
     <div>
-      {/* HERO */}
-      <section className="relative h-[88vh] min-h-[620px] overflow-hidden bg-primary-deep">
-        <Swiper
-          modules={[Autoplay, EffectFade, Pagination, Navigation]}
-          effect="fade"
-          autoplay={{ delay: 5500, disableOnInteraction: false }}
-          pagination={{ clickable: true }}
-          loop
-          className="h-full"
-        >
-          {heroSlides.map((s, i) => (
-            <SwiperSlide key={i}>
-              <div className="relative h-full">
-                <img src={s.img} alt="" className="absolute inset-0 size-full object-cover animate-kenburns" width={1920} height={1080} />
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-deep/90 via-primary-deep/70 to-primary-deep/30" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/80 to-transparent" />
-                <div className="relative h-full max-w-[1400px] mx-auto px-6 lg:px-8 flex flex-col justify-center">
-                  <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl">
-                    <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/15 border border-gold/40 text-gold text-[11px] font-bold uppercase tracking-[0.22em] backdrop-blur">
-                      <Sparkles className="size-3.5" /> {s.eyebrow}
+      {/* HERO — magazine geometric editorial */}
+      <section className="relative bg-primary-deep py-6 lg:py-10">
+        <div className="relative mx-auto w-full max-w-[1400px] px-4 lg:px-6">
+          <div className="relative h-[760px] min-h-[680px] overflow-hidden rounded-[2.5rem] bg-primary-deep shadow-elegant">
+            {/* Background image + gradients */}
+            <div className="absolute inset-0">
+              <img src={heroCampus} alt="" className="size-full object-cover opacity-40 animate-kenburns" width={1920} height={1080} />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary-deep via-primary-deep/70 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-deep via-primary-deep/40 to-transparent" />
+            </div>
+
+            {/* Magazine geometric accents */}
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+              <div className="absolute top-12 right-12 h-[80%] w-[42%] rounded-tr-[100px] border-t-2 border-r-2 border-gold/30" />
+              <div className="absolute bottom-0 right-0 h-32 w-1/3 bg-gold/20 blur-3xl" />
+              <div className="absolute top-1/4 right-[15%] h-64 w-px bg-gradient-to-b from-transparent via-gold/50 to-transparent" />
+              <div className="absolute top-1/3 right-[10%] h-96 w-px bg-gradient-to-b from-transparent via-gold/20 to-transparent" />
+              <div className="absolute -top-32 -left-32 size-[460px] rounded-full bg-primary-glow/30 blur-[140px] animate-glow" />
+            </div>
+
+            {/* Decorative grid */}
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.05]"
+              style={{ backgroundImage: "radial-gradient(#fff 1px, transparent 1px)", backgroundSize: "44px 44px" }}
+            />
+
+            {/* Content */}
+            <div className="relative z-10 flex h-full flex-col justify-center px-8 pb-40 lg:px-20 lg:pb-32 pt-16">
+              {/* Header meta */}
+              <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mb-8 flex flex-wrap items-center gap-4">
+                <div className="h-[2px] w-12 bg-gold" />
+                <div className="flex flex-wrap gap-2">
+                  {["NAAC A++", "NBA Accredited", "AICTE Approved"].map((b) => (
+                    <span key={b} className="rounded border border-white/15 bg-white/5 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white backdrop-blur-md">
+                      {b}
                     </span>
-                    <h1 className="mt-6 text-5xl md:text-7xl font-extrabold text-white leading-[1.05] tracking-tight text-balance">
-                      {s.title}
-                    </h1>
-                    <p className="mt-6 text-lg text-white/80 max-w-xl leading-relaxed">{s.sub}</p>
-                    <div className="mt-10 flex flex-wrap gap-4">
-                      <Link to="/admission" className="px-8 py-4 rounded-full bg-gold text-primary-deep font-bold shadow-gold hover:-translate-y-0.5 transition-all">
-                        Apply Now
-                      </Link>
-                      <Link to="/courses" className="px-8 py-4 rounded-full glass-dark text-white font-bold hover:bg-white/10 transition-all">
-                        Explore Programmes
-                      </Link>
-                    </div>
-                  </motion.div>
+                  ))}
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </motion.div>
+
+              {/* Headline */}
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }} className="max-w-4xl">
+                <h1 className="text-5xl font-extrabold uppercase tracking-tighter leading-[0.88] text-white text-balance md:text-7xl lg:text-[88px]">
+                  Engineering
+                  <br />
+                  <span className="bg-gradient-to-br from-gold to-[oklch(0.86_0.14_88)] bg-clip-text text-transparent">
+                    The Future
+                  </span>
+                  <span className="text-gold">.</span>
+                </h1>
+                <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/75 lg:text-xl">
+                  Vidyutha Institute of Technology — nurturing world-class innovators through cutting-edge research, global partnerships and industry-integrated excellence since 1994.
+                </p>
+
+                {/* CTAs */}
+                <div className="mt-10 flex flex-wrap items-center gap-4">
+                  <Link to="/admission" className="group relative overflow-hidden rounded-md bg-gold px-9 py-4 font-extrabold uppercase tracking-tight text-primary-deep shadow-gold transition-all hover:-translate-y-0.5">
+                    <span className="relative z-10">Apply Now 2025</span>
+                  </Link>
+                  <Link to="/courses" className="rounded-md border border-white/30 px-9 py-4 font-bold uppercase tracking-tight text-white backdrop-blur-sm transition-colors hover:bg-white/10">
+                    Explore Programmes
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Bottom magazine stat strip */}
+            <div className="absolute bottom-0 left-0 right-0 grid grid-cols-2 bg-gold text-primary-deep lg:grid-cols-4">
+              {HERO_STATS.map((s, i) => (
+                <div
+                  key={s.l}
+                  className={`p-6 lg:p-7 ${i < HERO_STATS.length - 1 ? "border-r border-primary-deep/10" : ""}`}
+                >
+                  <div className="text-2xl font-black leading-none md:text-3xl">{s.v}</div>
+                  <div className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.18em] opacity-80">{s.l}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Side rotated tagline */}
+            <div className="absolute top-1/2 -right-2 hidden -translate-y-1/2 rotate-90 lg:block">
+              <span className="text-[11px] font-bold uppercase tracking-[1em] text-gold/40">Est. 1994 • Excellence in Innovation</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* STATS */}
