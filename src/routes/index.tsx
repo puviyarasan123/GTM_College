@@ -2,9 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 import {
   ArrowRight, Award, BookOpen, Building2, Calendar, ChevronRight, GraduationCap,
-  MapPin, Star, Trophy, Users,
+  MapPin, Quote, Star, Trophy, Users,
 } from "lucide-react";
 import heroCampus from "@/assets/hero-campus.jpg";
 import aboutCampus from "@/assets/about-campus.jpg";
