@@ -7,9 +7,7 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: `About — ${SITE.name}` },
-      { name: "description", content: `Discover the legacy, vision and accreditations of ${SITE.name}.` },
-      { property: "og:title", content: `About — ${SITE.name}` },
-      { property: "og:description", content: `Three decades of academic excellence, research and impact.` },
+      { name: "description", content: `Learn about ${SITE.name}, Gudiyattam — affiliated to Thiruvalluvar University, offering quality UG programmes since ${SITE.estd}.` },
       { property: "og:url", content: "/about" },
     ],
     links: [{ rel: "canonical", href: "/about" }],
@@ -18,27 +16,39 @@ export const Route = createFileRoute("/about")({
 });
 
 const pillars = [
-  { icon: Award, title: "NAAC 'A' Grade Accredited", desc: "Recognised for academic quality, infrastructure and student outcomes." },
-  { icon: BookOpen, title: "Quality Education", desc: "Curriculum aligned with Bharathiar University standards and industry needs." },
+  { icon: Award, title: "NAAC Accredited", desc: "Recognised for academic quality, infrastructure and student outcomes." },
+  { icon: BookOpen, title: "Thiruvalluvar University Affiliated", desc: "All programmes affiliated to Thiruvalluvar University, Vellore." },
   { icon: Globe2, title: "Holistic Development", desc: "Sports, cultural activities, NSS and NCC programmes for all-round growth." },
-  { icon: Sparkles, title: "Student-Centred", desc: "Mentorship, career guidance and placement support from day one." },
+  { icon: Sparkles, title: "Government College", desc: "A government-aided institution serving students of Gudiyattam and Vellore District since 1974." },
 ];
 
 function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="About the institution" title={`Three decades of empowering minds at ${SITE.short}.`} subtitle={`Established in ${SITE.estd}, GTM College of Arts & Science has grown into a premier institution in Coimbatore, offering quality education in Science, Arts, Commerce and Management, affiliated to Bharathiar University.`} />
+      <PageHero
+        eyebrow="About the Institution"
+        title="Five decades of empowering minds at GTMC."
+        subtitle={`Established in ${SITE.estd}, Govt. Thirumagal Mills College, Gudiyattam has grown into a trusted institution in Vellore District, offering quality education in Science, Arts, Commerce and Management, affiliated to Thiruvalluvar University.`}
+      />
       <Section>
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <Reveal>
-            <SectionHeader eyebrow="Our story" title="A legacy built on knowledge, values and excellence." desc="Founded with a vision to provide quality higher education, GTM College has grown from a small institution into a thriving campus serving 8,000+ students. Every classroom, lab and library is designed to nurture curiosity and build careers." />
-            <p className="text-muted-foreground leading-relaxed">Our teaching approach blends strong academic foundations with practical learning. Students graduate with skills, confidence and values that make them successful in their careers and life. Industry-aligned curriculum ensures graduates are job-ready from day one.</p>
+            <SectionHeader
+              eyebrow="Our Story"
+              title="A legacy built on knowledge, values and service."
+              desc={`Founded in ${SITE.estd} under the Government of Tamil Nadu, GTMC has been serving students from Gudiyattam and surrounding areas of Vellore District for over 50 years. The college is named after the Thirumagal Mills, reflecting its deep roots in the local community. Every classroom, lab and library is designed to nurture curiosity and build careers.`}
+            />
+            <p className="text-muted-foreground leading-relaxed mt-4">
+              Our teaching approach blends strong academic foundations with practical learning. Students graduate with skills, confidence and values that make them successful in their careers and life. As a government college, we are committed to making quality higher education accessible to all sections of society.
+            </p>
           </Reveal>
           <div className="grid sm:grid-cols-2 gap-5">
             {pillars.map((p, i) => (
               <Reveal key={p.title} delay={i * 0.05}>
                 <div className="rounded-2xl border border-border bg-card p-6 h-full hover:shadow-elegant transition-shadow">
-                  <div className="size-11 rounded-xl bg-gold/15 text-gold-deep grid place-items-center mb-4"><p.icon className="size-5" /></div>
+                  <div className="size-11 rounded-xl bg-gold/15 text-gold-deep grid place-items-center mb-4">
+                    <p.icon className="size-5" />
+                  </div>
                   <div className="font-bold text-primary">{p.title}</div>
                   <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{p.desc}</p>
                 </div>

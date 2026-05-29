@@ -1,11 +1,11 @@
 export const SITE = {
-  name: "GTM COLLEGE OF ARTS & SCIENCE",
-  short: "GTM",
+  name: "GOVT. THIRUMAGAL MILLS COLLEGE",
+  short: "GTMC",
   tagline: "Empowering Minds, Shaping Futures",
-  estd: 1994,
-  phone: "+91 422 2539 500",
-  email: "admissions@gtmc.edu.in",
-  address: "Saravanampatti, Coimbatore, Tamil Nadu 641035",
+  estd: 1974,
+  phone: "04171-220162",
+  email: "principal@gtmc.edu.in",
+  address: "Gudiyattam, Vellore District, Tamil Nadu – 632 602",
 };
 
 export const NAV: { label: string; to: string; children?: { label: string; to: string; desc?: string }[] }[] = [
@@ -14,7 +14,6 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
     to: "/about",
     children: [
       { label: "About Us", to: "/about", desc: "Our story, legacy & accreditations" },
-      { label: "Chairman's Message", to: "/chairman-message", desc: "From the chairman's desk" },
       { label: "Principal's Message", to: "/principal-message", desc: "Leadership perspective" },
       { label: "Vision & Mission", to: "/vision-mission", desc: "What drives us forward" },
     ],
@@ -34,16 +33,16 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
     to: "/admission",
     children: [
       { label: "Admission Process", to: "/admission", desc: "Apply for 2025–26 session" },
-      { label: "Placement", to: "/placement", desc: "92% placement record" },
+      { label: "Placement", to: "/placement", desc: "Placement cell & career support" },
     ],
   },
   {
     label: "Campus",
     to: "/infrastructure",
     children: [
-      { label: "Infrastructure", to: "/infrastructure", desc: "Modern labs & smart classrooms" },
-      { label: "Hostel", to: "/hostel", desc: "Comfortable residential facilities" },
-      { label: "Transport", to: "/transport", desc: "Bus routes across Coimbatore" },
+      { label: "Infrastructure", to: "/infrastructure", desc: "Labs, classrooms & facilities" },
+      { label: "Hostel", to: "/hostel", desc: "Residential facilities" },
+      { label: "Transport", to: "/transport", desc: "Bus routes across Gudiyattam" },
       { label: "Gallery", to: "/gallery", desc: "Campus moments" },
     ],
   },
@@ -59,93 +58,180 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
 ];
 
 export const TICKER = [
-  "Admissions open 2025–26 — applications close Aug 30",
-  "NAAC 'A' Grade accreditation with 3.2 CGPA",
-  "₹50 Lakh in merit scholarships for deserving students",
-  "Annual Science Symposium — Sept 14 to 16, register now",
-  "Placements 2024: 92% placement rate, highest package ₹12 LPA",
+  "Admissions open 2025–26 — apply now for UG & PG programmes",
+  "Govt. Thirumagal Mills College, Gudiyattam — Est. 1974",
+  "Affiliated to Thiruvalluvar University, Vellore",
+  "NAAC Accredited institution with quality education",
+  "Contact us: 04171-220162 | principal@gtmc.edu.in",
 ];
 
 export const STATS = [
-  { value: 8000, suffix: "+", label: "Active Students" },
-  { value: 180, suffix: "+", label: "Qualified Faculty" },
-  { value: 92, suffix: "%", label: "Placement Rate" },
-  { value: 180, suffix: "+", label: "Recruiting Partners" },
+  { value: 50, suffix: "+", label: "Years of Excellence" },
+  { value: 100, suffix: "+", label: "Qualified Faculty" },
+  { value: 3000, suffix: "+", label: "Active Students" },
+  { value: 20, suffix: "+", label: "Programmes Offered" },
 ];
 
 export const DEPARTMENTS = [
-  { code: "PHY", name: "Physics", desc: "Quantum mechanics, astrophysics & applied physics.", icon: "Atom" },
-  { code: "CHEM", name: "Chemistry", desc: "Organic, inorganic, analytical & pharmaceutical chemistry.", icon: "FlaskConical" },
-  { code: "MATH", name: "Mathematics", desc: "Pure mathematics, statistics & computational methods.", icon: "Calculator" },
-  { code: "CS", name: "Computer Science", desc: "Programming, AI, data science & software development.", icon: "Cpu" },
-  { code: "BIO", name: "Biotechnology", desc: "Genetic engineering, microbiology & bioinformatics.", icon: "Dna" },
-  { code: "ENG", name: "English", desc: "Literature, linguistics & communication skills.", icon: "BookOpen" },
-  { code: "TAM", name: "Tamil", desc: "Classical & modern Tamil literature and culture.", icon: "Languages" },
-  { code: "COM", name: "Commerce", desc: "Accounting, finance, taxation & business management.", icon: "TrendingUp" },
-  { code: "BBA", name: "Business Administration", desc: "Management, marketing, HR & entrepreneurship.", icon: "Briefcase" },
-  { code: "BCA", name: "Computer Applications", desc: "Software development, web technologies & IT.", icon: "Monitor" },
+  { code: "B.Sc", name: "Mathematics", desc: "Pure & applied mathematics, statistics and computational methods.", icon: "Calculator" },
+  { code: "B.Sc", name: "Physics", desc: "Classical mechanics, optics, electronics & applied physics.", icon: "Atom" },
+  { code: "B.Sc", name: "Chemistry", desc: "Organic, inorganic, analytical & industrial chemistry.", icon: "FlaskConical" },
+  { code: "B.Sc", name: "Computer Science", desc: "Programming, data structures, software development & algorithms.", icon: "Cpu" },
+  { code: "B.Sc", name: "Information Technology", desc: "Networking, web technologies, database management & IT systems.", icon: "Monitor" },
+  { code: "B.Sc", name: "Zoology", desc: "Animal biology, ecology, genetics & environmental science.", icon: "Dna" },
+  { code: "B.Sc", name: "Botany", desc: "Plant biology, ecology, plant physiology & biotechnology.", icon: "Leaf" },
+  { code: "B.A", name: "Tamil", desc: "Classical & modern Tamil literature, linguistics and culture.", icon: "Languages" },
+  { code: "B.A", name: "English", desc: "English literature, linguistics & communication skills.", icon: "BookOpen" },
+  { code: "B.Com", name: "Commerce", desc: "Accounting, finance, taxation, auditing & business law.", icon: "TrendingUp" },
+  { code: "BBA", name: "Business Administration", desc: "Management, marketing, HR, entrepreneurship & business strategy.", icon: "Briefcase" },
+  { code: "BCA", name: "Computer Applications", desc: "Software development, web design, programming & IT applications.", icon: "Laptop" },
 ];
 
 export const COURSES = [
-  { level: "Undergraduate", title: "B.Sc. (3 Years)", branches: ["Physics", "Chemistry", "Mathematics", "Computer Science", "Biotechnology", "Microbiology", "Biochemistry", "Statistics"], duration: "3 Years", seats: "960" },
-  { level: "Undergraduate", title: "B.A. (3 Years)", branches: ["English", "Tamil", "History", "Economics", "Political Science", "Psychology", "Sociology"], duration: "3 Years", seats: "720" },
-  { level: "Undergraduate", title: "B.Com. (3 Years)", branches: ["General", "Computer Applications", "Professional Accounting", "Banking & Insurance"], duration: "3 Years", seats: "480" },
-  { level: "Undergraduate", title: "BBA (3 Years)", branches: ["General Management", "Finance", "Marketing", "HR"], duration: "3 Years", seats: "240" },
-  { level: "Undergraduate", title: "BCA (3 Years)", branches: ["General", "Data Science", "Cloud Computing"], duration: "3 Years", seats: "180" },
-  { level: "Postgraduate", title: "M.Sc. (2 Years)", branches: ["Physics", "Chemistry", "Mathematics", "Computer Science", "Biotechnology", "Data Science"], duration: "2 Years", seats: "240" },
-  { level: "Postgraduate", title: "M.A. (2 Years)", branches: ["English", "Tamil", "History", "Economics", "Psychology"], duration: "2 Years", seats: "180" },
-  { level: "Postgraduate", title: "M.Com. (2 Years)", branches: ["General", "Finance", "International Business"], duration: "2 Years", seats: "120" },
+  {
+    level: "Undergraduate",
+    title: "B.Sc. Mathematics",
+    branches: ["Pure Mathematics", "Statistics", "Computer Applications"],
+    duration: "3 Years",
+    seats: "60",
+  },
+  {
+    level: "Undergraduate",
+    title: "B.Sc. Physics",
+    branches: ["Core Physics", "Electronics", "Computer Applications"],
+    duration: "3 Years",
+    seats: "60",
+  },
+  {
+    level: "Undergraduate",
+    title: "B.Sc. Chemistry",
+    branches: ["Core Chemistry", "Industrial Chemistry"],
+    duration: "3 Years",
+    seats: "60",
+  },
+  {
+    level: "Undergraduate",
+    title: "B.Sc. Computer Science",
+    branches: ["Core CS", "Data Science", "Cyber Security"],
+    duration: "3 Years",
+    seats: "60",
+  },
+  {
+    level: "Undergraduate",
+    title: "B.Sc. Information Technology",
+    branches: ["Core IT", "Networking", "Cloud Computing"],
+    duration: "3 Years",
+    seats: "60",
+  },
+  {
+    level: "Undergraduate",
+    title: "B.Sc. Zoology",
+    branches: ["Core Zoology", "Environmental Science"],
+    duration: "3 Years",
+    seats: "60",
+  },
+  {
+    level: "Undergraduate",
+    title: "B.Sc. Botany",
+    branches: ["Core Botany", "Plant Biotechnology"],
+    duration: "3 Years",
+    seats: "60",
+  },
+  {
+    level: "Undergraduate",
+    title: "B.A. Tamil",
+    branches: ["Tamil Literature", "Tamil Linguistics"],
+    duration: "3 Years",
+    seats: "60",
+  },
+  {
+    level: "Undergraduate",
+    title: "B.A. English",
+    branches: ["English Literature", "English Communication"],
+    duration: "3 Years",
+    seats: "60",
+  },
+  {
+    level: "Undergraduate",
+    title: "B.Com.",
+    branches: ["General", "Computer Applications", "Professional Accounting"],
+    duration: "3 Years",
+    seats: "60",
+  },
+  {
+    level: "Undergraduate",
+    title: "BBA",
+    branches: ["General Management", "Finance", "Marketing", "Human Resources"],
+    duration: "3 Years",
+    seats: "60",
+  },
+  {
+    level: "Undergraduate",
+    title: "BCA",
+    branches: ["General", "Data Science", "Cloud Computing"],
+    duration: "3 Years",
+    seats: "60",
+  },
 ];
 
 export const RECRUITERS = [
-  "TCS", "Infosys", "Wipro", "Cognizant", "Accenture", "Capgemini", "HCL",
-  "Tech Mahindra", "L&T Infotech", "Mphasis", "Mindtree", "Zoho", "Freshworks",
-  "ICICI Bank", "HDFC Bank", "Axis Bank", "Kotak Mahindra", "Deloitte",
+  "TCS", "Infosys", "Wipro", "Cognizant", "HCL",
+  "Tech Mahindra", "Zoho", "Freshworks", "Capgemini",
+  "ICICI Bank", "HDFC Bank", "Axis Bank", "Deloitte", "IBM",
 ];
 
 export const PLACEMENT_HIGHLIGHTS = [
-  { value: "₹12 LPA", label: "Highest Package 2024" },
-  { value: "₹4.2 LPA", label: "Average Package" },
-  { value: "92%", label: "Placement Rate" },
-  { value: "180+", label: "Companies Visited" },
+  { value: "₹8 LPA", label: "Highest Package" },
+  { value: "₹3.5 LPA", label: "Average Package" },
+  { value: "85%", label: "Placement Rate" },
+  { value: "100+", label: "Companies Visited" },
 ];
 
 export const FACULTY = [
-  { name: "Dr. R. Krishnan", role: "Dean, Science", qual: "Ph.D., Bharathiar University", focus: "Quantum Physics & Nanotechnology" },
-  { name: "Dr. Meera Iyer", role: "Professor, Biotechnology", qual: "Ph.D., Anna University", focus: "Microbial Genetics" },
-  { name: "Dr. Anand Subramaniam", role: "HoD, Computer Science", qual: "Ph.D., Bharathiar University", focus: "Machine Learning & AI" },
-  { name: "Dr. Priya Raghavan", role: "Professor, English", qual: "Ph.D., University of Madras", focus: "Contemporary Literature" },
-  { name: "Dr. S. Balasubramanian", role: "Dean of Research", qual: "Ph.D., IIT Madras", focus: "Applied Mathematics" },
-  { name: "Dr. Lakshmi Narayanan", role: "Professor, Commerce", qual: "Ph.D., Bharathiar University", focus: "Financial Management" },
+  { name: "Dr. J. Ebanasar", role: "Principal", qual: "M.Sc., Ph.D.", focus: "Academic Leadership & Administration", dept: "Administration" },
+  { name: "Dr. R. Senthilkumar", role: "HoD, Computer Science", qual: "Ph.D., Thiruvalluvar University", focus: "Data Structures & Software Engineering", dept: "Computer Science" },
+  { name: "Dr. P. Kavitha", role: "HoD, Mathematics", qual: "Ph.D., Thiruvalluvar University", focus: "Applied Mathematics & Statistics", dept: "Mathematics" },
+  { name: "Dr. S. Murugan", role: "HoD, Physics", qual: "Ph.D., Thiruvalluvar University", focus: "Electronics & Applied Physics", dept: "Physics" },
+  { name: "Dr. M. Selvi", role: "HoD, Chemistry", qual: "Ph.D., Thiruvalluvar University", focus: "Organic & Industrial Chemistry", dept: "Chemistry" },
+  { name: "Dr. T. Rajkumar", role: "HoD, Commerce", qual: "Ph.D., Thiruvalluvar University", focus: "Financial Accounting & Taxation", dept: "Commerce" },
+  { name: "Dr. N. Anitha", role: "HoD, Tamil", qual: "Ph.D., Thiruvalluvar University", focus: "Classical Tamil Literature", dept: "Tamil" },
+  { name: "Dr. S. Priya", role: "HoD, English", qual: "Ph.D., Thiruvalluvar University", focus: "English Literature & Communication", dept: "English" },
 ];
 
 export const NEWS = [
-  { date: "May 18, 2025", category: "Admissions", title: "UG & PG 2025–26 application window opens for all programmes", excerpt: "Online applications are now live; merit scholarships available based on board exam scores and entrance tests." },
-  { date: "May 10, 2025", category: "Research", title: "GTM COLLEGE faculty publishes research in international journals", excerpt: "Three research papers on biotechnology and data science accepted in peer-reviewed international publications." },
-  { date: "Apr 28, 2025", category: "Placements", title: "TCS recruits 85 students from Computer Science & BCA departments", excerpt: "Annual campus recruitment drive concludes with excellent results across all departments." },
-  { date: "Apr 14, 2025", category: "Events", title: "ScienceFest 2025 — Inter-collegiate Science Exhibition", excerpt: "Two-day event hosted 800+ students from 40 colleges with innovative project displays and competitions." },
-  { date: "Apr 02, 2025", category: "Awards", title: "NAAC 'A' Grade accreditation renewed", excerpt: "Institution scores 3.2/4.00 on NAAC quality criteria, maintaining high academic standards." },
+  { date: "May 18, 2025", category: "Admissions", title: "UG 2025–26 application window opens for all programmes", excerpt: "Online applications are now live for all UG programmes. Merit scholarships available for eligible students." },
+  { date: "May 10, 2025", category: "Research", title: "GTMC faculty publishes research in national journals", excerpt: "Faculty members from Science departments publish research papers in peer-reviewed national publications." },
+  { date: "Apr 28, 2025", category: "Placements", title: "TCS & Infosys recruit students from CS & IT departments", excerpt: "Annual campus recruitment drive concludes with excellent results across Computer Science and IT departments." },
+  { date: "Apr 14, 2025", category: "Events", title: "Annual Science Symposium 2025 — Inter-collegiate event", excerpt: "Two-day event hosted students from 30+ colleges with project displays, paper presentations and competitions." },
+  { date: "Apr 02, 2025", category: "Awards", title: "NAAC Accreditation status maintained", excerpt: "Institution continues to maintain NAAC accreditation, reflecting commitment to quality education." },
 ];
 
 export const EVENTS = [
-  { date: { d: "14", m: "SEP" }, title: "Annual Science Symposium 2025", venue: "Main Auditorium", time: "09:00 – 18:00" },
-  { date: { d: "22", m: "SEP" }, title: "Career Guidance Workshop", venue: "Seminar Hall, Block A", time: "14:00 – 17:00" },
+  { date: { d: "14", m: "SEP" }, title: "Annual Science Symposium 2025", venue: "Main Auditorium", time: "09:00 – 17:00" },
+  { date: { d: "22", m: "SEP" }, title: "Career Guidance Workshop", venue: "Seminar Hall", time: "10:00 – 13:00" },
   { date: { d: "05", m: "OCT" }, title: "Inter-Collegiate Quiz Competition", venue: "Computer Lab", time: "All Day" },
-  { date: { d: "18", m: "OCT" }, title: "Cultural Fest — Kalanjali 2025", venue: "Open Air Theatre", time: "17:00 onwards" },
+  { date: { d: "18", m: "OCT" }, title: "Cultural Fest — Thirumagal 2025", venue: "Open Air Theatre", time: "17:00 onwards" },
 ];
 
 export const TESTIMONIALS = [
-  { name: "Aditi Sharma", batch: "B.Sc. Computer Science, 2022", company: "Software Developer, TCS", quote: "GTM COLLEGE provided excellent education and placement support. The faculty guided me throughout my journey." },
-  { name: "Rahul Verma", batch: "B.Com., 2021", company: "Accountant, ICICI Bank", quote: "The commerce department prepared me well for the corporate world with practical knowledge and internships." },
-  { name: "Sneha Iyer", batch: "BBA, 2023", company: "HR Executive, Infosys", quote: "The management programme gave me confidence and skills to excel in my career from day one." },
-  { name: "Karthik Subramanian", batch: "M.Sc. Biotechnology, 2020", company: "Research Associate, Biocon", quote: "The research facilities and faculty mentorship helped me build a strong foundation in biotechnology." },
+  { name: "Priya S.", batch: "B.Sc. Computer Science, 2023", company: "Software Developer, TCS", quote: "GTMC gave me a strong foundation in programming and the placement cell helped me land my first job at TCS." },
+  { name: "Arun K.", batch: "B.Com., 2022", company: "Accountant, HDFC Bank", quote: "The commerce department's practical approach to accounting and finance prepared me well for the banking sector." },
+  { name: "Divya R.", batch: "BBA, 2023", company: "HR Executive, Infosys", quote: "The management programme and the supportive faculty helped me build confidence and communication skills." },
+  { name: "Karthik M.", batch: "BCA, 2021", company: "Software Engineer, Zoho", quote: "The BCA programme at GTMC gave me solid technical knowledge and the campus placements were excellent." },
 ];
 
 export const FACILITIES = [
-  { title: "Central Library", desc: "Extensive collection of books, journals, digital resources and reading halls.", icon: "BookOpen" },
-  { title: "Science Labs", desc: "Well-equipped laboratories for Physics, Chemistry, Biology and Computer Science.", icon: "FlaskConical" },
+  { title: "Central Library", desc: "Extensive collection of books, journals, digital resources and spacious reading halls.", icon: "BookOpen" },
+  { title: "Computer Labs", desc: "Well-equipped computer laboratories with high-speed internet and latest software.", icon: "Monitor" },
+  { title: "Science Labs", desc: "Modern laboratories for Physics, Chemistry, Zoology and Botany practicals.", icon: "FlaskConical" },
   { title: "Hostel Facilities", desc: "Separate hostels for boys and girls with mess, recreation and 24/7 security.", icon: "Hotel" },
   { title: "Sports Complex", desc: "Indoor & outdoor courts, gym, athletic track and sports equipment.", icon: "Dumbbell" },
-  { title: "Auditorium", desc: "Spacious auditorium with modern AV systems for events and seminars.", icon: "Theater" },
-  { title: "Health Centre", desc: "On-campus medical facility with qualified doctors and first-aid services.", icon: "HeartPulse" },
+  { title: "Auditorium", desc: "Spacious auditorium with modern AV systems for events, seminars and cultural programmes.", icon: "Theater" },
 ];
+
+export const PRINCIPAL = {
+  name: "Dr. J. Ebanasar",
+  title: "Principal",
+  qual: "M.Sc., Ph.D.",
+  image: "/principal.jpeg" as string | null,
+};

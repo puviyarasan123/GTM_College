@@ -11,6 +11,16 @@ async function api<T>(path: string, body?: unknown): Promise<T> {
   return res.json();
 }
 
+async function safeApi<T>(path: string): Promise<T | null> {
+  try {
+    const res = await fetch(path);
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
 export type StudentSession = { id: string; email: string; name: string };
 
 export type Application = {
@@ -38,7 +48,7 @@ export type AppStats = {
   accepted: number; rejected: number; waitlisted: number;
 };
 
-export const getStudentSession = () => api<StudentSession | null>("/api/student/session");
+export const getStudentSession = () => safeApi<StudentSession>("/api/student/session");
 export const studentRegister = (data: { email: string; password: string; name: string; phone: string }) =>
   api<{ token: string; student: StudentSession }>("/api/student/register", data);
 export const studentLogin = (data: { email: string; password: string }) =>

@@ -11,10 +11,6 @@ import {
   ArrowRight, Award, BookOpen, Building2, Calendar, ChevronRight, GraduationCap,
   MapPin, Quote, Sparkles, Star, Trophy, Users,
 } from "lucide-react";
-import heroCampus from "@/assets/hero-campus.jpg";
-import heroLibrary from "@/assets/hero-library.jpg";
-import heroLab from "@/assets/hero-lab.jpg";
-import aboutCampus from "@/assets/about-campus.jpg";
 import {
   STATS, DEPARTMENTS, COURSES, RECRUITERS, PLACEMENT_HIGHLIGHTS,
   FACULTY, NEWS, EVENTS, TESTIMONIALS, FACILITIES,
@@ -24,10 +20,10 @@ import { Reveal, Section, SectionHeader } from "@/components/site/PageShell";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "GTM COLLEGE OF ARTS & SCIENCE — Empowering Minds, Shaping Futures" },
-      { name: "description", content: "Premier Arts & Science College in Coimbatore. NAAC 'A' Grade, 92% placements, experienced faculty. Apply for 2025–26." },
-      { property: "og:title", content: "GTM COLLEGE OF ARTS & SCIENCE" },
-      { property: "og:description", content: "Empowering minds and shaping futures through quality education. Admissions open." },
+      { title: "Govt. Thirumagal Mills College, Gudiyattam — Empowering Minds, Shaping Futures" },
+      { name: "description", content: "Govt. Thirumagal Mills College, Gudiyattam — Affiliated to Thiruvalluvar University. Quality UG programmes in Science, Arts, Commerce & Management. Est. 1974." },
+      { property: "og:title", content: "Govt. Thirumagal Mills College, Gudiyattam" },
+      { property: "og:description", content: "Serving rural students with quality higher education since 1974. Admissions open for 2025–26." },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
@@ -35,9 +31,24 @@ export const Route = createFileRoute("/")({
 });
 
 const heroSlides = [
-  { img: heroCampus, eyebrow: "Admissions 2025–26 Open", title: "Empowering Minds, Shaping Futures.", sub: "Join GTM College of Arts & Science — a premier institution offering quality education in Science, Arts, Commerce and Management." },
-  { img: heroLibrary, eyebrow: "NAAC 'A' Grade Accredited", title: "Where knowledge meets opportunity.", sub: "Extensive library resources, experienced faculty and a vibrant campus life to nurture your potential." },
-  { img: heroLab, eyebrow: "Modern Laboratories", title: "Discover. Explore. Innovate.", sub: "Well-equipped science labs, computer centres and research facilities to fuel your academic journey." },
+  {
+    img: "/hero1.jpg",
+    eyebrow: "Admissions 2025–26 Open",
+    title: "Empowering Minds, Shaping Futures.",
+    sub: "Govt. Thirumagal Mills College, Gudiyattam — serving rural students with quality higher education since 1974.",
+  },
+  {
+    img: "/hero2.jpg",
+    eyebrow: "Affiliated to Thiruvalluvar University",
+    title: "Where knowledge meets opportunity.",
+    sub: "UG programmes in Science, Arts, Commerce & Management with experienced faculty and modern infrastructure.",
+  },
+  {
+    img: "/hero3.jpg",
+    eyebrow: "NAAC Accredited Institution",
+    title: "Discover. Learn. Grow.",
+    sub: "Well-equipped labs, a rich library and vibrant campus life to nurture every student's potential.",
+  },
 ];
 
 function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -69,21 +80,28 @@ function Index() {
   return (
     <div>
       {/* HERO */}
-      <section className="relative h-[88vh] min-h-[620px] overflow-hidden bg-primary-deep">
+      <section className="relative w-full overflow-hidden bg-primary-deep" style={{ height: "90vh", minHeight: "600px" }}>
         <Swiper
           modules={[Autoplay, EffectFade, Pagination, Navigation]}
           effect="fade"
           autoplay={{ delay: 5500, disableOnInteraction: false }}
           pagination={{ clickable: true }}
           loop
-          className="h-full"
+          className="w-full h-full"
         >
           {heroSlides.map((s, i) => (
-            <SwiperSlide key={i}>
-              <div className="relative h-full">
-                <img src={s.img} alt="" className="absolute inset-0 size-full object-cover animate-kenburns" width={1920} height={1080} />
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-deep/90 via-primary-deep/70 to-primary-deep/30" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/80 to-transparent" />
+            <SwiperSlide key={i} className="w-full h-full">
+              <div className="relative w-full h-full">
+                <img
+                  src={s.img}
+                  alt="GTMC Campus"
+                  className="absolute inset-0 w-full h-full"
+                  style={{ objectFit: "cover", objectPosition: "center", display: "block" }}
+                  fetchPriority={i === 0 ? "high" : "auto"}
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="relative h-full max-w-[1400px] mx-auto px-6 lg:px-8 flex flex-col justify-center">
                   <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl">
                     <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/15 border border-gold/40 text-gold text-[11px] font-bold uppercase tracking-[0.22em] backdrop-blur">
@@ -124,7 +142,7 @@ function Index() {
       {/* ACCREDITATIONS */}
       <section className="py-14">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8 flex flex-wrap justify-center items-center gap-x-14 gap-y-6 text-primary/60">
-          {["NAAC 'A' Grade", "Bharathiar University Affiliated", "UGC Recognised", "ISO 9001:2015", "AISHE Registered", "Govt. of Tamil Nadu Approved"].map((b) => (
+          {["NAAC Accredited", "Thiruvalluvar University Affiliated", "UGC Recognised", "Govt. of Tamil Nadu", "AISHE Registered", "Directorate of Collegiate Education"].map((b) => (
             <span key={b} className="text-[11px] font-bold uppercase tracking-[0.25em]">{b}</span>
           ))}
         </div>
@@ -133,28 +151,34 @@ function Index() {
       {/* ABOUT */}
       <Section className="grid lg:grid-cols-2 gap-16 items-center">
         <Reveal>
-          <div className="relative">
-            <img src={aboutCampus} alt="GTM campus" width={1600} height={1000} loading="lazy" className="rounded-3xl shadow-elegant w-full object-cover aspect-4/3" />
+          <div className="relative w-full">
+            <img
+              src="/hello.jpg"
+              alt="GTMC Campus"
+              loading="lazy"
+              decoding="async"
+              className="rounded-3xl shadow-elegant w-full h-auto block"
+            />
             <div className="absolute -bottom-6 -right-6 glass rounded-2xl p-6 shadow-elegant w-56 hidden md:block">
-              <div className="flex items-center gap-3"><Trophy className="size-6 text-gold-deep" /><div className="text-xs text-muted-foreground">Est. 1994</div></div>
-              <div className="text-2xl font-extrabold text-primary mt-2">30+ Years</div>
+              <div className="flex items-center gap-3"><Trophy className="size-6 text-gold-deep" /><div className="text-xs text-muted-foreground">Est. 1974</div></div>
+              <div className="text-2xl font-extrabold text-primary mt-2">50+ Years</div>
               <div className="text-xs text-muted-foreground">of academic excellence</div>
             </div>
           </div>
         </Reveal>
         <Reveal delay={0.1}>
-          <SectionHeader eyebrow="About the Institute" title="A legacy of academic excellence since 1994." />
+          <SectionHeader eyebrow="About the Institution" title="Serving Gudiyattam since 1974." />
           <p className="text-muted-foreground leading-relaxed text-lg">
-            GTM College of Arts & Science is a premier institution in Coimbatore, affiliated to Bharathiar University.
-            We offer comprehensive UG and PG programmes in Science, Arts, Commerce and Management, nurturing
-            students with quality education, modern infrastructure and strong placement support.
+            Govt. Thirumagal Mills College is a government co-educational institution in Gudiyattam, Vellore District,
+            affiliated to Thiruvalluvar University. We offer UG programmes in Science, Arts, Commerce and Management,
+            serving first-generation learners and rural students with quality education.
           </p>
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
-              { i: Award, t: "NAAC 'A' Grade Accredited" },
-              { i: Users, t: "180+ Qualified Faculty" },
-              { i: Building2, t: "Spacious Green Campus" },
-              { i: BookOpen, t: "10 Academic Departments" },
+              { i: Award, t: "NAAC Accredited" },
+              { i: Users, t: "100+ Qualified Faculty" },
+              { i: Building2, t: "Government Institution" },
+              { i: BookOpen, t: "12 Departments" },
             ].map(({ i: I, t }) => (
               <div key={t} className="flex items-center gap-3 p-4 rounded-2xl bg-secondary">
                 <div className="size-10 rounded-xl bg-gradient-hero grid place-items-center text-gold"><I className="size-5" /></div>

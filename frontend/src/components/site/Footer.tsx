@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { GraduationCap, MapPin, Phone, Mail, ArrowRight } from "lucide-react";
+import { MapPin, Phone, Mail, ArrowRight } from "lucide-react";
 import { SITE } from "@/lib/site-data";
 
 const cols = [
@@ -50,16 +50,14 @@ export function Footer() {
       <div className="relative max-w-[1400px] mx-auto px-6 lg:px-8 pt-20 pb-10">
         <div className="grid lg:grid-cols-12 gap-12 pb-16 border-b border-white/10">
           <div className="lg:col-span-4">
-            <Link to="/" className="flex items-center gap-3">
-              <div className="size-12 rounded-xl bg-gold grid place-items-center text-primary-deep">
-                <GraduationCap className="size-6" />
-              </div>
-              <div>
-                <div className="text-lg font-extrabold tracking-tight">GTM</div>
-                <div className="text-[9px] uppercase tracking-[0.22em] text-white/60 font-semibold">
-                  ARTS & SCIENCE
-                </div>
-              </div>
+            <Link to="/" className="block">
+              <img
+                src="/logonew.png"
+                alt="Govt. Thirumagal Mills College"
+                className="h-14 w-auto"
+                style={{ imageRendering: "high-quality" }}
+                decoding="async"
+              />
             </Link>
             <p className="mt-6 text-sm text-white/70 leading-relaxed max-w-sm">
               A premier Arts & Science institution dedicated to quality education, holistic student development and academic excellence since {SITE.estd}.

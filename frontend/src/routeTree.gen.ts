@@ -24,7 +24,6 @@ import { Route as EventsRouteImport } from './routes/events'
 import { Route as DepartmentsRouteImport } from './routes/departments'
 import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as ChairmanMessageRouteImport } from './routes/chairman-message'
 import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AdmissionRouteImport } from './routes/admission'
 import { Route as AboutRouteImport } from './routes/about'
@@ -117,11 +116,6 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ChairmanMessageRoute = ChairmanMessageRouteImport.update({
-  id: '/chairman-message',
-  path: '/chairman-message',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApplyRoute = ApplyRouteImport.update({
   id: '/apply',
   path: '/apply',
@@ -209,7 +203,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/apply': typeof ApplyRoute
-  '/chairman-message': typeof ChairmanMessageRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
   '/departments': typeof DepartmentsRoute
@@ -243,7 +236,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/apply': typeof ApplyRoute
-  '/chairman-message': typeof ChairmanMessageRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
   '/departments': typeof DepartmentsRoute
@@ -278,7 +270,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/apply': typeof ApplyRoute
-  '/chairman-message': typeof ChairmanMessageRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
   '/departments': typeof DepartmentsRoute
@@ -314,7 +305,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/admission'
     | '/apply'
-    | '/chairman-message'
     | '/contact'
     | '/courses'
     | '/departments'
@@ -348,7 +338,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/admission'
     | '/apply'
-    | '/chairman-message'
     | '/contact'
     | '/courses'
     | '/departments'
@@ -382,7 +371,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/admission'
     | '/apply'
-    | '/chairman-message'
     | '/contact'
     | '/courses'
     | '/departments'
@@ -417,7 +405,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AdmissionRoute: typeof AdmissionRoute
   ApplyRoute: typeof ApplyRoute
-  ChairmanMessageRoute: typeof ChairmanMessageRoute
   ContactRoute: typeof ContactRoute
   CoursesRoute: typeof CoursesRoute
   DepartmentsRoute: typeof DepartmentsRoute
@@ -544,13 +531,6 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/chairman-message': {
-      id: '/chairman-message'
-      path: '/chairman-message'
-      fullPath: '/chairman-message'
-      preLoaderRoute: typeof ChairmanMessageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apply': {
@@ -699,7 +679,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AdmissionRoute: AdmissionRoute,
   ApplyRoute: ApplyRoute,
-  ChairmanMessageRoute: ChairmanMessageRoute,
   ContactRoute: ContactRoute,
   CoursesRoute: CoursesRoute,
   DepartmentsRoute: DepartmentsRoute,

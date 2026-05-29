@@ -11,10 +11,19 @@ async function api<T>(path: string, body?: unknown): Promise<T> {
   return res.json();
 }
 
+async function safeApi<T>(path: string): Promise<T | null> {
+  try {
+    const res = await fetch(path);
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
 export type JWTPayload = { id: string; email: string; role: string };
 
-export const getAdminSession = () =>
-  api<JWTPayload | null>("/api/auth/session");
+export const getAdminSession = () => safeApi<JWTPayload>("/api/auth/session");
 
 export const adminLogin = ({ data }: { data: { email: string; password: string } }) =>
   api<{ token: string; user: { id: string; email: string; name: string; role: string } }>("/api/auth/login", data);
