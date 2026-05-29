@@ -69,8 +69,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // debug — remove after fix
   if (req.method === "GET" && route === "_debug") {
-    return res.json({ route, path, query: req.query });
+    return res.json({ route, path, query: req.query, rawPath });
   }
+  console.log("[api] route:", JSON.stringify(route), "rawPath:", JSON.stringify(rawPath));
 
   try {
     // ── Admin Auth ────────────────────────────────────────────────────────────
