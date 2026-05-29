@@ -14,22 +14,23 @@ export const Route = createFileRoute("/principal-message")({
   }),
   component: () => (
     <>
-      <PageHero eyebrow="From the principal's office" title="We do not prepare students for jobs. We prepare them to invent them." subtitle="Dr. Aishwarya Krishnan, Principal" />
+      <PageHero eyebrow="From the principal's office" title="We nurture students to become confident, capable and compassionate individuals." subtitle="Dr. S. Meenakshi, Principal" />
       <Section>
         <div className="grid lg:grid-cols-[2fr_1fr] gap-12 items-start">
           <Reveal>
             <Quote className="size-10 text-gold mb-6" />
             <div className="space-y-5 text-muted-foreground text-lg leading-relaxed">
-              <p>The world our students will work in does not yet exist. Roles will be redefined, industries will be reshuffled, and entire categories of work will emerge that we cannot name today. Our role, then, is not to teach the present but to build the people who will design the future.</p>
-              <p>That is why our curriculum is anchored in first principles — mathematics, systems thinking, design, ethics — and why every student completes a year-long capstone before graduating. It is why our labs stay open at midnight and why our faculty publish, build and teach in equal measure.</p>
-              <p>To every prospective student reading this: bring your questions. We will help you sharpen them.</p>
+              <p>At GTM College of Arts & Science, we believe that education is not just about acquiring knowledge — it is about developing the whole person. Our goal is to create graduates who are not only academically strong but also ethically grounded and socially responsible.</p>
+              <p>Our faculty are dedicated mentors who go beyond the classroom to guide students in their academic and personal growth. Our curriculum is designed to build critical thinking, communication skills and practical knowledge that employers value.</p>
+              <p>We take pride in our vibrant campus life — from cultural festivals and sports events to NSS activities and industry visits — all of which contribute to the holistic development of our students.</p>
+              <p>To every student joining us: you are in the right place. Work hard, stay curious, and we will walk this journey with you.</p>
             </div>
           </Reveal>
           <Reveal delay={0.1}>
             <div className="aspect-[3/4] rounded-3xl bg-gradient-to-br from-gold to-gold-deep shadow-elegant" />
             <div className="mt-6">
-              <div className="font-bold text-primary text-lg">Dr. Aishwarya Krishnan</div>
-              <div className="text-sm text-muted-foreground">Principal, Ph.D. (Stanford)</div>
+              <div className="font-bold text-primary text-lg">Dr. S. Meenakshi</div>
+              <div className="text-sm text-muted-foreground">Principal, Ph.D. (Bharathiar University)</div>
             </div>
           </Reveal>
         </div>

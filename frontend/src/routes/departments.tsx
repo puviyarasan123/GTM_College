@@ -14,7 +14,7 @@ export const Route = createFileRoute("/departments")({
   }),
   component: () => (
     <>
-      <PageHero eyebrow="Schools & Departments" title="Eight schools. One culture of rigour." subtitle="Each department is a self-contained research community with its own labs, advisory board and industry partnerships." />
+      <PageHero eyebrow="Schools & Departments" title="Ten departments. One culture of excellence." subtitle="Each department is dedicated to quality teaching, student mentorship and academic growth across Science, Arts, Commerce and Management." />
       <Section>
         <SectionHeader title="Explore the schools" desc="Click through to learn about programmes, faculty and research focus areas." />
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">

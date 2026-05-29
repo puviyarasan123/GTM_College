@@ -1,11 +1,11 @@
 export const SITE = {
-  name: "GTM COLLEGE",
+  name: "GTM COLLEGE OF ARTS & SCIENCE",
   short: "GTM",
-  tagline: "Architects of the Future",
+  tagline: "Empowering Minds, Shaping Futures",
   estd: 1994,
-  phone: "+91 44 2837 4500",
+  phone: "+91 422 2539 500",
   email: "admissions@gtmc.edu.in",
-  address: "University Road, Academic District, Chennai, Tamil Nadu 600119",
+  address: "Saravanampatti, Coimbatore, Tamil Nadu 641035",
 };
 
 export const NAV: { label: string; to: string; children?: { label: string; to: string; desc?: string }[] }[] = [
@@ -23,9 +23,9 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
     label: "Academics",
     to: "/courses",
     children: [
-      { label: "Courses Offered", to: "/courses", desc: "UG, PG & doctoral programmes" },
-      { label: "Departments", to: "/departments", desc: "8 engineering & science wings" },
-      { label: "Faculty", to: "/faculty", desc: "250+ PhD scholars & industry experts" },
+      { label: "Courses Offered", to: "/courses", desc: "UG & PG programmes" },
+      { label: "Departments", to: "/departments", desc: "Science, Arts, Commerce & Management" },
+      { label: "Faculty", to: "/faculty", desc: "Experienced & qualified professors" },
       { label: "Library", to: "/library", desc: "Digital + physical knowledge hub" },
     ],
   },
@@ -34,16 +34,16 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
     to: "/admission",
     children: [
       { label: "Admission Process", to: "/admission", desc: "Apply for 2025–26 session" },
-      { label: "Placement", to: "/placement", desc: "98% placement record" },
+      { label: "Placement", to: "/placement", desc: "92% placement record" },
     ],
   },
   {
     label: "Campus",
     to: "/infrastructure",
     children: [
-      { label: "Infrastructure", to: "/infrastructure", desc: "World-class labs & smart classrooms" },
-      { label: "Hostel", to: "/hostel", desc: "Premium residential life" },
-      { label: "Transport", to: "/transport", desc: "60+ bus routes city-wide" },
+      { label: "Infrastructure", to: "/infrastructure", desc: "Modern labs & smart classrooms" },
+      { label: "Hostel", to: "/hostel", desc: "Comfortable residential facilities" },
+      { label: "Transport", to: "/transport", desc: "Bus routes across Coimbatore" },
       { label: "Gallery", to: "/gallery", desc: "Campus moments" },
     ],
   },
@@ -52,7 +52,7 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
     to: "/news",
     children: [
       { label: "News & Announcements", to: "/news", desc: "Latest updates" },
-      { label: "Events", to: "/events", desc: "Symposiums, fests & conferences" },
+      { label: "Events", to: "/events", desc: "Symposiums, fests & competitions" },
     ],
   },
   { label: "Contact", to: "/contact" },
@@ -60,88 +60,92 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
 
 export const TICKER = [
   "Admissions open 2025–26 — applications close Aug 30",
-  "NAAC A++ re-accreditation conferred for 5 years",
-  "₹4.5Cr in merit scholarships announced for incoming batch",
-  "Global Research Summit — Sept 14 to 16, register now",
-  "Placements 2024 : 98.4% recorded, highest package ₹54 LPA",
+  "NAAC 'A' Grade accreditation with 3.2 CGPA",
+  "₹50 Lakh in merit scholarships for deserving students",
+  "Annual Science Symposium — Sept 14 to 16, register now",
+  "Placements 2024: 92% placement rate, highest package ₹12 LPA",
 ];
 
 export const STATS = [
-  { value: 15000, suffix: "+", label: "Active Students" },
-  { value: 250, suffix: "+", label: "PhD Faculty" },
-  { value: 98, suffix: "%", label: "Placement Rate" },
-  { value: 450, suffix: "+", label: "Recruiting Partners" },
+  { value: 8000, suffix: "+", label: "Active Students" },
+  { value: 180, suffix: "+", label: "Qualified Faculty" },
+  { value: 92, suffix: "%", label: "Placement Rate" },
+  { value: 180, suffix: "+", label: "Recruiting Partners" },
 ];
 
 export const DEPARTMENTS = [
-  { code: "CSE", name: "Computer Science & Engineering", desc: "AI, ML, Cybersecurity & full-stack systems.", icon: "Cpu" },
-  { code: "ECE", name: "Electronics & Communication", desc: "VLSI, embedded systems, 5G & IoT.", icon: "CircuitBoard" },
-  { code: "EEE", name: "Electrical & Electronics", desc: "Smart grids, renewables, power systems.", icon: "Zap" },
-  { code: "MECH", name: "Mechanical Engineering", desc: "Robotics, CAD/CAM, thermal sciences.", icon: "Cog" },
-  { code: "CIVIL", name: "Civil Engineering", desc: "Structural design, smart cities, sustainability.", icon: "Building2" },
-  { code: "IT", name: "Information Technology", desc: "Cloud, DevOps, data engineering.", icon: "Server" },
-  { code: "BIO", name: "Biotechnology", desc: "Genomics, bioinformatics, therapeutics.", icon: "Dna" },
-  { code: "AIDS", name: "AI & Data Science", desc: "MLOps, deep learning, applied research.", icon: "BrainCircuit" },
+  { code: "PHY", name: "Physics", desc: "Quantum mechanics, astrophysics & applied physics.", icon: "Atom" },
+  { code: "CHEM", name: "Chemistry", desc: "Organic, inorganic, analytical & pharmaceutical chemistry.", icon: "FlaskConical" },
+  { code: "MATH", name: "Mathematics", desc: "Pure mathematics, statistics & computational methods.", icon: "Calculator" },
+  { code: "CS", name: "Computer Science", desc: "Programming, AI, data science & software development.", icon: "Cpu" },
+  { code: "BIO", name: "Biotechnology", desc: "Genetic engineering, microbiology & bioinformatics.", icon: "Dna" },
+  { code: "ENG", name: "English", desc: "Literature, linguistics & communication skills.", icon: "BookOpen" },
+  { code: "TAM", name: "Tamil", desc: "Classical & modern Tamil literature and culture.", icon: "Languages" },
+  { code: "COM", name: "Commerce", desc: "Accounting, finance, taxation & business management.", icon: "TrendingUp" },
+  { code: "BBA", name: "Business Administration", desc: "Management, marketing, HR & entrepreneurship.", icon: "Briefcase" },
+  { code: "BCA", name: "Computer Applications", desc: "Software development, web technologies & IT.", icon: "Monitor" },
 ];
 
 export const COURSES = [
-  { level: "Undergraduate", title: "B.Tech (4 Years)", branches: ["CSE", "ECE", "EEE", "MECH", "CIVIL", "IT", "BIO", "AI & DS"], duration: "4 Years", seats: "1,440" },
-  { level: "Undergraduate", title: "B.Arch (5 Years)", branches: ["Architecture"], duration: "5 Years", seats: "60" },
-  { level: "Postgraduate", title: "M.Tech (2 Years)", branches: ["VLSI", "AI/ML", "Structural", "Power Systems", "Embedded"], duration: "2 Years", seats: "240" },
-  { level: "Postgraduate", title: "MBA", branches: ["Finance", "Marketing", "HR", "Analytics", "Operations"], duration: "2 Years", seats: "120" },
-  { level: "Postgraduate", title: "MCA", branches: ["Software Systems"], duration: "2 Years", seats: "60" },
-  { level: "Doctoral", title: "Ph.D. Programmes", branches: ["All Engineering & Science disciplines"], duration: "3–5 Years", seats: "Rolling" },
+  { level: "Undergraduate", title: "B.Sc. (3 Years)", branches: ["Physics", "Chemistry", "Mathematics", "Computer Science", "Biotechnology", "Microbiology", "Biochemistry", "Statistics"], duration: "3 Years", seats: "960" },
+  { level: "Undergraduate", title: "B.A. (3 Years)", branches: ["English", "Tamil", "History", "Economics", "Political Science", "Psychology", "Sociology"], duration: "3 Years", seats: "720" },
+  { level: "Undergraduate", title: "B.Com. (3 Years)", branches: ["General", "Computer Applications", "Professional Accounting", "Banking & Insurance"], duration: "3 Years", seats: "480" },
+  { level: "Undergraduate", title: "BBA (3 Years)", branches: ["General Management", "Finance", "Marketing", "HR"], duration: "3 Years", seats: "240" },
+  { level: "Undergraduate", title: "BCA (3 Years)", branches: ["General", "Data Science", "Cloud Computing"], duration: "3 Years", seats: "180" },
+  { level: "Postgraduate", title: "M.Sc. (2 Years)", branches: ["Physics", "Chemistry", "Mathematics", "Computer Science", "Biotechnology", "Data Science"], duration: "2 Years", seats: "240" },
+  { level: "Postgraduate", title: "M.A. (2 Years)", branches: ["English", "Tamil", "History", "Economics", "Psychology"], duration: "2 Years", seats: "180" },
+  { level: "Postgraduate", title: "M.Com. (2 Years)", branches: ["General", "Finance", "International Business"], duration: "2 Years", seats: "120" },
 ];
 
 export const RECRUITERS = [
-  "Google", "Microsoft", "Amazon", "TCS", "Infosys", "Wipro", "Accenture",
-  "Cognizant", "Capgemini", "Intel", "IBM", "Oracle", "Adobe", "Deloitte",
-  "JP Morgan", "Goldman Sachs", "Morgan Stanley", "Cisco",
+  "TCS", "Infosys", "Wipro", "Cognizant", "Accenture", "Capgemini", "HCL",
+  "Tech Mahindra", "L&T Infotech", "Mphasis", "Mindtree", "Zoho", "Freshworks",
+  "ICICI Bank", "HDFC Bank", "Axis Bank", "Kotak Mahindra", "Deloitte",
 ];
 
 export const PLACEMENT_HIGHLIGHTS = [
-  { value: "₹54 LPA", label: "Highest Package 2024" },
-  { value: "₹9.8 LPA", label: "Average Package" },
-  { value: "98.4%", label: "Placement Rate" },
-  { value: "450+", label: "Companies Visited" },
+  { value: "₹12 LPA", label: "Highest Package 2024" },
+  { value: "₹4.2 LPA", label: "Average Package" },
+  { value: "92%", label: "Placement Rate" },
+  { value: "180+", label: "Companies Visited" },
 ];
 
 export const FACULTY = [
-  { name: "Dr. R. Krishnan", role: "Dean, Computer Science", qual: "Ph.D., IIT Madras", focus: "AI & Distributed Systems" },
-  { name: "Dr. Meera Iyer", role: "Professor, Biotechnology", qual: "Ph.D., Stanford", focus: "Genomic Engineering" },
-  { name: "Dr. Anand Subramaniam", role: "HoD, ECE", qual: "Ph.D., IISc Bangalore", focus: "VLSI & 5G Systems" },
-  { name: "Dr. Priya Raghavan", role: "Professor, Mechanical", qual: "Ph.D., MIT", focus: "Robotics & Automation" },
-  { name: "Dr. S. Balasubramanian", role: "Dean of Research", qual: "Ph.D., IIT Bombay", focus: "Renewable Energy" },
-  { name: "Dr. Lakshmi Narayanan", role: "Professor, Civil", qual: "Ph.D., Cambridge", focus: "Smart Infrastructure" },
+  { name: "Dr. R. Krishnan", role: "Dean, Science", qual: "Ph.D., Bharathiar University", focus: "Quantum Physics & Nanotechnology" },
+  { name: "Dr. Meera Iyer", role: "Professor, Biotechnology", qual: "Ph.D., Anna University", focus: "Microbial Genetics" },
+  { name: "Dr. Anand Subramaniam", role: "HoD, Computer Science", qual: "Ph.D., Bharathiar University", focus: "Machine Learning & AI" },
+  { name: "Dr. Priya Raghavan", role: "Professor, English", qual: "Ph.D., University of Madras", focus: "Contemporary Literature" },
+  { name: "Dr. S. Balasubramanian", role: "Dean of Research", qual: "Ph.D., IIT Madras", focus: "Applied Mathematics" },
+  { name: "Dr. Lakshmi Narayanan", role: "Professor, Commerce", qual: "Ph.D., Bharathiar University", focus: "Financial Management" },
 ];
 
 export const NEWS = [
-  { date: "May 18, 2026", category: "Admissions", title: "B.Tech 2025–26 application window opens for all branches", excerpt: "Online applications are now live; merit scholarships up to 100% available based on board and entrance exam scores." },
-  { date: "May 10, 2026", category: "Research", title: "GTM COLLEGE bags 3 patents in autonomous-systems research", excerpt: "Faculty-led team at the AI lab patents three novel approaches in perception and SLAM for indoor robotics." },
-  { date: "Apr 28, 2026", category: "Placements", title: "Microsoft picks 42 students from CSE & IT departments", excerpt: "Annual on-campus recruitment drive concludes with the highest single-recruiter intake in five years." },
-  { date: "Apr 14, 2026", category: "Events", title: "TechVision 2026 — National Symposium on Industry 4.0", excerpt: "Two-day symposium hosted 1,200+ delegates across 60 institutions, headlined by industry leaders." },
-  { date: "Apr 02, 2026", category: "Awards", title: "NAAC A++ re-accreditation conferred", excerpt: "Institution scores 3.78/4.00 on the seven NAAC quality criteria, retaining A++ for a third consecutive cycle." },
+  { date: "May 18, 2025", category: "Admissions", title: "UG & PG 2025–26 application window opens for all programmes", excerpt: "Online applications are now live; merit scholarships available based on board exam scores and entrance tests." },
+  { date: "May 10, 2025", category: "Research", title: "GTM COLLEGE faculty publishes research in international journals", excerpt: "Three research papers on biotechnology and data science accepted in peer-reviewed international publications." },
+  { date: "Apr 28, 2025", category: "Placements", title: "TCS recruits 85 students from Computer Science & BCA departments", excerpt: "Annual campus recruitment drive concludes with excellent results across all departments." },
+  { date: "Apr 14, 2025", category: "Events", title: "ScienceFest 2025 — Inter-collegiate Science Exhibition", excerpt: "Two-day event hosted 800+ students from 40 colleges with innovative project displays and competitions." },
+  { date: "Apr 02, 2025", category: "Awards", title: "NAAC 'A' Grade accreditation renewed", excerpt: "Institution scores 3.2/4.00 on NAAC quality criteria, maintaining high academic standards." },
 ];
 
 export const EVENTS = [
-  { date: { d: "14", m: "SEP" }, title: "Global Research Summit 2026", venue: "Convocation Auditorium", time: "09:00 – 18:00" },
-  { date: { d: "22", m: "SEP" }, title: "Industry Connect — Tech Talks", venue: "Innovation Hall, Block C", time: "14:00 – 17:00" },
-  { date: { d: "05", m: "OCT" }, title: "Hackathon : Code4Bharat", venue: "CSE Department Labs", time: "All Day" },
-  { date: { d: "18", m: "OCT" }, title: "Cultural Fest — Saaranya 2026", venue: "Open Air Theatre", time: "17:00 onwards" },
+  { date: { d: "14", m: "SEP" }, title: "Annual Science Symposium 2025", venue: "Main Auditorium", time: "09:00 – 18:00" },
+  { date: { d: "22", m: "SEP" }, title: "Career Guidance Workshop", venue: "Seminar Hall, Block A", time: "14:00 – 17:00" },
+  { date: { d: "05", m: "OCT" }, title: "Inter-Collegiate Quiz Competition", venue: "Computer Lab", time: "All Day" },
+  { date: { d: "18", m: "OCT" }, title: "Cultural Fest — Kalanjali 2025", venue: "Open Air Theatre", time: "17:00 onwards" },
 ];
 
 export const TESTIMONIALS = [
-  { name: "Aditi Sharma", batch: "B.Tech CSE, 2022", company: "Software Engineer, Google", quote: "GTM COLLEGE gave me the technical depth and the network that shaped my career. The faculty pushed me to think beyond the syllabus." },
-  { name: "Rahul Verma", batch: "B.Tech ECE, 2021", company: "Hardware Engineer, Intel", quote: "The labs and the mentorship here are world-class. I built my first real chip prototype in my third year." },
-  { name: "Sneha Iyer", batch: "MBA, 2023", company: "Consultant, Deloitte", quote: "The placement cell didn't just find me a job — they prepared me to walk into a boardroom on day one." },
-  { name: "Karthik Subramanian", batch: "B.Tech Mech, 2020", company: "Founder, RoboMakers", quote: "I left GTM COLLEGE with a co-founder, a product, and the confidence to raise my first round." },
+  { name: "Aditi Sharma", batch: "B.Sc. Computer Science, 2022", company: "Software Developer, TCS", quote: "GTM COLLEGE provided excellent education and placement support. The faculty guided me throughout my journey." },
+  { name: "Rahul Verma", batch: "B.Com., 2021", company: "Accountant, ICICI Bank", quote: "The commerce department prepared me well for the corporate world with practical knowledge and internships." },
+  { name: "Sneha Iyer", batch: "BBA, 2023", company: "HR Executive, Infosys", quote: "The management programme gave me confidence and skills to excel in my career from day one." },
+  { name: "Karthik Subramanian", batch: "M.Sc. Biotechnology, 2020", company: "Research Associate, Biocon", quote: "The research facilities and faculty mentorship helped me build a strong foundation in biotechnology." },
 ];
 
 export const FACILITIES = [
-  { title: "Smart Library", desc: "Half a million digital journals, 24/7 study halls, AI-powered research assistant.", icon: "BookOpen" },
-  { title: "Innovation Labs", desc: "VR/AR, 3D printing, NVIDIA-grade compute and dedicated startup incubation space.", icon: "FlaskConical" },
-  { title: "Residential Halls", desc: "12 hostels, single & shared rooms, 24/7 mess, recreation, healthcare on site.", icon: "Hotel" },
-  { title: "Sports Complex", desc: "Olympic pool, indoor & outdoor courts, gym, athletic track, yoga centre.", icon: "Dumbbell" },
-  { title: "Auditorium", desc: "Convocation hall seating 2,500 with state-of-the-art AV systems.", icon: "Theater" },
-  { title: "Health Centre", desc: "On-campus clinic with 24/7 doctors, ambulance and tie-ups with leading hospitals.", icon: "HeartPulse" },
+  { title: "Central Library", desc: "Extensive collection of books, journals, digital resources and reading halls.", icon: "BookOpen" },
+  { title: "Science Labs", desc: "Well-equipped laboratories for Physics, Chemistry, Biology and Computer Science.", icon: "FlaskConical" },
+  { title: "Hostel Facilities", desc: "Separate hostels for boys and girls with mess, recreation and 24/7 security.", icon: "Hotel" },
+  { title: "Sports Complex", desc: "Indoor & outdoor courts, gym, athletic track and sports equipment.", icon: "Dumbbell" },
+  { title: "Auditorium", desc: "Spacious auditorium with modern AV systems for events and seminars.", icon: "Theater" },
+  { title: "Health Centre", desc: "On-campus medical facility with qualified doctors and first-aid services.", icon: "HeartPulse" },
 ];

@@ -18,21 +18,21 @@ export const Route = createFileRoute("/about")({
 });
 
 const pillars = [
-  { icon: Award, title: "NAAC A++ Accredited", desc: "Reaffirmed for academic rigour and institutional excellence." },
-  { icon: BookOpen, title: "Research-Led Teaching", desc: "₹120 Cr+ in active research grants across eight schools." },
-  { icon: Globe2, title: "Global Partnerships", desc: "Exchange programmes across 32 universities in 18 countries." },
-  { icon: Sparkles, title: "Innovation DNA", desc: "On-campus incubator with 60+ student-led ventures funded." },
+  { icon: Award, title: "NAAC 'A' Grade Accredited", desc: "Recognised for academic quality, infrastructure and student outcomes." },
+  { icon: BookOpen, title: "Quality Education", desc: "Curriculum aligned with Bharathiar University standards and industry needs." },
+  { icon: Globe2, title: "Holistic Development", desc: "Sports, cultural activities, NSS and NCC programmes for all-round growth." },
+  { icon: Sparkles, title: "Student-Centred", desc: "Mentorship, career guidance and placement support from day one." },
 ];
 
 function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="About the institution" title={`Three decades of engineering the future at ${SITE.short}.`} subtitle={`Established in ${SITE.estd}, we have grown into a premier multi-disciplinary university shaping leaders across engineering, science, design and management.`} />
+      <PageHero eyebrow="About the institution" title={`Three decades of empowering minds at ${SITE.short}.`} subtitle={`Established in ${SITE.estd}, GTM College of Arts & Science has grown into a premier institution in Coimbatore, offering quality education in Science, Arts, Commerce and Management, affiliated to Bharathiar University.`} />
       <Section>
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <Reveal>
-            <SectionHeader eyebrow="Our story" title="A legacy built on curiosity, rigour and craft." desc="Founded by a collective of educators and industry leaders, the institute has grown from a single engineering school into a 120-acre campus serving 15,000+ learners. Every classroom, lab and studio is designed to turn questions into outcomes." />
-            <p className="text-muted-foreground leading-relaxed">Our pedagogy blends classical fundamentals with project-led learning. Students graduate with portfolios, patents and publications — not just transcripts. Industry advisory boards refresh every programme on a 24-month cycle so what is taught here matches what is shipped outside.</p>
+            <SectionHeader eyebrow="Our story" title="A legacy built on knowledge, values and excellence." desc="Founded with a vision to provide quality higher education, GTM College has grown from a small institution into a thriving campus serving 8,000+ students. Every classroom, lab and library is designed to nurture curiosity and build careers." />
+            <p className="text-muted-foreground leading-relaxed">Our teaching approach blends strong academic foundations with practical learning. Students graduate with skills, confidence and values that make them successful in their careers and life. Industry-aligned curriculum ensures graduates are job-ready from day one.</p>
           </Reveal>
           <div className="grid sm:grid-cols-2 gap-5">
             {pillars.map((p, i) => (

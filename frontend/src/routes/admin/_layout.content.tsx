@@ -9,9 +9,9 @@ const SECTIONS = [
     label: "Hero Slides",
     description: "Edit the 3 hero banner slides (eyebrow, title, subtitle)",
     defaultValue: JSON.stringify([
-      { eyebrow: "Admissions 2025–26 Open", title: "Engineering the future of global technology.", sub: "Join India's most ambitious engineering community." },
-      { eyebrow: "NAAC A++ Accredited", title: "Where knowledge becomes craft.", sub: "Half a million digital journals. 250+ PhD faculty." },
-      { eyebrow: "Industry-Grade Labs", title: "Build what the world needs next.", sub: "NVIDIA compute, robotics suites, biotech wet labs." },
+      { eyebrow: "Admissions 2025–26 Open", title: "Empowering Minds, Shaping Futures.", sub: "Join GTM College of Arts & Science — quality education in Science, Arts, Commerce and Management." },
+      { eyebrow: "NAAC 'A' Grade Accredited", title: "Where knowledge meets opportunity.", sub: "Extensive library resources, experienced faculty and a vibrant campus life to nurture your potential." },
+      { eyebrow: "Modern Laboratories", title: "Discover. Explore. Innovate.", sub: "Well-equipped science labs, computer centres and research facilities to fuel your academic journey." },
     ], null, 2),
   },
   {
@@ -19,10 +19,10 @@ const SECTIONS = [
     label: "Stats Bar",
     description: "The 4 animated counters below the hero",
     defaultValue: JSON.stringify([
-      { value: 15000, suffix: "+", label: "Active Students" },
-      { value: 250, suffix: "+", label: "PhD Faculty" },
-      { value: 98, suffix: "%", label: "Placement Rate" },
-      { value: 450, suffix: "+", label: "Recruiting Partners" },
+      { value: 8000, suffix: "+", label: "Active Students" },
+      { value: 180, suffix: "+", label: "Qualified Faculty" },
+      { value: 92, suffix: "%", label: "Placement Rate" },
+      { value: 180, suffix: "+", label: "Recruiting Partners" },
     ], null, 2),
   },
   {
@@ -31,8 +31,8 @@ const SECTIONS = [
     description: "About text, highlights and established year",
     defaultValue: JSON.stringify({
       eyebrow: "About the Institute",
-      title: "A legacy of engineering excellence since 1994.",
-      body: "GTM COLLEGE stands as one of India's most ambitious engineering communities.",
+      title: "A legacy of academic excellence since 1994.",
+      body: "GTM College of Arts & Science is a premier institution in Coimbatore, affiliated to Bharathiar University.",
       estd: "1994",
       years: "30+",
     }, null, 2),
@@ -42,10 +42,10 @@ const SECTIONS = [
     label: "Placement Highlights",
     description: "Placement stats shown in the dark section",
     defaultValue: JSON.stringify([
-      { value: "₹54 LPA", label: "Highest Package 2024" },
-      { value: "₹9.8 LPA", label: "Average Package" },
-      { value: "98.4%", label: "Placement Rate" },
-      { value: "450+", label: "Companies Visited" },
+      { value: "₹12 LPA", label: "Highest Package 2024" },
+      { value: "₹4.2 LPA", label: "Average Package" },
+      { value: "92%", label: "Placement Rate" },
+      { value: "180+", label: "Companies Visited" },
     ], null, 2),
   },
   {
@@ -53,9 +53,9 @@ const SECTIONS = [
     label: "Contact Info",
     description: "Phone, email, address shown in footer and contact page",
     defaultValue: JSON.stringify({
-      phone: "+91 44 2837 4500",
+      phone: "+91 422 2539 500",
       email: "admissions@gtmc.edu.in",
-      address: "University Road, Academic District, Chennai, Tamil Nadu 600119",
+      address: "Saravanampatti, Coimbatore, Tamil Nadu 641035",
     }, null, 2),
   },
 ];

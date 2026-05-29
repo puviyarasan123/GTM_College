@@ -24,10 +24,10 @@ import { Reveal, Section, SectionHeader } from "@/components/site/PageShell";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "GTM COLLEGE — Architects of the Future" },
-      { name: "description", content: "Premier engineering institution. NAAC A++, 98% placements, 250+ PhD faculty, ₹54 LPA highest package. Apply for 2025–26." },
-      { property: "og:title", content: "GTM COLLEGE" },
-      { property: "og:description", content: "Engineering the future of global technology. Admissions open." },
+      { title: "GTM COLLEGE OF ARTS & SCIENCE — Empowering Minds, Shaping Futures" },
+      { name: "description", content: "Premier Arts & Science College in Coimbatore. NAAC 'A' Grade, 92% placements, experienced faculty. Apply for 2025–26." },
+      { property: "og:title", content: "GTM COLLEGE OF ARTS & SCIENCE" },
+      { property: "og:description", content: "Empowering minds and shaping futures through quality education. Admissions open." },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
@@ -35,9 +35,9 @@ export const Route = createFileRoute("/")({
 });
 
 const heroSlides = [
-  { img: heroCampus, eyebrow: "Admissions 2025–26 Open", title: "Engineering the future of global technology.", sub: "Join India's most ambitious engineering community — built on rigorous academics, world-class research, and 98% placements." },
-  { img: heroLibrary, eyebrow: "NAAC A++ Accredited", title: "Where knowledge becomes craft.", sub: "Half a million digital journals. 250+ PhD faculty. A library that never sleeps." },
-  { img: heroLab, eyebrow: "Industry-Grade Labs", title: "Build what the world needs next.", sub: "NVIDIA compute, robotics suites, biotech wet labs and a dedicated startup incubator." },
+  { img: heroCampus, eyebrow: "Admissions 2025–26 Open", title: "Empowering Minds, Shaping Futures.", sub: "Join GTM College of Arts & Science — a premier institution offering quality education in Science, Arts, Commerce and Management." },
+  { img: heroLibrary, eyebrow: "NAAC 'A' Grade Accredited", title: "Where knowledge meets opportunity.", sub: "Extensive library resources, experienced faculty and a vibrant campus life to nurture your potential." },
+  { img: heroLab, eyebrow: "Modern Laboratories", title: "Discover. Explore. Innovate.", sub: "Well-equipped science labs, computer centres and research facilities to fuel your academic journey." },
 ];
 
 function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -124,7 +124,7 @@ function Index() {
       {/* ACCREDITATIONS */}
       <section className="py-14">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8 flex flex-wrap justify-center items-center gap-x-14 gap-y-6 text-primary/60">
-          {["NAAC A++", "AICTE Approved", "NBA Accredited", "NIRF Top 50", "UGC Recognised", "ISO 9001:2015"].map((b) => (
+          {["NAAC 'A' Grade", "Bharathiar University Affiliated", "UGC Recognised", "ISO 9001:2015", "AISHE Registered", "Govt. of Tamil Nadu Approved"].map((b) => (
             <span key={b} className="text-[11px] font-bold uppercase tracking-[0.25em]">{b}</span>
           ))}
         </div>
@@ -143,18 +143,18 @@ function Index() {
           </div>
         </Reveal>
         <Reveal delay={0.1}>
-          <SectionHeader eyebrow="About the Institute" title="A legacy of engineering excellence since 1994." />
+          <SectionHeader eyebrow="About the Institute" title="A legacy of academic excellence since 1994." />
           <p className="text-muted-foreground leading-relaxed text-lg">
-            GTM COLLEGE stands as one of India's most ambitious engineering communities — combining
-            rigorous academic foundations with industry-grade research, global partnerships and a relentless focus on
-            student outcomes. Our 110-acre campus is home to 15,000+ learners across UG, PG and doctoral programmes.
+            GTM College of Arts & Science is a premier institution in Coimbatore, affiliated to Bharathiar University.
+            We offer comprehensive UG and PG programmes in Science, Arts, Commerce and Management, nurturing
+            students with quality education, modern infrastructure and strong placement support.
           </p>
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
-              { i: Award, t: "NAAC A++ Accredited" },
-              { i: Users, t: "250+ PhD Faculty" },
-              { i: Building2, t: "110-Acre Smart Campus" },
-              { i: BookOpen, t: "8 Engineering Wings" },
+              { i: Award, t: "NAAC 'A' Grade Accredited" },
+              { i: Users, t: "180+ Qualified Faculty" },
+              { i: Building2, t: "Spacious Green Campus" },
+              { i: BookOpen, t: "10 Academic Departments" },
             ].map(({ i: I, t }) => (
               <div key={t} className="flex items-center gap-3 p-4 rounded-2xl bg-secondary">
                 <div className="size-10 rounded-xl bg-gradient-hero grid place-items-center text-gold"><I className="size-5" /></div>
@@ -172,7 +172,7 @@ function Index() {
       <section className="bg-gradient-soft border-y border-border">
         <Section>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <SectionHeader eyebrow="Academics" title="Departments built for industry 4.0." desc="Eight specialised wings, each led by PhD scholars and supported by industry-grade labs." />
+            <SectionHeader eyebrow="Academics" title="Departments built for your future." desc="Ten specialised departments across Science, Arts, Commerce and Management." />
             <Link to="/departments" className="text-sm font-bold text-gold-deep underline underline-offset-8 shrink-0">View all departments</Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -197,7 +197,7 @@ function Index() {
 
       {/* COURSES */}
       <Section>
-        <SectionHeader eyebrow="Programmes" title="Courses offered." desc="From undergraduate to doctoral — pathways designed for every ambition." />
+        <SectionHeader eyebrow="Programmes" title="Courses offered." desc="Undergraduate and postgraduate programmes across Science, Arts, Commerce and Management." />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {COURSES.map((c, i) => (
             <Reveal key={c.title} delay={i * 0.04}>
@@ -226,9 +226,9 @@ function Index() {
           <div className="grid lg:grid-cols-5 gap-12 items-center">
             <div className="lg:col-span-2">
               <div className="text-[11px] font-bold uppercase tracking-[0.3em] text-gold mb-3">Placements 2024</div>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-balance">Global recruiters. Record-breaking offers.</h2>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-balance">Top recruiters. Excellent career opportunities.</h2>
               <p className="mt-5 text-white/75 leading-relaxed max-w-md">
-                Our students are sought after by 450+ companies including Google, Microsoft, Amazon and JP Morgan.
+                Our students are placed in 180+ companies including TCS, Infosys, Wipro, Cognizant and leading banks.
               </p>
               <Link to="/placement" className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold text-primary-deep font-bold hover:-translate-y-0.5 transition-transform">
                 View placement stats <ArrowRight className="size-4" />
@@ -297,7 +297,7 @@ function Index() {
       {/* FACILITIES */}
       <section className="bg-gradient-soft border-y border-border">
         <Section>
-          <SectionHeader eyebrow="Campus Life" title="Facilities that inspire." desc="A 110-acre sanctuary of learning, research and student life." />
+          <SectionHeader eyebrow="Campus Life" title="Facilities that inspire." desc="A vibrant campus designed for learning, growth and holistic development." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {FACILITIES.map((f, i) => (
               <Reveal key={f.title} delay={i * 0.05}>
@@ -314,7 +314,7 @@ function Index() {
 
       {/* FACULTY HIGHLIGHTS */}
       <Section>
-        <SectionHeader eyebrow="Mentors" title="Faculty highlights." desc="Scholars, researchers and practitioners shaping tomorrow's engineers." />
+        <SectionHeader eyebrow="Mentors" title="Faculty highlights." desc="Experienced scholars and practitioners dedicated to student success." />
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {FACULTY.slice(0, 6).map((f, i) => (
             <Reveal key={f.name} delay={i * 0.04}>
@@ -382,7 +382,7 @@ function Index() {
               </div>
               <input className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-hidden focus:ring-2 focus:ring-gold" placeholder="Email" />
               <select className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-hidden focus:ring-2 focus:ring-gold">
-                <option>B.Tech — Computer Science</option><option>B.Tech — ECE</option><option>B.Tech — Mechanical</option><option>MBA</option><option>MCA</option><option>Other</option>
+                <option>B.Sc. — Computer Science</option><option>B.Sc. — Mathematics</option><option>B.Com. — General</option><option>BBA</option><option>BCA</option><option>B.A. — English</option><option>M.Sc.</option><option>M.A.</option><option>M.Com.</option><option>Other</option>
               </select>
               <textarea rows={3} className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-hidden focus:ring-2 focus:ring-gold" placeholder="Tell us briefly what you'd like to know" />
               <button type="submit" className="w-full py-3.5 rounded-xl bg-gradient-hero text-primary-foreground font-bold hover:opacity-95">Submit Enquiry</button>

@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, redirect, Link, useRouter } from "@tanstack/re
 import { getAdminSession, adminLogout } from "@/lib/admin-fns";
 import {
   LayoutDashboard, Users, Newspaper, Calendar, Megaphone,
-  Settings, LogOut, GraduationCap, ChevronRight,
+  Settings, LogOut, GraduationCap, ChevronRight, FileText,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/_layout")({
@@ -18,7 +18,9 @@ export const Route = createFileRoute("/admin/_layout")({
 
 const NAV_ITEMS = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/admin/users", label: "Users", icon: Users },
+  { to: "/admin/applications", label: "Applications", icon: FileText },
+  { to: "/admin/students", label: "Students", icon: GraduationCap },
+  { to: "/admin/users", label: "Admin Users", icon: Users },
   { to: "/admin/news", label: "News", icon: Newspaper },
   { to: "/admin/events", label: "Events", icon: Calendar },
   { to: "/admin/announcements", label: "Announcements", icon: Megaphone },

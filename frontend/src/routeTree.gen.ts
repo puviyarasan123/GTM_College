@@ -25,16 +25,21 @@ import { Route as DepartmentsRouteImport } from './routes/departments'
 import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ChairmanMessageRouteImport } from './routes/chairman-message'
+import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AdmissionRouteImport } from './routes/admission'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StudentLoginRouteImport } from './routes/student/login'
+import { Route as StudentDashboardRouteImport } from './routes/student/dashboard'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminLayoutRouteImport } from './routes/admin/_layout'
 import { Route as AdminLayoutUsersRouteImport } from './routes/admin/_layout.users'
+import { Route as AdminLayoutStudentsRouteImport } from './routes/admin/_layout.students'
 import { Route as AdminLayoutNewsRouteImport } from './routes/admin/_layout.news'
 import { Route as AdminLayoutEventsRouteImport } from './routes/admin/_layout.events'
 import { Route as AdminLayoutDashboardRouteImport } from './routes/admin/_layout.dashboard'
 import { Route as AdminLayoutContentRouteImport } from './routes/admin/_layout.content'
+import { Route as AdminLayoutApplicationsRouteImport } from './routes/admin/_layout.applications'
 import { Route as AdminLayoutAnnouncementsRouteImport } from './routes/admin/_layout.announcements'
 
 const VisionMissionRoute = VisionMissionRouteImport.update({
@@ -117,6 +122,11 @@ const ChairmanMessageRoute = ChairmanMessageRouteImport.update({
   path: '/chairman-message',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApplyRoute = ApplyRouteImport.update({
+  id: '/apply',
+  path: '/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdmissionRoute = AdmissionRouteImport.update({
   id: '/admission',
   path: '/admission',
@@ -132,6 +142,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentLoginRoute = StudentLoginRouteImport.update({
+  id: '/student/login',
+  path: '/student/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentDashboardRoute = StudentDashboardRouteImport.update({
+  id: '/student/dashboard',
+  path: '/student/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
@@ -145,6 +165,11 @@ const AdminLayoutRoute = AdminLayoutRouteImport.update({
 const AdminLayoutUsersRoute = AdminLayoutUsersRouteImport.update({
   id: '/users',
   path: '/users',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutStudentsRoute = AdminLayoutStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
   getParentRoute: () => AdminLayoutRoute,
 } as any)
 const AdminLayoutNewsRoute = AdminLayoutNewsRouteImport.update({
@@ -167,6 +192,11 @@ const AdminLayoutContentRoute = AdminLayoutContentRouteImport.update({
   path: '/content',
   getParentRoute: () => AdminLayoutRoute,
 } as any)
+const AdminLayoutApplicationsRoute = AdminLayoutApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
 const AdminLayoutAnnouncementsRoute =
   AdminLayoutAnnouncementsRouteImport.update({
     id: '/announcements',
@@ -178,6 +208,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
+  '/apply': typeof ApplyRoute
   '/chairman-message': typeof ChairmanMessageRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
@@ -196,17 +227,22 @@ export interface FileRoutesByFullPath {
   '/vision-mission': typeof VisionMissionRoute
   '/admin': typeof AdminLayoutRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/student/dashboard': typeof StudentDashboardRoute
+  '/student/login': typeof StudentLoginRoute
   '/admin/announcements': typeof AdminLayoutAnnouncementsRoute
+  '/admin/applications': typeof AdminLayoutApplicationsRoute
   '/admin/content': typeof AdminLayoutContentRoute
   '/admin/dashboard': typeof AdminLayoutDashboardRoute
   '/admin/events': typeof AdminLayoutEventsRoute
   '/admin/news': typeof AdminLayoutNewsRoute
+  '/admin/students': typeof AdminLayoutStudentsRoute
   '/admin/users': typeof AdminLayoutUsersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
+  '/apply': typeof ApplyRoute
   '/chairman-message': typeof ChairmanMessageRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
@@ -225,11 +261,15 @@ export interface FileRoutesByTo {
   '/vision-mission': typeof VisionMissionRoute
   '/admin': typeof AdminLayoutRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/student/dashboard': typeof StudentDashboardRoute
+  '/student/login': typeof StudentLoginRoute
   '/admin/announcements': typeof AdminLayoutAnnouncementsRoute
+  '/admin/applications': typeof AdminLayoutApplicationsRoute
   '/admin/content': typeof AdminLayoutContentRoute
   '/admin/dashboard': typeof AdminLayoutDashboardRoute
   '/admin/events': typeof AdminLayoutEventsRoute
   '/admin/news': typeof AdminLayoutNewsRoute
+  '/admin/students': typeof AdminLayoutStudentsRoute
   '/admin/users': typeof AdminLayoutUsersRoute
 }
 export interface FileRoutesById {
@@ -237,6 +277,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
+  '/apply': typeof ApplyRoute
   '/chairman-message': typeof ChairmanMessageRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
@@ -255,11 +296,15 @@ export interface FileRoutesById {
   '/vision-mission': typeof VisionMissionRoute
   '/admin/_layout': typeof AdminLayoutRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/student/dashboard': typeof StudentDashboardRoute
+  '/student/login': typeof StudentLoginRoute
   '/admin/_layout/announcements': typeof AdminLayoutAnnouncementsRoute
+  '/admin/_layout/applications': typeof AdminLayoutApplicationsRoute
   '/admin/_layout/content': typeof AdminLayoutContentRoute
   '/admin/_layout/dashboard': typeof AdminLayoutDashboardRoute
   '/admin/_layout/events': typeof AdminLayoutEventsRoute
   '/admin/_layout/news': typeof AdminLayoutNewsRoute
+  '/admin/_layout/students': typeof AdminLayoutStudentsRoute
   '/admin/_layout/users': typeof AdminLayoutUsersRoute
 }
 export interface FileRouteTypes {
@@ -268,6 +313,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admission'
+    | '/apply'
     | '/chairman-message'
     | '/contact'
     | '/courses'
@@ -286,17 +332,22 @@ export interface FileRouteTypes {
     | '/vision-mission'
     | '/admin'
     | '/admin/login'
+    | '/student/dashboard'
+    | '/student/login'
     | '/admin/announcements'
+    | '/admin/applications'
     | '/admin/content'
     | '/admin/dashboard'
     | '/admin/events'
     | '/admin/news'
+    | '/admin/students'
     | '/admin/users'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/admission'
+    | '/apply'
     | '/chairman-message'
     | '/contact'
     | '/courses'
@@ -315,17 +366,22 @@ export interface FileRouteTypes {
     | '/vision-mission'
     | '/admin'
     | '/admin/login'
+    | '/student/dashboard'
+    | '/student/login'
     | '/admin/announcements'
+    | '/admin/applications'
     | '/admin/content'
     | '/admin/dashboard'
     | '/admin/events'
     | '/admin/news'
+    | '/admin/students'
     | '/admin/users'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/admission'
+    | '/apply'
     | '/chairman-message'
     | '/contact'
     | '/courses'
@@ -344,11 +400,15 @@ export interface FileRouteTypes {
     | '/vision-mission'
     | '/admin/_layout'
     | '/admin/login'
+    | '/student/dashboard'
+    | '/student/login'
     | '/admin/_layout/announcements'
+    | '/admin/_layout/applications'
     | '/admin/_layout/content'
     | '/admin/_layout/dashboard'
     | '/admin/_layout/events'
     | '/admin/_layout/news'
+    | '/admin/_layout/students'
     | '/admin/_layout/users'
   fileRoutesById: FileRoutesById
 }
@@ -356,6 +416,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AdmissionRoute: typeof AdmissionRoute
+  ApplyRoute: typeof ApplyRoute
   ChairmanMessageRoute: typeof ChairmanMessageRoute
   ContactRoute: typeof ContactRoute
   CoursesRoute: typeof CoursesRoute
@@ -374,6 +435,8 @@ export interface RootRouteChildren {
   VisionMissionRoute: typeof VisionMissionRoute
   AdminLayoutRoute: typeof AdminLayoutRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
+  StudentDashboardRoute: typeof StudentDashboardRoute
+  StudentLoginRoute: typeof StudentLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -490,6 +553,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChairmanMessageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apply': {
+      id: '/apply'
+      path: '/apply'
+      fullPath: '/apply'
+      preLoaderRoute: typeof ApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admission': {
       id: '/admission'
       path: '/admission'
@@ -511,6 +581,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/login': {
+      id: '/student/login'
+      path: '/student/login'
+      fullPath: '/student/login'
+      preLoaderRoute: typeof StudentLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/dashboard': {
+      id: '/student/dashboard'
+      path: '/student/dashboard'
+      fullPath: '/student/dashboard'
+      preLoaderRoute: typeof StudentDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/login': {
       id: '/admin/login'
       path: '/admin/login'
@@ -530,6 +614,13 @@ declare module '@tanstack/react-router' {
       path: '/users'
       fullPath: '/admin/users'
       preLoaderRoute: typeof AdminLayoutUsersRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/students': {
+      id: '/admin/_layout/students'
+      path: '/students'
+      fullPath: '/admin/students'
+      preLoaderRoute: typeof AdminLayoutStudentsRouteImport
       parentRoute: typeof AdminLayoutRoute
     }
     '/admin/_layout/news': {
@@ -560,6 +651,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLayoutContentRouteImport
       parentRoute: typeof AdminLayoutRoute
     }
+    '/admin/_layout/applications': {
+      id: '/admin/_layout/applications'
+      path: '/applications'
+      fullPath: '/admin/applications'
+      preLoaderRoute: typeof AdminLayoutApplicationsRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
     '/admin/_layout/announcements': {
       id: '/admin/_layout/announcements'
       path: '/announcements'
@@ -572,19 +670,23 @@ declare module '@tanstack/react-router' {
 
 interface AdminLayoutRouteChildren {
   AdminLayoutAnnouncementsRoute: typeof AdminLayoutAnnouncementsRoute
+  AdminLayoutApplicationsRoute: typeof AdminLayoutApplicationsRoute
   AdminLayoutContentRoute: typeof AdminLayoutContentRoute
   AdminLayoutDashboardRoute: typeof AdminLayoutDashboardRoute
   AdminLayoutEventsRoute: typeof AdminLayoutEventsRoute
   AdminLayoutNewsRoute: typeof AdminLayoutNewsRoute
+  AdminLayoutStudentsRoute: typeof AdminLayoutStudentsRoute
   AdminLayoutUsersRoute: typeof AdminLayoutUsersRoute
 }
 
 const AdminLayoutRouteChildren: AdminLayoutRouteChildren = {
   AdminLayoutAnnouncementsRoute: AdminLayoutAnnouncementsRoute,
+  AdminLayoutApplicationsRoute: AdminLayoutApplicationsRoute,
   AdminLayoutContentRoute: AdminLayoutContentRoute,
   AdminLayoutDashboardRoute: AdminLayoutDashboardRoute,
   AdminLayoutEventsRoute: AdminLayoutEventsRoute,
   AdminLayoutNewsRoute: AdminLayoutNewsRoute,
+  AdminLayoutStudentsRoute: AdminLayoutStudentsRoute,
   AdminLayoutUsersRoute: AdminLayoutUsersRoute,
 }
 
@@ -596,6 +698,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AdmissionRoute: AdmissionRoute,
+  ApplyRoute: ApplyRoute,
   ChairmanMessageRoute: ChairmanMessageRoute,
   ContactRoute: ContactRoute,
   CoursesRoute: CoursesRoute,
@@ -614,6 +717,8 @@ const rootRouteChildren: RootRouteChildren = {
   VisionMissionRoute: VisionMissionRoute,
   AdminLayoutRoute: AdminLayoutRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
+  StudentDashboardRoute: StudentDashboardRoute,
+  StudentLoginRoute: StudentLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

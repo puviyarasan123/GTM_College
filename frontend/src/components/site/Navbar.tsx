@@ -41,7 +41,7 @@ export function Navbar() {
             <div className="leading-tight">
               <div className="text-[15px] font-extrabold text-primary tracking-tight">GTM</div>
               <div className="text-[9px] uppercase tracking-[0.22em] text-muted-foreground font-semibold">
-                COLLEGE
+                ARTS & SCIENCE
               </div>
             </div>
           </Link>
@@ -104,7 +104,7 @@ export function Navbar() {
               <Search className="size-4" />
             </button>
             <a
-              href="/student-login"
+              href="/student/login"
               className="text-sm font-semibold text-primary/80 hover:text-primary px-3"
             >
               Login
@@ -162,7 +162,7 @@ export function Navbar() {
                 </div>
               ))}
               <div className="pt-3 flex gap-2">
-                <a href="/student-login" className="flex-1 text-center py-2.5 rounded-full border border-border text-sm font-semibold">
+                <a href="/student/login" className="flex-1 text-center py-2.5 rounded-full border border-border text-sm font-semibold">
                   Login
                 </a>
                 <Link to="/admission" className="flex-1 text-center py-2.5 rounded-full bg-gradient-hero text-primary-foreground text-sm font-bold">

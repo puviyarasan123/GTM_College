@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import { resolve } from "path";
+import type { ServerResponse } from "http";
 
 export default defineConfig({
   root: "frontend",
@@ -11,8 +12,8 @@ export default defineConfig({
     tailwindcss(),
     tsConfigPaths({ projects: ["./tsconfig.json"] }),
     TanStackRouterVite({
-      routesDirectory: "./frontend/src/routes",
-      generatedRouteTree: "./frontend/src/routeTree.gen.ts",
+      routesDirectory: "./src/routes",
+      generatedRouteTree: "./src/routeTree.gen.ts",
     }),
     viteReact(),
   ],
@@ -26,5 +27,21 @@ export default defineConfig({
   server: {
     host: "::",
     port: 8080,
+    proxy: {
+      "/api": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+        configure: (proxy) => {
+          proxy.on("error", (err, _req, res) => {
+            console.error("[proxy error]", err.message);
+            const sres = res as ServerResponse;
+            if (!sres.headersSent) {
+              sres.writeHead(502, { "Content-Type": "application/json" });
+              sres.end(JSON.stringify({ message: "API server unavailable" }));
+            }
+          });
+        },
+      },
+    },
   },
 });

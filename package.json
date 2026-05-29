@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "concurrently -k \"tsx server.ts\" \"wait-on http://localhost:3001/api/announcements && vite dev\"",
+    "dev:api": "tsx server.ts",
+    "dev:vite": "vite dev",
     "build": "prisma generate && vite build",
     "postinstall": "prisma generate",
     "preview": "vite preview",
@@ -51,12 +53,16 @@
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-router": "^1.168.25",
     "@tanstack/router-plugin": "^1.167.28",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "cookie-parser": "^1.4.7",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
+    "express": "^5.2.1",
     "framer-motion": "^12.39.0",
     "input-otp": "^1.4.2",
     "jose": "^6.2.3",
@@ -87,6 +93,7 @@
     "@types/react-dom": "^19.2.0",
     "@vercel/node": "^5.8.8",
     "@vitejs/plugin-react": "^5.0.4",
+    "concurrently": "^10.0.0",
     "eslint": "^9.32.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.6",
@@ -97,6 +104,7 @@
     "tsx": "^4.22.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "wait-on": "^9.0.10"
   }
 }

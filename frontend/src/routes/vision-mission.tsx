@@ -18,9 +18,9 @@ export const Route = createFileRoute("/vision-mission")({
       <Section>
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: Target, title: "Vision", body: "To be among the world's most respected universities for engineering, design and applied sciences — recognised for graduates who lead with rigour and conscience." },
-            { icon: Compass, title: "Mission", body: "To deliver transformative education through project-led pedagogy, world-class research infrastructure, and an environment that celebrates curiosity, integrity and craft." },
-            { icon: Heart, title: "Values", body: "Curiosity over certainty. Craft over shortcuts. Community over self. Outcomes over optics. These four values guide every decision we make." },
+            { icon: Target, title: "Vision", body: "To be a premier Arts & Science institution in Tamil Nadu, recognised for academic excellence, holistic student development and meaningful contribution to society." },
+            { icon: Compass, title: "Mission", body: "To provide quality education through experienced faculty, modern infrastructure and student-centred learning that prepares graduates for successful careers and responsible citizenship." },
+            { icon: Heart, title: "Values", body: "Integrity in all actions. Excellence in academics. Respect for every individual. Service to society. These values define who we are and how we grow together." },
           ].map((b, i) => (
             <Reveal key={b.title} delay={i * 0.08}>
               <div className="rounded-3xl bg-gradient-to-b from-primary to-primary-deep text-primary-foreground p-8 h-full shadow-elegant">

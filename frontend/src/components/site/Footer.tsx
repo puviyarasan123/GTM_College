@@ -17,8 +17,8 @@ const cols = [
     links: [
       { label: "Apply Now", to: "/admission" },
       { label: "Placements", to: "/placement" },
-      { label: "Student Login", to: "/student-login" },
-      { label: "Admin Login", to: "/admin-login" },
+      { label: "Student Login", to: "/student/login" },
+      { label: "Admin Login", to: "/admin/login" },
     ],
   },
   {
@@ -57,13 +57,12 @@ export function Footer() {
               <div>
                 <div className="text-lg font-extrabold tracking-tight">GTM</div>
                 <div className="text-[9px] uppercase tracking-[0.22em] text-white/60 font-semibold">
-                  COLLEGE
+                  ARTS & SCIENCE
                 </div>
               </div>
             </Link>
             <p className="mt-6 text-sm text-white/70 leading-relaxed max-w-sm">
-              A premier institution dedicated to excellence in engineering, research and holistic
-              student development since {SITE.estd}.
+              A premier Arts & Science institution dedicated to quality education, holistic student development and academic excellence since {SITE.estd}.
             </p>
             <div className="mt-6 flex gap-3">
               {["FB","X","IG","IN","YT"].map((s) => (

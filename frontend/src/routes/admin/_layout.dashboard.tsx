@@ -3,29 +3,40 @@ import { getAllNews } from "@/lib/content-fns";
 import { getAllEvents } from "@/lib/content-fns";
 import { getAllAnnouncements } from "@/lib/content-fns";
 import { listUsers } from "@/lib/admin-fns";
-import { Newspaper, Calendar, Megaphone, Users, TrendingUp } from "lucide-react";
+import { getApplicationStats } from "@/lib/student-fns";
+import { Newspaper, Calendar, Megaphone, Users, TrendingUp, FileText, CheckCircle2, Clock, XCircle } from "lucide-react";
 
 export const Route = createFileRoute("/admin/_layout/dashboard")({
   loader: async () => {
-    const [news, events, announcements, users] = await Promise.all([
+    const [news, events, announcements, users, appStats] = await Promise.all([
       getAllNews(),
       getAllEvents(),
       getAllAnnouncements(),
       listUsers(),
+      getApplicationStats(),
     ]);
-    return { news, events, announcements, users };
+    return { news, events, announcements, users, appStats };
   },
   component: Dashboard,
 });
 
 function Dashboard() {
-  const { news, events, announcements, users } = Route.useLoaderData();
+  const { news, events, announcements, users, appStats } = Route.useLoaderData();
 
   const stats = [
     { label: "News Articles", value: news.length, icon: Newspaper, color: "text-blue-500" },
     { label: "Events", value: events.length, icon: Calendar, color: "text-green-500" },
     { label: "Announcements", value: announcements.length, icon: Megaphone, color: "text-yellow-500" },
     { label: "Admin Users", value: users.length, icon: Users, color: "text-purple-500" },
+  ];
+
+  const appCards = [
+    { label: "Total Applications", value: appStats.total, icon: FileText, color: "text-foreground", bg: "bg-secondary" },
+    { label: "Pending", value: appStats.pending, icon: Clock, color: "text-yellow-700", bg: "bg-yellow-50" },
+    { label: "Under Review", value: appStats.underReview, icon: FileText, color: "text-blue-700", bg: "bg-blue-50" },
+    { label: "Accepted", value: appStats.accepted, icon: CheckCircle2, color: "text-green-700", bg: "bg-green-50" },
+    { label: "Rejected", value: appStats.rejected, icon: XCircle, color: "text-red-700", bg: "bg-red-50" },
+    { label: "Waitlisted", value: appStats.waitlisted, icon: Clock, color: "text-purple-700", bg: "bg-purple-50" },
   ];
 
   return (
@@ -46,6 +57,20 @@ function Dashboard() {
             <div className="text-xs text-muted-foreground mt-1 font-medium">{label}</div>
           </div>
         ))}
+      </div>
+
+      {/* Application Stats */}
+      <div className="mb-8">
+        <h2 className="font-bold text-foreground mb-4">Admission Applications</h2>
+        <div className="grid grid-cols-3 lg:grid-cols-6 gap-3">
+          {appCards.map(({ label, value, icon: Icon, color, bg }) => (
+            <div key={label} className={`${bg} rounded-2xl p-4 text-center`}>
+              <Icon className={`size-4 ${color} mx-auto mb-1`} />
+              <div className={`text-2xl font-extrabold ${color}`}>{value}</div>
+              <div className="text-xs text-muted-foreground font-medium mt-1">{label}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">

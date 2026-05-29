@@ -33,3 +33,8 @@ export const deleteUser = ({ data }: { data: { id: string } }) =>
 
 export const updateUserPassword = ({ data }: { data: { id: string; password: string } }) =>
   api("/api/users/update-password", data);
+
+export const listStudents = (search?: string) => {
+  const q = search ? `?search=${encodeURIComponent(search)}` : "";
+  return api<{ id: string; name: string; email: string; phone: string; createdAt: string; _count: { applications: number } }[]>(`/api/students${q}`);
+};
