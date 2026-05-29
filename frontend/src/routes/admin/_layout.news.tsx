@@ -62,7 +62,7 @@ function NewsPage() {
       </div>
 
       <div className="space-y-3">
-        {items.map((item) => (
+        {items.map((item: NewsItem) => (
           <div key={item.id} className="bg-card rounded-2xl border border-border p-5 flex items-start gap-4">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">

@@ -73,7 +73,7 @@ function UsersPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {users.map((u) => (
+            {users.map((u: { id: string; name: string; email: string; role: string; createdAt: string }) => (
               <tr key={u.id} className="hover:bg-secondary/50 transition-colors">
                 <td className="px-5 py-4 font-medium text-foreground flex items-center gap-2">
                   <div className="size-8 rounded-full bg-primary/10 grid place-items-center text-primary font-bold text-xs">

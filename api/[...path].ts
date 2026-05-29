@@ -214,6 +214,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.json({ ok: true });
     }
 
+    // ── Sitemap ───────────────────────────────────────────────────────────────
+    if (route === "sitemap.xml") {
+      const BASE_URL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "";
+      const PATHS = [
+        "/", "/about", "/chairman-message", "/principal-message", "/vision-mission",
+        "/courses", "/departments", "/faculty", "/library",
+        "/admission", "/placement",
+        "/infrastructure", "/hostel", "/transport", "/gallery",
+        "/news", "/events", "/contact",
+      ];
+      const urls = PATHS.map((p) => `  <url><loc>${BASE_URL}${p}</loc><changefreq>weekly</changefreq></url>`).join("\n");
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`;
+      res.setHeader("Content-Type", "application/xml");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      return res.send(xml);
+    }
+
     return res.status(404).json({ message: "Not found" });
 
   } catch (err: unknown) {

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, Section, Reveal } from "@/components/site/PageShell";
-import { SITE, NEWS as STATIC_NEWS } from "@/lib/site-data";
+import { NEWS as STATIC_NEWS } from "@/lib/site-data";
 import { getNews } from "@/lib/content-fns";
 
 export const Route = createFileRoute("/news")({
@@ -11,14 +11,6 @@ export const Route = createFileRoute("/news")({
     } catch {}
     return STATIC_NEWS.map((n, i) => ({ id: String(i), date: n.date, category: n.category, title: n.title, excerpt: n.excerpt, published: true, createdAt: new Date(), updatedAt: new Date() }));
   },
-  head: () => ({
-    meta: [
-      { title: `News & Announcements — ${SITE.name}` },
-      { name: "description", content: "Latest news, accreditations, research milestones and campus updates." },
-      { property: "og:url", content: "/news" },
-    ],
-    links: [{ rel: "canonical", href: "/news" }],
-  }),
   component: NewsPage,
 });
 
@@ -29,7 +21,7 @@ function NewsPage() {
       <PageHero eyebrow="Newsroom" title="What is happening on campus." />
       <Section>
         <div className="space-y-5">
-          {news.map((n, i) => (
+          {news.map((n: { id: string; category: string; date: string; title: string; excerpt: string }, i: number) => (
             <Reveal key={n.id} delay={i * 0.05}>
               <article className="grid md:grid-cols-[180px_1fr] gap-6 rounded-2xl border border-border bg-card p-6 hover:shadow-elegant transition-shadow">
                 <div>

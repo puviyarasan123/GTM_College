@@ -61,7 +61,7 @@ function AnnouncementsPage() {
       </div>
 
       <div className="space-y-3">
-        {items.map((item) => (
+        {items.map((item: Ann) => (
           <div key={item.id} className="bg-card rounded-2xl border border-border p-5 flex items-center gap-4">
             <div className="size-8 rounded-lg bg-secondary grid place-items-center text-xs font-bold text-muted-foreground shrink-0">
               {item.order}

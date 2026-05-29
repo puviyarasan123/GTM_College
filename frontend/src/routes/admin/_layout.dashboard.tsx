@@ -52,7 +52,7 @@ function Dashboard() {
         <div className="bg-card rounded-2xl border border-border p-6">
           <h2 className="font-bold text-foreground mb-4">Recent News</h2>
           <div className="space-y-3">
-            {news.slice(0, 5).map((n) => (
+            {news.slice(0, 5).map((n: { id: string; title: string; published: boolean; date: string; category: string }) => (
               <div key={n.id} className="flex items-start gap-3 text-sm">
                 <span className={`mt-0.5 size-2 rounded-full shrink-0 ${n.published ? "bg-green-500" : "bg-gray-300"}`} />
                 <div className="min-w-0">
@@ -67,7 +67,7 @@ function Dashboard() {
         <div className="bg-card rounded-2xl border border-border p-6">
           <h2 className="font-bold text-foreground mb-4">Upcoming Events</h2>
           <div className="space-y-3">
-            {events.slice(0, 5).map((e) => (
+            {events.slice(0, 5).map((e: { id: string; day: string; month: string; title: string; venue: string }) => (
               <div key={e.id} className="flex items-start gap-3 text-sm">
                 <div className="shrink-0 size-10 rounded-xl bg-primary/5 grid place-items-center text-center">
                   <div className="text-xs font-extrabold text-primary leading-none">{e.day}</div>

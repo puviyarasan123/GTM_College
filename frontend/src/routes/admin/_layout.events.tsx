@@ -65,7 +65,7 @@ function EventsPage() {
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {items.map((item) => (
+        {items.map((item: EventItem) => (
           <div key={item.id} className="bg-card rounded-2xl border border-border p-5">
             <div className="flex items-start justify-between gap-2 mb-3">
               <div className="size-14 rounded-xl bg-primary/5 grid place-items-center text-center shrink-0">
