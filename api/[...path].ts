@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs";
 declare global { var __prisma: PrismaClient | undefined; }
 function getPrisma() {
   if (globalThis.__prisma) return globalThis.__prisma;
-  const url = process.env.DATABASE_URL;
+  const url = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
   if (!url) throw new Error("DATABASE_URL is not set");
   globalThis.__prisma = new PrismaClient({ adapter: new PrismaPg(url) });
   return globalThis.__prisma;
@@ -36,6 +36,13 @@ async function verifyStudentToken(token: string) {
 function getCookie(req: VercelRequest, name: string) {
   const match = (req.headers.cookie ?? "").match(new RegExp(`${name}=([^;]+)`));
   return match ? match[1] : null;
+}
+
+function setCookie(res: VercelResponse, name: string, value: string, maxAge: number) {
+  res.setHeader("Set-Cookie", `${name}=${value}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Lax; Secure`);
+}
+function clearCookie(res: VercelResponse, name: string) {
+  res.setHeader("Set-Cookie", `${name}=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax; Secure`);
 }
 async function requireAdmin(req: VercelRequest) {
   const token = getCookie(req, "admin_token");
@@ -72,11 +79,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!user || !(await bcrypt.compare(password, user.password)))
         return res.status(401).json({ message: "Invalid credentials" });
       const token = await signAdminToken({ id: user.id, email: user.email, role: user.role });
-      return res.setHeader("Set-Cookie", `admin_token=${token}; Path=/; Max-Age=28800; HttpOnly; SameSite=Strict`)
-        .json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
+      setCookie(res, "admin_token", token, 28800);
+      return res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
     }
     if (route === "auth/logout") {
-      return res.setHeader("Set-Cookie", "admin_token=; Path=/; Max-Age=0; HttpOnly; SameSite=Strict").json({ ok: true });
+      clearCookie(res, "admin_token");
+      return res.json({ ok: true });
     }
 
     // ── Student Auth ──────────────────────────────────────────────────────────
@@ -87,8 +95,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const hashed = await bcrypt.hash(password, 10);
       const student = await prisma.student.create({ data: { email, password: hashed, name, phone } });
       const token = await signStudentToken({ id: student.id, email: student.email, name: student.name });
-      return res.setHeader("Set-Cookie", `student_token=${token}; Path=/; Max-Age=86400; HttpOnly; SameSite=Strict`)
-        .json({ token, student: { id: student.id, email: student.email, name: student.name } });
+      setCookie(res, "student_token", token, 86400);
+      return res.json({ token, student: { id: student.id, email: student.email, name: student.name } });
     }
     if (route === "student/login") {
       const { email, password } = req.body;
@@ -96,11 +104,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!student || !(await bcrypt.compare(password, student.password)))
         return res.status(401).json({ message: "Invalid credentials" });
       const token = await signStudentToken({ id: student.id, email: student.email, name: student.name });
-      return res.setHeader("Set-Cookie", `student_token=${token}; Path=/; Max-Age=86400; HttpOnly; SameSite=Strict`)
-        .json({ token, student: { id: student.id, email: student.email, name: student.name } });
+      setCookie(res, "student_token", token, 86400);
+      return res.json({ token, student: { id: student.id, email: student.email, name: student.name } });
     }
     if (route === "student/logout") {
-      return res.setHeader("Set-Cookie", "student_token=; Path=/; Max-Age=0; HttpOnly; SameSite=Strict").json({ ok: true });
+      clearCookie(res, "student_token");
+      return res.json({ ok: true });
     }
     if (route === "student/me") {
       const s = await requireStudent(req);
