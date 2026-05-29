@@ -61,10 +61,16 @@ async function requireStudent(req: VercelRequest) {
 
 // ── Handler ───────────────────────────────────────────────────────────────────
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const path = (req.query.path as string[] | undefined) ?? [];
+  const rawPath = req.query.path;
+  const path = Array.isArray(rawPath) ? rawPath : rawPath ? [rawPath] : [];
   const route = path.join("/");
   const prisma = getPrisma();
   res.setHeader("Content-Type", "application/json");
+
+  // debug — remove after fix
+  if (req.method === "GET" && route === "_debug") {
+    return res.json({ route, path, query: req.query });
+  }
 
   try {
     // ── Admin Auth ────────────────────────────────────────────────────────────
