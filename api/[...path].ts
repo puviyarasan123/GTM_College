@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs";
 declare global { var __prisma: PrismaClient | undefined; }
 function getPrisma() {
   if (globalThis.__prisma) return globalThis.__prisma;
-  const url = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
+  const url = process.env.DATABASE_URL ?? process.env.DIRECT_URL;
   if (!url) throw new Error("DATABASE_URL is not set");
   globalThis.__prisma = new PrismaClient({ adapter: new PrismaPg(url) });
   return globalThis.__prisma;
