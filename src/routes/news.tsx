@@ -1,15 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, Section, Reveal } from "@/components/site/PageShell";
-import { SITE } from "@/lib/site-data";
-
-const NEWS = [
-  { date: "12 May 2026", tag: "Accreditation", title: "NAAC A++ re-accreditation conferred for a further five years", excerpt: "An independent panel rated the institution outstanding across teaching, research and governance." },
-  { date: "28 Apr 2026", tag: "Research", title: "₹12 Cr DST grant awarded for next-generation battery research", excerpt: "A multi-disciplinary team across EEE, Chemistry and Materials will lead the four-year programme." },
-  { date: "10 Apr 2026", tag: "Placements", title: "Batch 2026 placements cross 98% with record ₹54 LPA highest offer", excerpt: "450+ companies participated in the year-long recruitment drive." },
-  { date: "02 Apr 2026", tag: "Campus", title: "New 25,000 sq.ft maker-space inaugurated at the innovation block", excerpt: "Equipped with CNC, 3D printing, electronics prototyping and a wet lab." },
-];
+import { SITE, NEWS as STATIC_NEWS } from "@/lib/site-data";
+import { getNews } from "@/lib/content-fns";
 
 export const Route = createFileRoute("/news")({
+  loader: async () => {
+    try {
+      const rows = await getNews();
+      if (rows.length > 0) return rows;
+    } catch {}
+    return STATIC_NEWS.map((n, i) => ({ id: String(i), date: n.date, category: n.category, title: n.title, excerpt: n.excerpt, published: true, createdAt: new Date(), updatedAt: new Date() }));
+  },
   head: () => ({
     meta: [
       { title: `News & Announcements — ${SITE.name}` },
@@ -18,16 +19,21 @@ export const Route = createFileRoute("/news")({
     ],
     links: [{ rel: "canonical", href: "/news" }],
   }),
-  component: () => (
+  component: NewsPage,
+});
+
+function NewsPage() {
+  const news = Route.useLoaderData();
+  return (
     <>
       <PageHero eyebrow="Newsroom" title="What is happening on campus." />
       <Section>
         <div className="space-y-5">
-          {NEWS.map((n, i) => (
-            <Reveal key={n.title} delay={i * 0.05}>
+          {news.map((n, i) => (
+            <Reveal key={n.id} delay={i * 0.05}>
               <article className="grid md:grid-cols-[180px_1fr] gap-6 rounded-2xl border border-border bg-card p-6 hover:shadow-elegant transition-shadow">
                 <div>
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-gold-deep">{n.tag}</div>
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-gold-deep">{n.category}</div>
                   <div className="text-sm text-muted-foreground mt-1">{n.date}</div>
                 </div>
                 <div>
@@ -40,5 +46,5 @@ export const Route = createFileRoute("/news")({
         </div>
       </Section>
     </>
-  ),
-});
+  );
+}

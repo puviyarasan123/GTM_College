@@ -1,8 +1,19 @@
 import { Megaphone } from "lucide-react";
+import { getAnnouncements } from "@/lib/content-fns";
 import { TICKER } from "@/lib/site-data";
+import { useEffect, useState } from "react";
 
 export function AnnouncementTicker() {
-  const items = [...TICKER, ...TICKER];
+  const [dbItems, setDbItems] = useState<string[] | null>(null);
+
+  useEffect(() => {
+    getAnnouncements().then((rows: Array<{ text: string }>) => {
+      if (rows.length > 0) setDbItems(rows.map((r) => r.text));
+    }).catch(() => {});
+  }, []);
+
+  const source = dbItems ?? TICKER;
+  const items = [...source, ...source];
   return (
     <div className="bg-primary-deep text-primary-foreground border-b border-white/10 overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 flex items-center gap-4 h-9">

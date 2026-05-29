@@ -28,6 +28,14 @@ import { Route as ChairmanMessageRouteImport } from './routes/chairman-message'
 import { Route as AdmissionRouteImport } from './routes/admission'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminLayoutRouteImport } from './routes/admin/_layout'
+import { Route as AdminLayoutUsersRouteImport } from './routes/admin/_layout.users'
+import { Route as AdminLayoutNewsRouteImport } from './routes/admin/_layout.news'
+import { Route as AdminLayoutEventsRouteImport } from './routes/admin/_layout.events'
+import { Route as AdminLayoutDashboardRouteImport } from './routes/admin/_layout.dashboard'
+import { Route as AdminLayoutContentRouteImport } from './routes/admin/_layout.content'
+import { Route as AdminLayoutAnnouncementsRouteImport } from './routes/admin/_layout.announcements'
 
 const VisionMissionRoute = VisionMissionRouteImport.update({
   id: '/vision-mission',
@@ -124,6 +132,47 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLayoutRoute = AdminLayoutRouteImport.update({
+  id: '/admin/_layout',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLayoutUsersRoute = AdminLayoutUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutNewsRoute = AdminLayoutNewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutEventsRoute = AdminLayoutEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutDashboardRoute = AdminLayoutDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutContentRoute = AdminLayoutContentRouteImport.update({
+  id: '/content',
+  path: '/content',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutAnnouncementsRoute =
+  AdminLayoutAnnouncementsRouteImport.update({
+    id: '/announcements',
+    path: '/announcements',
+    getParentRoute: () => AdminLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -145,6 +194,14 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/transport': typeof TransportRoute
   '/vision-mission': typeof VisionMissionRoute
+  '/admin': typeof AdminLayoutRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/announcements': typeof AdminLayoutAnnouncementsRoute
+  '/admin/content': typeof AdminLayoutContentRoute
+  '/admin/dashboard': typeof AdminLayoutDashboardRoute
+  '/admin/events': typeof AdminLayoutEventsRoute
+  '/admin/news': typeof AdminLayoutNewsRoute
+  '/admin/users': typeof AdminLayoutUsersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -166,6 +223,14 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/transport': typeof TransportRoute
   '/vision-mission': typeof VisionMissionRoute
+  '/admin': typeof AdminLayoutRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/announcements': typeof AdminLayoutAnnouncementsRoute
+  '/admin/content': typeof AdminLayoutContentRoute
+  '/admin/dashboard': typeof AdminLayoutDashboardRoute
+  '/admin/events': typeof AdminLayoutEventsRoute
+  '/admin/news': typeof AdminLayoutNewsRoute
+  '/admin/users': typeof AdminLayoutUsersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -188,6 +253,14 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/transport': typeof TransportRoute
   '/vision-mission': typeof VisionMissionRoute
+  '/admin/_layout': typeof AdminLayoutRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/_layout/announcements': typeof AdminLayoutAnnouncementsRoute
+  '/admin/_layout/content': typeof AdminLayoutContentRoute
+  '/admin/_layout/dashboard': typeof AdminLayoutDashboardRoute
+  '/admin/_layout/events': typeof AdminLayoutEventsRoute
+  '/admin/_layout/news': typeof AdminLayoutNewsRoute
+  '/admin/_layout/users': typeof AdminLayoutUsersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -211,6 +284,14 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/transport'
     | '/vision-mission'
+    | '/admin'
+    | '/admin/login'
+    | '/admin/announcements'
+    | '/admin/content'
+    | '/admin/dashboard'
+    | '/admin/events'
+    | '/admin/news'
+    | '/admin/users'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -232,6 +313,14 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/transport'
     | '/vision-mission'
+    | '/admin'
+    | '/admin/login'
+    | '/admin/announcements'
+    | '/admin/content'
+    | '/admin/dashboard'
+    | '/admin/events'
+    | '/admin/news'
+    | '/admin/users'
   id:
     | '__root__'
     | '/'
@@ -253,6 +342,14 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/transport'
     | '/vision-mission'
+    | '/admin/_layout'
+    | '/admin/login'
+    | '/admin/_layout/announcements'
+    | '/admin/_layout/content'
+    | '/admin/_layout/dashboard'
+    | '/admin/_layout/events'
+    | '/admin/_layout/news'
+    | '/admin/_layout/users'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -275,6 +372,8 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TransportRoute: typeof TransportRoute
   VisionMissionRoute: typeof VisionMissionRoute
+  AdminLayoutRoute: typeof AdminLayoutRouteWithChildren
+  AdminLoginRoute: typeof AdminLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -412,8 +511,86 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/_layout': {
+      id: '/admin/_layout'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/_layout/users': {
+      id: '/admin/_layout/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminLayoutUsersRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/news': {
+      id: '/admin/_layout/news'
+      path: '/news'
+      fullPath: '/admin/news'
+      preLoaderRoute: typeof AdminLayoutNewsRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/events': {
+      id: '/admin/_layout/events'
+      path: '/events'
+      fullPath: '/admin/events'
+      preLoaderRoute: typeof AdminLayoutEventsRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/dashboard': {
+      id: '/admin/_layout/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminLayoutDashboardRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/content': {
+      id: '/admin/_layout/content'
+      path: '/content'
+      fullPath: '/admin/content'
+      preLoaderRoute: typeof AdminLayoutContentRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/announcements': {
+      id: '/admin/_layout/announcements'
+      path: '/announcements'
+      fullPath: '/admin/announcements'
+      preLoaderRoute: typeof AdminLayoutAnnouncementsRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
   }
 }
+
+interface AdminLayoutRouteChildren {
+  AdminLayoutAnnouncementsRoute: typeof AdminLayoutAnnouncementsRoute
+  AdminLayoutContentRoute: typeof AdminLayoutContentRoute
+  AdminLayoutDashboardRoute: typeof AdminLayoutDashboardRoute
+  AdminLayoutEventsRoute: typeof AdminLayoutEventsRoute
+  AdminLayoutNewsRoute: typeof AdminLayoutNewsRoute
+  AdminLayoutUsersRoute: typeof AdminLayoutUsersRoute
+}
+
+const AdminLayoutRouteChildren: AdminLayoutRouteChildren = {
+  AdminLayoutAnnouncementsRoute: AdminLayoutAnnouncementsRoute,
+  AdminLayoutContentRoute: AdminLayoutContentRoute,
+  AdminLayoutDashboardRoute: AdminLayoutDashboardRoute,
+  AdminLayoutEventsRoute: AdminLayoutEventsRoute,
+  AdminLayoutNewsRoute: AdminLayoutNewsRoute,
+  AdminLayoutUsersRoute: AdminLayoutUsersRoute,
+}
+
+const AdminLayoutRouteWithChildren = AdminLayoutRoute._addFileChildren(
+  AdminLayoutRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -435,6 +612,8 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TransportRoute: TransportRoute,
   VisionMissionRoute: VisionMissionRoute,
+  AdminLayoutRoute: AdminLayoutRouteWithChildren,
+  AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

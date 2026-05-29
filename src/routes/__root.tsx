@@ -1,14 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  Outlet,
-  Link,
-  createRootRouteWithContext,
-  useRouter,
-  HeadContent,
-  Scripts,
-} from "@tanstack/react-router";
-
-import appCss from "../styles.css?url";
+import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { AnnouncementTicker } from "@/components/site/AnnouncementTicker";
@@ -71,60 +62,29 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "GTM COLLEGE — Engineering the Future" },
-      { name: "description", content: "Premier engineering institution offering B.Tech, M.Tech, MBA, MCA & Ph.D. programmes with 98% placements and NAAC A++ accreditation." },
-      { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "GTM COLLEGE" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:title", content: "GTM COLLEGE — Engineering the Future" },
-      { name: "twitter:title", content: "GTM COLLEGE — Engineering the Future" },
-      { property: "og:description", content: "Premier engineering institution offering B.Tech, M.Tech, MBA, MCA & Ph.D. programmes with 98% placements and NAAC A++ accreditation." },
-      { name: "twitter:description", content: "Premier engineering institution offering B.Tech, M.Tech, MBA, MCA & Ph.D. programmes with 98% placements and NAAC A++ accreditation." },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
-  }),
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
 
-function RootShell({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const isAdmin = typeof window !== "undefined" && window.location.pathname.startsWith("/admin");
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen flex flex-col bg-background">
-        <AnnouncementTicker />
-        <Navbar />
-        <main className="flex-1">
-          <Outlet />
-        </main>
-        <Footer />
-      </div>
+      {isAdmin ? (
+        <Outlet />
+      ) : (
+        <div className="min-h-screen flex flex-col bg-background">
+          <AnnouncementTicker />
+          <Navbar />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
+      )}
     </QueryClientProvider>
   );
 }

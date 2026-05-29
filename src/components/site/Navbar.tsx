@@ -103,12 +103,12 @@ export function Navbar() {
             >
               <Search className="size-4" />
             </button>
-            <Link
-              to="/student-login"
+            <a
+              href="/student-login"
               className="text-sm font-semibold text-primary/80 hover:text-primary px-3"
             >
               Login
-            </Link>
+            </a>
             <Link
               to="/admission"
               className="px-5 py-2.5 rounded-full bg-gradient-hero text-primary-foreground text-sm font-bold shadow-elegant hover:shadow-gold hover:-translate-y-0.5 transition-all"
@@ -162,9 +162,9 @@ export function Navbar() {
                 </div>
               ))}
               <div className="pt-3 flex gap-2">
-                <Link to="/student-login" className="flex-1 text-center py-2.5 rounded-full border border-border text-sm font-semibold">
+                <a href="/student-login" className="flex-1 text-center py-2.5 rounded-full border border-border text-sm font-semibold">
                   Login
-                </Link>
+                </a>
                 <Link to="/admission" className="flex-1 text-center py-2.5 rounded-full bg-gradient-hero text-primary-foreground text-sm font-bold">
                   Apply Now
                 </Link>
