@@ -261,4 +261,7 @@ app.all("/api/*splat", async (req, res) => {
   }
 });
 
-app.listen(3001, () => console.log("✅ API server running on http://localhost:3001"));
+const server = app.listen(3001, () => console.log("✅ API server running on http://localhost:3001"));
+server.keepAliveTimeout = 65000;
+process.on("SIGTERM", () => server.close());
+process.on("SIGINT", () => server.close());
