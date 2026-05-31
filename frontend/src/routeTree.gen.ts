@@ -13,42 +13,26 @@ import { Route as VisionMissionRouteImport } from './routes/vision-mission'
 import { Route as TransportRouteImport } from './routes/transport'
 import { Route as TimelineRouteImport } from './routes/timeline'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ScholarshipsRouteImport } from './routes/scholarships'
-import { Route as RulesRouteImport } from './routes/rules'
 import { Route as PrincipalMessageRouteImport } from './routes/principal-message'
 import { Route as PlacementRouteImport } from './routes/placement'
-import { Route as OfficeRouteImport } from './routes/office'
 import { Route as NewsRouteImport } from './routes/news'
-import { Route as LibraryRouteImport } from './routes/library'
+import { Route as LibrarysRouteImport } from './routes/library'
 import { Route as InfrastructureRouteImport } from './routes/infrastructure'
 import { Route as HostelRouteImport } from './routes/hostel'
-import { Route as HodRouteImport } from './routes/hod'
-import { Route as GoverningCouncilRouteImport } from './routes/governing-council'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FacultyRouteImport } from './routes/faculty'
 import { Route as EventsRouteImport } from './routes/events'
+import { Route as DepartmentsRouteImport } from './routes/departments.index'
+import { Route as CoursesRouteImport } from './routes/courses.ug'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CalenderRouteImport } from './routes/calender'
 import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AdmissionRouteImport } from './routes/admission'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DepartmentsIndexRouteImport } from './routes/departments.index'
 import { Route as StudentLoginRouteImport } from './routes/student/login'
 import { Route as StudentDashboardRouteImport } from './routes/student/dashboard'
-import { Route as ReportsIdRouteImport } from './routes/reports.$id'
-import { Route as NirfTabIdRouteImport } from './routes/nirf.$tabId'
-import { Route as IqacTabIdRouteImport } from './routes/iqac.$tabId'
-import { Route as DepartmentsDeptIdRouteImport } from './routes/departments.$deptId'
-import { Route as CoursesUgRouteImport } from './routes/courses.ug'
-import { Route as CoursesResearchRouteImport } from './routes/courses.research'
-import { Route as CoursesPgRouteImport } from './routes/courses.pg'
-import { Route as CoursesEMaterialsRouteImport } from './routes/courses.e-materials'
-import { Route as ComplianceIdRouteImport } from './routes/compliance.$id'
-import { Route as AqarTabIdRouteImport } from './routes/aqar.$tabId'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminLayoutRouteImport } from './routes/admin/_layout'
-import { Route as ActivitiesTabIdRouteImport } from './routes/activities.$tabId'
 import { Route as AdminLayoutUsersRouteImport } from './routes/admin/_layout.users'
 import { Route as AdminLayoutStudentsRouteImport } from './routes/admin/_layout.students'
 import { Route as AdminLayoutNewsRouteImport } from './routes/admin/_layout.news'
@@ -78,16 +62,6 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ScholarshipsRoute = ScholarshipsRouteImport.update({
-  id: '/scholarships',
-  path: '/scholarships',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RulesRoute = RulesRouteImport.update({
-  id: '/rules',
-  path: '/rules',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PrincipalMessageRoute = PrincipalMessageRouteImport.update({
   id: '/principal-message',
   path: '/principal-message',
@@ -98,19 +72,14 @@ const PlacementRoute = PlacementRouteImport.update({
   path: '/placement',
   getParentRoute: () => rootRouteImport,
 } as any)
-const OfficeRoute = OfficeRouteImport.update({
-  id: '/office',
-  path: '/office',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LibraryRoute = LibraryRouteImport.update({
-  id: '/library',
-  path: '/library',
+const LibrarysRoute = LibrarysRouteImport.update({
+  id: '/librarys',
+  path: '/librarys',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InfrastructureRoute = InfrastructureRouteImport.update({
@@ -121,16 +90,6 @@ const InfrastructureRoute = InfrastructureRouteImport.update({
 const HostelRoute = HostelRouteImport.update({
   id: '/hostel',
   path: '/hostel',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HodRoute = HodRouteImport.update({
-  id: '/hod',
-  path: '/hod',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GoverningCouncilRoute = GoverningCouncilRouteImport.update({
-  id: '/governing-council',
-  path: '/governing-council',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryRoute = GalleryRouteImport.update({
@@ -148,14 +107,19 @@ const EventsRoute = EventsRouteImport.update({
   path: '/events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DepartmentsRoute = DepartmentsRouteImport.update({
+  id: '/departments',
+  path: '/departments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesRoute = CoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CalenderRoute = CalenderRouteImport.update({
-  id: '/calender',
-  path: '/calender',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApplyRoute = ApplyRouteImport.update({
@@ -178,11 +142,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DepartmentsIndexRoute = DepartmentsIndexRouteImport.update({
-  id: '/departments/',
-  path: '/departments/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const StudentLoginRoute = StudentLoginRouteImport.update({
   id: '/student/login',
   path: '/student/login',
@@ -193,56 +152,6 @@ const StudentDashboardRoute = StudentDashboardRouteImport.update({
   path: '/student/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReportsIdRoute = ReportsIdRouteImport.update({
-  id: '/reports/$id',
-  path: '/reports/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NirfTabIdRoute = NirfTabIdRouteImport.update({
-  id: '/nirf/$tabId',
-  path: '/nirf/$tabId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IqacTabIdRoute = IqacTabIdRouteImport.update({
-  id: '/iqac/$tabId',
-  path: '/iqac/$tabId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DepartmentsDeptIdRoute = DepartmentsDeptIdRouteImport.update({
-  id: '/departments/$deptId',
-  path: '/departments/$deptId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CoursesUgRoute = CoursesUgRouteImport.update({
-  id: '/courses/ug',
-  path: '/courses/ug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CoursesResearchRoute = CoursesResearchRouteImport.update({
-  id: '/courses/research',
-  path: '/courses/research',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CoursesPgRoute = CoursesPgRouteImport.update({
-  id: '/courses/pg',
-  path: '/courses/pg',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CoursesEMaterialsRoute = CoursesEMaterialsRouteImport.update({
-  id: '/courses/e-materials',
-  path: '/courses/e-materials',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComplianceIdRoute = ComplianceIdRouteImport.update({
-  id: '/compliance/$id',
-  path: '/compliance/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AqarTabIdRoute = AqarTabIdRouteImport.update({
-  id: '/aqar/$tabId',
-  path: '/aqar/$tabId',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
@@ -251,11 +160,6 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
 const AdminLayoutRoute = AdminLayoutRouteImport.update({
   id: '/admin/_layout',
   path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ActivitiesTabIdRoute = ActivitiesTabIdRouteImport.update({
-  id: '/activities/$tabId',
-  path: '/activities/$tabId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminLayoutUsersRoute = AdminLayoutUsersRouteImport.update({
@@ -305,42 +209,26 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/apply': typeof ApplyRoute
-  '/calender': typeof CalenderRoute
   '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
+  '/departments': typeof DepartmentsRoute
   '/events': typeof EventsRoute
   '/faculty': typeof FacultyRoute
   '/gallery': typeof GalleryRoute
-  '/governing-council': typeof GoverningCouncilRoute
-  '/hod': typeof HodRoute
   '/hostel': typeof HostelRoute
   '/infrastructure': typeof InfrastructureRoute
-  '/library': typeof LibraryRoute
+  '/librarys': typeof LibrarysRoute
   '/news': typeof NewsRoute
-  '/office': typeof OfficeRoute
   '/placement': typeof PlacementRoute
   '/principal-message': typeof PrincipalMessageRoute
-  '/rules': typeof RulesRoute
-  '/scholarships': typeof ScholarshipsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/timeline': typeof TimelineRoute
   '/transport': typeof TransportRoute
   '/vision-mission': typeof VisionMissionRoute
-  '/activities/$tabId': typeof ActivitiesTabIdRoute
   '/admin': typeof AdminLayoutRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
-  '/aqar/$tabId': typeof AqarTabIdRoute
-  '/compliance/$id': typeof ComplianceIdRoute
-  '/courses/e-materials': typeof CoursesEMaterialsRoute
-  '/courses/pg': typeof CoursesPgRoute
-  '/courses/research': typeof CoursesResearchRoute
-  '/courses/ug': typeof CoursesUgRoute
-  '/departments/$deptId': typeof DepartmentsDeptIdRoute
-  '/iqac/$tabId': typeof IqacTabIdRoute
-  '/nirf/$tabId': typeof NirfTabIdRoute
-  '/reports/$id': typeof ReportsIdRoute
   '/student/dashboard': typeof StudentDashboardRoute
   '/student/login': typeof StudentLoginRoute
-  '/departments/': typeof DepartmentsIndexRoute
   '/admin/announcements': typeof AdminLayoutAnnouncementsRoute
   '/admin/applications': typeof AdminLayoutApplicationsRoute
   '/admin/content': typeof AdminLayoutContentRoute
@@ -355,42 +243,26 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/apply': typeof ApplyRoute
-  '/calender': typeof CalenderRoute
   '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
+  '/departments': typeof DepartmentsRoute
   '/events': typeof EventsRoute
   '/faculty': typeof FacultyRoute
   '/gallery': typeof GalleryRoute
-  '/governing-council': typeof GoverningCouncilRoute
-  '/hod': typeof HodRoute
   '/hostel': typeof HostelRoute
   '/infrastructure': typeof InfrastructureRoute
-  '/library': typeof LibraryRoute
+  '/librarys': typeof LibrarysRoute
   '/news': typeof NewsRoute
-  '/office': typeof OfficeRoute
   '/placement': typeof PlacementRoute
   '/principal-message': typeof PrincipalMessageRoute
-  '/rules': typeof RulesRoute
-  '/scholarships': typeof ScholarshipsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/timeline': typeof TimelineRoute
   '/transport': typeof TransportRoute
   '/vision-mission': typeof VisionMissionRoute
-  '/activities/$tabId': typeof ActivitiesTabIdRoute
   '/admin': typeof AdminLayoutRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
-  '/aqar/$tabId': typeof AqarTabIdRoute
-  '/compliance/$id': typeof ComplianceIdRoute
-  '/courses/e-materials': typeof CoursesEMaterialsRoute
-  '/courses/pg': typeof CoursesPgRoute
-  '/courses/research': typeof CoursesResearchRoute
-  '/courses/ug': typeof CoursesUgRoute
-  '/departments/$deptId': typeof DepartmentsDeptIdRoute
-  '/iqac/$tabId': typeof IqacTabIdRoute
-  '/nirf/$tabId': typeof NirfTabIdRoute
-  '/reports/$id': typeof ReportsIdRoute
   '/student/dashboard': typeof StudentDashboardRoute
   '/student/login': typeof StudentLoginRoute
-  '/departments': typeof DepartmentsIndexRoute
   '/admin/announcements': typeof AdminLayoutAnnouncementsRoute
   '/admin/applications': typeof AdminLayoutApplicationsRoute
   '/admin/content': typeof AdminLayoutContentRoute
@@ -406,42 +278,26 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/apply': typeof ApplyRoute
-  '/calender': typeof CalenderRoute
   '/contact': typeof ContactRoute
+  '/courses': typeof CoursesRoute
+  '/departments': typeof DepartmentsRoute
   '/events': typeof EventsRoute
   '/faculty': typeof FacultyRoute
   '/gallery': typeof GalleryRoute
-  '/governing-council': typeof GoverningCouncilRoute
-  '/hod': typeof HodRoute
   '/hostel': typeof HostelRoute
   '/infrastructure': typeof InfrastructureRoute
-  '/library': typeof LibraryRoute
+  '/librarys': typeof LibrarysRoute
   '/news': typeof NewsRoute
-  '/office': typeof OfficeRoute
   '/placement': typeof PlacementRoute
   '/principal-message': typeof PrincipalMessageRoute
-  '/rules': typeof RulesRoute
-  '/scholarships': typeof ScholarshipsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/timeline': typeof TimelineRoute
   '/transport': typeof TransportRoute
   '/vision-mission': typeof VisionMissionRoute
-  '/activities/$tabId': typeof ActivitiesTabIdRoute
   '/admin/_layout': typeof AdminLayoutRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
-  '/aqar/$tabId': typeof AqarTabIdRoute
-  '/compliance/$id': typeof ComplianceIdRoute
-  '/courses/e-materials': typeof CoursesEMaterialsRoute
-  '/courses/pg': typeof CoursesPgRoute
-  '/courses/research': typeof CoursesResearchRoute
-  '/courses/ug': typeof CoursesUgRoute
-  '/departments/$deptId': typeof DepartmentsDeptIdRoute
-  '/iqac/$tabId': typeof IqacTabIdRoute
-  '/nirf/$tabId': typeof NirfTabIdRoute
-  '/reports/$id': typeof ReportsIdRoute
   '/student/dashboard': typeof StudentDashboardRoute
   '/student/login': typeof StudentLoginRoute
-  '/departments/': typeof DepartmentsIndexRoute
   '/admin/_layout/announcements': typeof AdminLayoutAnnouncementsRoute
   '/admin/_layout/applications': typeof AdminLayoutApplicationsRoute
   '/admin/_layout/content': typeof AdminLayoutContentRoute
@@ -458,42 +314,26 @@ export interface FileRouteTypes {
     | '/about'
     | '/admission'
     | '/apply'
-    | '/calender'
     | '/contact'
+    | '/courses'
+    | '/departments'
     | '/events'
     | '/faculty'
     | '/gallery'
-    | '/governing-council'
-    | '/hod'
     | '/hostel'
     | '/infrastructure'
-    | '/library'
+    | '/librarys'
     | '/news'
-    | '/office'
     | '/placement'
     | '/principal-message'
-    | '/rules'
-    | '/scholarships'
     | '/sitemap.xml'
     | '/timeline'
     | '/transport'
     | '/vision-mission'
-    | '/activities/$tabId'
     | '/admin'
     | '/admin/login'
-    | '/aqar/$tabId'
-    | '/compliance/$id'
-    | '/courses/e-materials'
-    | '/courses/pg'
-    | '/courses/research'
-    | '/courses/ug'
-    | '/departments/$deptId'
-    | '/iqac/$tabId'
-    | '/nirf/$tabId'
-    | '/reports/$id'
     | '/student/dashboard'
     | '/student/login'
-    | '/departments/'
     | '/admin/announcements'
     | '/admin/applications'
     | '/admin/content'
@@ -508,42 +348,26 @@ export interface FileRouteTypes {
     | '/about'
     | '/admission'
     | '/apply'
-    | '/calender'
     | '/contact'
+    | '/courses'
+    | '/departments'
     | '/events'
     | '/faculty'
     | '/gallery'
-    | '/governing-council'
-    | '/hod'
     | '/hostel'
     | '/infrastructure'
-    | '/library'
+    | '/librarys'
     | '/news'
-    | '/office'
     | '/placement'
     | '/principal-message'
-    | '/rules'
-    | '/scholarships'
     | '/sitemap.xml'
     | '/timeline'
     | '/transport'
     | '/vision-mission'
-    | '/activities/$tabId'
     | '/admin'
     | '/admin/login'
-    | '/aqar/$tabId'
-    | '/compliance/$id'
-    | '/courses/e-materials'
-    | '/courses/pg'
-    | '/courses/research'
-    | '/courses/ug'
-    | '/departments/$deptId'
-    | '/iqac/$tabId'
-    | '/nirf/$tabId'
-    | '/reports/$id'
     | '/student/dashboard'
     | '/student/login'
-    | '/departments'
     | '/admin/announcements'
     | '/admin/applications'
     | '/admin/content'
@@ -558,42 +382,26 @@ export interface FileRouteTypes {
     | '/about'
     | '/admission'
     | '/apply'
-    | '/calender'
     | '/contact'
+    | '/courses'
+    | '/departments'
     | '/events'
     | '/faculty'
     | '/gallery'
-    | '/governing-council'
-    | '/hod'
     | '/hostel'
     | '/infrastructure'
-    | '/library'
+    | '/librarys'
     | '/news'
-    | '/office'
     | '/placement'
     | '/principal-message'
-    | '/rules'
-    | '/scholarships'
     | '/sitemap.xml'
     | '/timeline'
     | '/transport'
     | '/vision-mission'
-    | '/activities/$tabId'
     | '/admin/_layout'
     | '/admin/login'
-    | '/aqar/$tabId'
-    | '/compliance/$id'
-    | '/courses/e-materials'
-    | '/courses/pg'
-    | '/courses/research'
-    | '/courses/ug'
-    | '/departments/$deptId'
-    | '/iqac/$tabId'
-    | '/nirf/$tabId'
-    | '/reports/$id'
     | '/student/dashboard'
     | '/student/login'
-    | '/departments/'
     | '/admin/_layout/announcements'
     | '/admin/_layout/applications'
     | '/admin/_layout/content'
@@ -609,42 +417,26 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AdmissionRoute: typeof AdmissionRoute
   ApplyRoute: typeof ApplyRoute
-  CalenderRoute: typeof CalenderRoute
   ContactRoute: typeof ContactRoute
+  CoursesRoute: typeof CoursesRoute
+  DepartmentsRoute: typeof DepartmentsRoute
   EventsRoute: typeof EventsRoute
   FacultyRoute: typeof FacultyRoute
   GalleryRoute: typeof GalleryRoute
-  GoverningCouncilRoute: typeof GoverningCouncilRoute
-  HodRoute: typeof HodRoute
   HostelRoute: typeof HostelRoute
   InfrastructureRoute: typeof InfrastructureRoute
-  LibraryRoute: typeof LibraryRoute
+  LibrarysRoute: typeof LibrarysRoute
   NewsRoute: typeof NewsRoute
-  OfficeRoute: typeof OfficeRoute
   PlacementRoute: typeof PlacementRoute
   PrincipalMessageRoute: typeof PrincipalMessageRoute
-  RulesRoute: typeof RulesRoute
-  ScholarshipsRoute: typeof ScholarshipsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TimelineRoute: typeof TimelineRoute
   TransportRoute: typeof TransportRoute
   VisionMissionRoute: typeof VisionMissionRoute
-  ActivitiesTabIdRoute: typeof ActivitiesTabIdRoute
   AdminLayoutRoute: typeof AdminLayoutRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
-  AqarTabIdRoute: typeof AqarTabIdRoute
-  ComplianceIdRoute: typeof ComplianceIdRoute
-  CoursesEMaterialsRoute: typeof CoursesEMaterialsRoute
-  CoursesPgRoute: typeof CoursesPgRoute
-  CoursesResearchRoute: typeof CoursesResearchRoute
-  CoursesUgRoute: typeof CoursesUgRoute
-  DepartmentsDeptIdRoute: typeof DepartmentsDeptIdRoute
-  IqacTabIdRoute: typeof IqacTabIdRoute
-  NirfTabIdRoute: typeof NirfTabIdRoute
-  ReportsIdRoute: typeof ReportsIdRoute
   StudentDashboardRoute: typeof StudentDashboardRoute
   StudentLoginRoute: typeof StudentLoginRoute
-  DepartmentsIndexRoute: typeof DepartmentsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -677,20 +469,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/scholarships': {
-      id: '/scholarships'
-      path: '/scholarships'
-      fullPath: '/scholarships'
-      preLoaderRoute: typeof ScholarshipsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/rules': {
-      id: '/rules'
-      path: '/rules'
-      fullPath: '/rules'
-      preLoaderRoute: typeof RulesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/principal-message': {
       id: '/principal-message'
       path: '/principal-message'
@@ -705,13 +483,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlacementRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/office': {
-      id: '/office'
-      path: '/office'
-      fullPath: '/office'
-      preLoaderRoute: typeof OfficeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/news': {
       id: '/news'
       path: '/news'
@@ -719,11 +490,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/library': {
-      id: '/library'
-      path: '/library'
-      fullPath: '/library'
-      preLoaderRoute: typeof LibraryRouteImport
+    '/librarys': {
+      id: '/librarys'
+      path: '/librarys'
+      fullPath: '/librarys'
+      preLoaderRoute: typeof LibrarysRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/infrastructure': {
@@ -738,20 +509,6 @@ declare module '@tanstack/react-router' {
       path: '/hostel'
       fullPath: '/hostel'
       preLoaderRoute: typeof HostelRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/hod': {
-      id: '/hod'
-      path: '/hod'
-      fullPath: '/hod'
-      preLoaderRoute: typeof HodRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/governing-council': {
-      id: '/governing-council'
-      path: '/governing-council'
-      fullPath: '/governing-council'
-      preLoaderRoute: typeof GoverningCouncilRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery': {
@@ -775,18 +532,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/departments': {
+      id: '/departments'
+      path: '/departments'
+      fullPath: '/departments'
+      preLoaderRoute: typeof DepartmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses': {
+      id: '/courses'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/calender': {
-      id: '/calender'
-      path: '/calender'
-      fullPath: '/calender'
-      preLoaderRoute: typeof CalenderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apply': {
@@ -817,13 +581,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/departments/': {
-      id: '/departments/'
-      path: '/departments'
-      fullPath: '/departments/'
-      preLoaderRoute: typeof DepartmentsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/student/login': {
       id: '/student/login'
       path: '/student/login'
@@ -838,76 +595,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reports/$id': {
-      id: '/reports/$id'
-      path: '/reports/$id'
-      fullPath: '/reports/$id'
-      preLoaderRoute: typeof ReportsIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/nirf/$tabId': {
-      id: '/nirf/$tabId'
-      path: '/nirf/$tabId'
-      fullPath: '/nirf/$tabId'
-      preLoaderRoute: typeof NirfTabIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/iqac/$tabId': {
-      id: '/iqac/$tabId'
-      path: '/iqac/$tabId'
-      fullPath: '/iqac/$tabId'
-      preLoaderRoute: typeof IqacTabIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/departments/$deptId': {
-      id: '/departments/$deptId'
-      path: '/departments/$deptId'
-      fullPath: '/departments/$deptId'
-      preLoaderRoute: typeof DepartmentsDeptIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/courses/ug': {
-      id: '/courses/ug'
-      path: '/courses/ug'
-      fullPath: '/courses/ug'
-      preLoaderRoute: typeof CoursesUgRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/courses/research': {
-      id: '/courses/research'
-      path: '/courses/research'
-      fullPath: '/courses/research'
-      preLoaderRoute: typeof CoursesResearchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/courses/pg': {
-      id: '/courses/pg'
-      path: '/courses/pg'
-      fullPath: '/courses/pg'
-      preLoaderRoute: typeof CoursesPgRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/courses/e-materials': {
-      id: '/courses/e-materials'
-      path: '/courses/e-materials'
-      fullPath: '/courses/e-materials'
-      preLoaderRoute: typeof CoursesEMaterialsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compliance/$id': {
-      id: '/compliance/$id'
-      path: '/compliance/$id'
-      fullPath: '/compliance/$id'
-      preLoaderRoute: typeof ComplianceIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/aqar/$tabId': {
-      id: '/aqar/$tabId'
-      path: '/aqar/$tabId'
-      fullPath: '/aqar/$tabId'
-      preLoaderRoute: typeof AqarTabIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin/login': {
       id: '/admin/login'
       path: '/admin/login'
@@ -920,13 +607,6 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminLayoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/activities/$tabId': {
-      id: '/activities/$tabId'
-      path: '/activities/$tabId'
-      fullPath: '/activities/$tabId'
-      preLoaderRoute: typeof ActivitiesTabIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/_layout/users': {
@@ -1019,42 +699,26 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AdmissionRoute: AdmissionRoute,
   ApplyRoute: ApplyRoute,
-  CalenderRoute: CalenderRoute,
   ContactRoute: ContactRoute,
+  CoursesRoute: CoursesRoute,
+  DepartmentsRoute: DepartmentsRoute,
   EventsRoute: EventsRoute,
   FacultyRoute: FacultyRoute,
   GalleryRoute: GalleryRoute,
-  GoverningCouncilRoute: GoverningCouncilRoute,
-  HodRoute: HodRoute,
   HostelRoute: HostelRoute,
   InfrastructureRoute: InfrastructureRoute,
-  LibraryRoute: LibraryRoute,
+  LibrarysRoute: LibrarysRoute,
   NewsRoute: NewsRoute,
-  OfficeRoute: OfficeRoute,
   PlacementRoute: PlacementRoute,
   PrincipalMessageRoute: PrincipalMessageRoute,
-  RulesRoute: RulesRoute,
-  ScholarshipsRoute: ScholarshipsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TimelineRoute: TimelineRoute,
   TransportRoute: TransportRoute,
   VisionMissionRoute: VisionMissionRoute,
-  ActivitiesTabIdRoute: ActivitiesTabIdRoute,
   AdminLayoutRoute: AdminLayoutRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
-  AqarTabIdRoute: AqarTabIdRoute,
-  ComplianceIdRoute: ComplianceIdRoute,
-  CoursesEMaterialsRoute: CoursesEMaterialsRoute,
-  CoursesPgRoute: CoursesPgRoute,
-  CoursesResearchRoute: CoursesResearchRoute,
-  CoursesUgRoute: CoursesUgRoute,
-  DepartmentsDeptIdRoute: DepartmentsDeptIdRoute,
-  IqacTabIdRoute: IqacTabIdRoute,
-  NirfTabIdRoute: NirfTabIdRoute,
-  ReportsIdRoute: ReportsIdRoute,
   StudentDashboardRoute: StudentDashboardRoute,
   StudentLoginRoute: StudentLoginRoute,
-  DepartmentsIndexRoute: DepartmentsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
