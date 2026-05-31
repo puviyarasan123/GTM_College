@@ -2,30 +2,57 @@ export const SITE = {
   name: "GOVT. THIRUMAGAL MILLS COLLEGE",
   short: "GTMC",
   tagline: "Empowering Minds, Shaping Futures",
-  estd: 1974,
+  estd: 1964,
   phone: "04171-220162",
   email: "principal@gtmc.edu.in",
   address: "Gudiyattam, Vellore District, Tamil Nadu – 632 602",
 };
 
-export const NAV: { label: string; to: string; children?: { label: string; to: string; desc?: string }[] }[] = [
+export const NAV: { label: string; to: string; children?: { label: string; to: string; desc?: string; isExternal?: boolean }[] }[] = [
   {
-    label: "About",
-    to: "/about",
+    label: "Home",
+    to: "/home",
     children: [
       { label: "About Us", to: "/about", desc: "Our story, legacy & accreditations" },
+      { label: "College Timeline", to: "/timeline", desc: "Year-by-year historical growth" },
       { label: "Principal's Message", to: "/principal-message", desc: "Leadership perspective" },
       { label: "Vision & Mission", to: "/vision-mission", desc: "What drives us forward" },
     ],
   },
   {
     label: "Academics",
-    to: "/courses",
+    to: "/academics",
     children: [
-      { label: "Courses Offered", to: "/courses", desc: "UG & PG programmes" },
+      { label: "Academic Calendar", to: "/calender", desc: "Official session timelines" },
       { label: "Departments", to: "/departments", desc: "Science, Arts, Commerce & Management" },
       { label: "Faculty", to: "/faculty", desc: "Experienced & qualified professors" },
       { label: "Library", to: "/library", desc: "Digital + physical knowledge hub" },
+    ],
+  },
+  {
+    label: "Courses",
+    to: "/courses/ug",
+    children: [
+      { label: "UG Courses", to: "/courses/ug", desc: "Undergraduate degree programmes" },
+      { label: "PG Courses", to: "/courses/pg", desc: "Postgraduate degree tracks" },
+      { label: "Research Courses", to: "/courses/research", desc: "Ph.D. & M.Phil. specializations" },
+      { 
+        label: "Syllabus", 
+        to: "https://www.tvu.edu.in/academic/syllabus/", 
+        desc: "University regulations & curriculum",
+        isExternal: true 
+      },
+      { label: "E-Materials", to: "/courses/e-materials", desc: "Digital study notes & online resources" },
+    ],
+  },
+  {
+    label: "Administration",
+    to: "/governing-council",
+    children: [
+      { label: "Governing Council", to: "/governing-council", desc: "Core decision-making & developmental body" },
+      { label: "Heads of Departments", to: "/hod", desc: "Academic leaders managing department directives" },
+      { label: "College Office", to: "/office", desc: "Administrative, non-teaching, and financial desk" },
+      // You can easily drop hidden routes like /principal-message here later!
     ],
   },
   {
@@ -37,15 +64,246 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
     ],
   },
   {
+    label: "Departments",
+    to: "/departments/tamil", // Defaults to dynamic home entry link
+    children: [
+      { label: "Tamil", to: "/departments/tamil", desc: "Department of Tamil" },
+      { label: "English", to: "/departments/english", desc: "Department of English" },
+      { label: "Economics", to: "/departments/economics", desc: "Department of Economics" },
+      { label: "History", to: "/departments/history", desc: "Department of History" },
+      { label: "Commerce", to: "/departments/commerce", desc: "Department of Commerce" },
+      { label: "Business Administration", to: "/departments/business-administration", desc: "Department of Business Administration" },
+      { label: "Mathematics", to: "/departments/mathematics", desc: "Department of Mathematics" },
+      { label: "Computer Applications", to: "/departments/computer-applications", desc: "Department of Computer Applications (BCA)" },
+      { label: "Computer Science", to: "/departments/computer-science", desc: "Department of Computer Science" },
+      { label: "Physics", to: "/departments/physics", desc: "Department of Physics" },
+      { label: "Chemistry", to: "/departments/chemistry", desc: "Department of Chemistry" },
+      { label: "Botany", to: "/departments/botany", desc: "Department of Botany" },
+      { label: "Zoology", to: "/departments/zoology", desc: "Department of Zoology" },
+    ],
+  },
+  {
     label: "Campus",
     to: "/infrastructure",
     children: [
       { label: "Infrastructure", to: "/infrastructure", desc: "Labs, classrooms & facilities" },
       { label: "Hostel", to: "/hostel", desc: "Residential facilities" },
       { label: "Transport", to: "/transport", desc: "Bus routes across Gudiyattam" },
+      { label: "Rules & Regulations", to: "/rules", desc: "Attendance frameworks and campus code of conduct" },
+      { label: "Scholarships", to: "/scholarships", desc: "Government financial aid and welfare schemes" },
       { label: "Gallery", to: "/gallery", desc: "Campus moments" },
     ],
   },
+
+  {
+    label: "IQAC",
+    to: "/iqac/team",
+    children: [
+      { 
+        label: "IQAC Team", 
+        to: "/iqac/team", 
+        desc: "Committee members, external experts, and structure" 
+      },
+      { 
+        label: "IQAC Activities", 
+        to: "/iqac/activities", // Formatted to match your dynamic router param
+        desc: "Quality initiatives, seminars, and event reports"
+      },
+      { 
+        label: "Best practices", 
+        to: "/iqac/best-practices", 
+        desc: "Institutional benchmarks and core core-value models"
+      },
+      { 
+        label: "Institutional Distinctiveness", 
+        to: "/iqac/institutional-distinctiveness", 
+        desc: "Our unique educational vision and priority areas"
+      },
+      { 
+        label: "Program Outcomes", 
+        to: "/iqac/program-outcomes", 
+        desc: "Expected graduate attributes and course objectives"
+      },
+      { 
+        label: "SSS Report 2021-22", 
+        to: "/iqac/sss-report", 
+        desc: "Student Satisfaction Survey analysis metrics"
+      },
+      { 
+        label: "NIRF Information 2022", 
+        to: "/iqac/nirf-2022", 
+        desc: "National Institutional Ranking Framework data analytics" 
+      },
+      { 
+        label: "AICTE EOA 2021-22", 
+        to: "/iqac/aicte-eoa", 
+        desc: "Extension of Approval status documentation"
+      },
+      { 
+        label: "Minutes of meetings", 
+        to: "/iqac/minutes", 
+        desc: "Statutory cell reviews and resolution summaries"
+      },
+      { 
+        label: "Future plan", 
+        to: "/iqac/future-plan", 
+        desc: "Strategic developmental pathways and milestones"
+      },
+      { 
+        label: "RTI PDF", 
+        to: "/iqac/rti-pdf", 
+        desc: "Right to Information basic framework logs"
+      },
+      { 
+        label: "RTI Act-2005_new", 
+        to: "/iqac/rti-act-new", 
+        desc: "Statutory governance and transparency declarations"
+      },
+    ],
+  },
+  {
+  label: "NIRF",
+  to: "/nirf/nirf-college-2025", // Updated default landing parameter to the first active child
+  children: [
+    { 
+      label: "NIRF - COLLEGE 2025", 
+      to: "/nirf/nirf-college-2025", 
+      desc: "NIRF Data Submission for College 2025" 
+    },
+    { 
+      label: "NIRF - OVERALL 2024", 
+      to: "/nirf/nirf-overall-2024", 
+      desc: "NIRF Overall Category Ranking 2024" 
+    },
+    { 
+      label: "NIRF - COLLEGE 2024", 
+      to: "/nirf/nirf-college-2024", 
+      desc: "NIRF Data Submission for College 2024" 
+    },
+    { 
+      label: "NIRF - COLLEGE 2023", 
+      to: "/nirf/nirf-college-2023", 
+      desc: "NIRF Data Submission for College 2023" 
+    },
+    { 
+      label: "NIRF - OVERALL 2023", 
+      to: "/nirf/nirf-overall-2023", 
+      desc: "NIRF Overall Category Ranking 2023" 
+    },
+  ],
+},
+
+{
+  label: "AQAR",
+  to: "/aqar/aqar-2020-21", // Default landing parameter pointing to the most recent report
+  children: [
+    { 
+      label: "AQAR 2017-18", 
+      to: "/aqar/aqar-2017-18", 
+      desc: "Annual Quality Assurance Report for Academic Year 2017-18" 
+    },
+    { 
+      label: "AQAR 2018-19", 
+      to: "/aqar/aqar-2018-19", 
+      desc: "Annual Quality Assurance Report for Academic Year 2018-19" 
+    },
+    { 
+      label: "AQAR 2019-20", 
+      to: "/aqar/aqar-2019-20", 
+      desc: "Annual Quality Assurance Report for Academic Year 2019-20" 
+    },
+    { 
+      label: "AQAR 2020-21", 
+      to: "/aqar/aqar-2020-21", 
+      desc: "Annual Quality Assurance Report for Academic Year 2020-21" 
+    },
+  ],
+},
+{
+  label: "Activities",
+  to: "/activities/clp", // Default landing page
+  children: [
+    { label: "CLP", to: "/activities/clp", desc: "Computer Literacy Programme initiatives" },
+    { label: "NCC", to: "/activities/ncc", desc: "National Cadet Corps updates and honors" },
+    { label: "NSS", to: "/activities/nss", desc: "National Service Scheme community camps" },
+    { label: "YRC", to: "/activities/yrc", desc: "Youth Red Cross humanitarian programs" },
+    { label: "SPORTS", to: "/activities/sports", desc: "Athletic achievements and tournament grids" },
+    { label: "Extension Activities", to: "/activities/extension", desc: "Institutional outreach frameworks" },
+    { label: "SC/ST-Welfare Cell", to: "/activities/sc-st-welfare", desc: "Welfare community support tracking" },
+    { 
+      label: "College Committees", 
+      to: "/activities/college-committees", 
+      desc: "Statutory governance board and committee PDFs" // This will catch the placeholder card
+    },
+    { label: "WOMEN'S Cell", to: "/activities/womens-cell", desc: "Empowerment and gender parity logs" },
+    { label: "Placement Cell", to: "/activities/placement", desc: "Campus recruitment records and statistics" },
+    { label: "Anti-Ragging & Eveteasing", to: "/activities/anti-ragging", desc: "Campus safety statutory policies" },
+    { label: "Student Grievance Cell", to: "/activities/grievance", desc: "Redressal mechanism protocols" },
+    { label: "Students Counseling Cell", to: "/activities/counseling", desc: "Mental health and academic mentorship" },
+  ],
+},
+{
+  label: "NAAC",
+  to: "/compliance/nirf", // Default landing page for the interactive compliance sections
+  children: [
+    { 
+      label: "12B & 2F", 
+      to: "/compliance/12b-2f", 
+      desc: "UGC statutory recognition certificates under sections 2(f) and 12(B)"
+    },
+    { 
+      label: "NAAC B+ Certificate", 
+      to: "/compliance/naac-certificate", 
+      desc: "Official institutional accreditation certificate and peer team metric scores"
+    },
+    { 
+      label: "NIRF", 
+      to: "/compliance/nirf", 
+      desc: "National Institutional Ranking Framework data sheets and parameter data tables" 
+    },
+    { 
+      label: "AICTE", 
+      to: "/compliance/aicte", 
+      desc: "All India Council for Technical Education regulatory extension of approval letters"
+    },
+    { 
+      label: "Files required for SSR", 
+      to: "/compliance/ssr-files", 
+      desc: "Core quantitative and qualitative descriptive assets compiled for Self-Study Report submission" 
+    },
+    { 
+      label: "Certificates of Recognition", 
+      to: "/compliance/recognition-certificates", 
+      desc: "University affiliation notifications and state board statutory recognition documents"
+    },
+  ],
+},
+
+{
+  label: "Reports",
+  to: "/reports/ncc-report-1", // Default landing item
+  children: [
+    { label: "NCC Report-1", to: "/reports/ncc-report-1", desc: "National Cadet Corps annual workflow and parade reports (Part 1)" },
+    { label: "NCC Report-2", to: "/reports/ncc-report-2", desc: "National Cadet Corps annual workflow and parade reports (Part 2)" },
+    { label: "NCC Report-3", to: "/reports/ncc-report-3", desc: "National Cadet Corps honors, institutional camps, and cadet metrics" },
+    { label: "NCC Report-4", to: "/reports/ncc-report-4", desc: "National Cadet Corps community extension drives and achievements" },
+    { label: "NSS Report", to: "/reports/nss-report", desc: "National Service Scheme community service and special camp logs" },
+    { label: "IQAC Report-1", to: "/reports/iqac-report-1", desc: "Internal Quality Assurance Cell audit portfolios (Cycle 1)" },
+    { label: "IQAC Report-2", to: "/reports/iqac-report-2", desc: "Internal Quality Assurance Cell audit portfolios (Cycle 2)" },
+    { label: "IQAC Report-3", to: "/reports/iqac-report-3", desc: "Internal Quality Assurance Cell parameter reviews and action summaries" },
+    { label: "IQAC Report-4", to: "/reports/iqac-report-4", desc: "Internal Quality Assurance Cell stakeholder feedback evaluation" },
+    { label: "placement Report1", to: "/reports/placement-report-1", desc: "Campus recruitment statistics, corporate ties, and placement shares" },
+    { label: "placement Report2", to: "/reports/placement-report-2", desc: "Departmental breakdown of student corporate onboarding records" },
+    { label: "placement Report3", to: "/reports/placement-report-3", desc: "Skill enhancement training schedules and career counseling metrics" },
+    { label: "RRC reports", to: "/reports/rrc-reports", desc: "Red Ribbon Club awareness camps and blood donation drive registries" },
+    { label: "Sports Report1", to: "/reports/sports-report-1", desc: "Athletic achievements, tournament grids, and inter-collegiate logs" },
+    { label: "Sports Report2", to: "/reports/sports-report-2", desc: "Intramural sports meets, event schedules, and medal tallies" },
+    { label: "Sports Report3", to: "/reports/sports-report-3", desc: "Zonal tournament hosting records and institutional accolades" },
+    { label: "Sports Report4", to: "/reports/sports-report-4", desc: "Infrastructural allocations and physical education updates" },
+    { label: "Sports Report5", to: "/reports/sports-report-5", desc: "Annual sports day consolidated ledger and outstanding athlete tracking" },
+    { label: "YRC report", to: "/reports/yrc-report", desc: "Youth Red Cross humanitarian programs, medical camps, and first-aid drills" },
+  ],
+},
   {
     label: "News",
     to: "/news",

@@ -3,7 +3,7 @@ import { PageHero, Section, SectionHeader, Reveal } from "@/components/site/Page
 import { DEPARTMENTS, SITE } from "@/lib/site-data";
 import * as Icons from "lucide-react";
 
-export const Route = createFileRoute("/departments")({
+export const Route = createFileRoute("/departments/")({
   head: () => ({
     meta: [
       { title: `Departments — ${SITE.name}` },
