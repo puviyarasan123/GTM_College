@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, redirect, Link, useRouter } from "@tanstack/re
 import { getAdminSession, adminLogout } from "@/lib/admin-fns";
 import {
   LayoutDashboard, Users, Newspaper, Calendar, Megaphone,
-  Settings, LogOut, GraduationCap, ChevronRight, FileText,
+  Settings, LogOut, GraduationCap, ChevronRight, FileText, UserCircle, ImageIcon, BookOpen, UsersRound, MessageSquare, Quote, Inbox,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/_layout")({
@@ -20,10 +20,19 @@ const NAV_ITEMS = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/admin/applications", label: "Applications", icon: FileText },
   { to: "/admin/students", label: "Students", icon: GraduationCap },
+  { to: "/admin/faculty", label: "Faculty", icon: Users },
+  { to: "/admin/principal", label: "Principal", icon: UserCircle },
+  { to: "/admin/images", label: "Site Images", icon: ImageIcon },
+  { to: "/admin/courses", label: "Courses", icon: BookOpen },
+  { to: "/admin/alumni", label: "Alumni", icon: UsersRound },
   { to: "/admin/users", label: "Admin Users", icon: Users },
   { to: "/admin/news", label: "News", icon: Newspaper },
   { to: "/admin/events", label: "Events", icon: Calendar },
   { to: "/admin/announcements", label: "Announcements", icon: Megaphone },
+  { to: "/admin/enquiries", label: "Enquiries", icon: Inbox },
+  { to: "/admin/testimonials", label: "Testimonials", icon: Quote },
+  { to: "/admin/feedback", label: "Feedback", icon: MessageSquare },
+  { to: "/admin/dynamic-sections", label: "IQAC / NIRF / AQAR", icon: FileText },
   { to: "/admin/content", label: "Site Content", icon: Settings },
 ];
 
@@ -33,7 +42,7 @@ function AdminLayout() {
 
   async function handleLogout() {
     await adminLogout();
-    router.navigate({ to: "/admin/login" });
+    router.navigate({ to: "/", replace: true });
   }
 
   return (

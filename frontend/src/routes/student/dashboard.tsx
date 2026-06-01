@@ -45,7 +45,7 @@ function StudentDashboard() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-primary-deep text-white px-6 py-4 flex items-center justify-between">
+      <header className="bg-primary-deep text-white px-4 sm:px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <GraduationCap className="size-6 text-gold" />
           <div>
@@ -64,7 +64,7 @@ function StudentDashboard() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-4xl mx-auto px-4 sm:p-6">
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-extrabold text-foreground">My Applications</h1>

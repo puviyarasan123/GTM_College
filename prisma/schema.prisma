@@ -86,6 +86,72 @@ model Application {
   updatedAt       DateTime          @updatedAt
 }
 
+model DynamicSection {
+  id        String   @id @default(cuid())
+  group     String
+  slug      String
+  title     String
+  subtitle  String   @default("")
+  content   String   @default("")
+  pdfUrl    String   @default("")
+  pdfs      Json     @default("[]")
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([group, slug])
+}
+
+model Enquiry {
+  id          String   @id @default(cuid())
+  source      String
+  name        String
+  email       String
+  phone       String?
+  course      String?
+  message     String
+  read        Boolean  @default(false)
+  submittedAt DateTime @default(now())
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  batch     String
+  company   String
+  quote     String
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FeedbackForm {
+  id        String             @id @default(cuid())
+  category  FeedbackCategory   @unique
+  fields    Json
+  active    Boolean            @default(true)
+  updatedAt DateTime           @updatedAt
+  responses FeedbackResponse[]
+}
+
+model FeedbackResponse {
+  id          String           @id @default(cuid())
+  formId      String
+  form        FeedbackForm     @relation(fields: [formId], references: [id])
+  category    FeedbackCategory
+  data        Json
+  submittedAt DateTime         @default(now())
+}
+
+enum FeedbackCategory {
+  STUDENT
+  PARENT
+  ALUMNI
+  TEACHER_PUBLIC
+}
+
 enum Role {
   SUPER_ADMIN
   EDITOR

@@ -79,7 +79,7 @@ export default function ApplyPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-primary-deep text-white px-6 py-4 flex items-center gap-3">
+      <header className="bg-primary-deep text-white px-4 sm:px-6 py-4 flex items-center gap-3">
         <GraduationCap className="size-6 text-gold" />
         <div>
           <div className="font-extrabold text-sm">GTM COLLEGE OF ARTS & SCIENCE</div>
@@ -87,7 +87,7 @@ export default function ApplyPage() {
         </div>
       </header>
 
-      <div className="max-w-2xl mx-auto p-6">
+      <div className="max-w-2xl mx-auto px-4 sm:p-6">
         {/* Progress */}
         <div className="flex items-center gap-2 mb-8">
           {STEPS.map((s, i) => (

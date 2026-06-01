@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { SignJWT, jwtVerify } from "jose";
 import bcrypt from "bcryptjs";
+import { v2 as cloudinary } from "cloudinary";
 
 // ── Prisma ────────────────────────────────────────────────────────────────────
 declare global { var __prisma: PrismaClient | undefined; }
@@ -13,6 +14,14 @@ function getPrisma() {
   globalThis.__prisma = new PrismaClient({ adapter: new PrismaPg(url) });
   return globalThis.__prisma;
 }
+
+// ── Cloudinary ────────────────────────────────────────────────────────────────
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
 // ── JWT ───────────────────────────────────────────────────────────────────────
 const adminSecret = new TextEncoder().encode(process.env.JWT_SECRET ?? "gtm-admin-secret");
@@ -230,6 +239,56 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       await requireAdmin(req);
       const { section, data } = req.body;
       return res.json(await prisma.siteContent.upsert({ where: { section }, update: { data }, create: { section, data } }));
+    }
+
+    // ── Faculty ───────────────────────────────────────────────────────────────
+    if (route === "faculty") {
+      const row = await prisma.siteContent.findUnique({ where: { section: "faculty" } });
+      return res.json(row ? (row.data as unknown[]) : []);
+    }
+    if (route === "faculty/save") {
+      await requireAdmin(req);
+      const { data } = req.body;
+      await prisma.siteContent.upsert({ where: { section: "faculty" }, update: { data }, create: { section: "faculty", data } });
+      return res.json({ ok: true });
+    }
+
+    // ── Principal ─────────────────────────────────────────────────────────────
+    if (route === "principal") {
+      const row = await prisma.siteContent.findUnique({ where: { section: "principal" } });
+      return res.json(row ? row.data : null);
+    }
+    if (route === "principal/save") {
+      await requireAdmin(req);
+      const { data } = req.body;
+      await prisma.siteContent.upsert({ where: { section: "principal" }, update: { data }, create: { section: "principal", data } });
+      return res.json({ ok: true });
+    }
+
+    // ── Site Images ─────────────────────────────────────────────────────────────
+    if (route === "site-images") {
+      const row = await prisma.siteContent.findUnique({ where: { section: "site-images" } });
+      return res.json(row ? row.data : {});
+    }
+    if (route === "site-images/save") {
+      await requireAdmin(req);
+      const { data } = req.body;
+      await prisma.siteContent.upsert({ where: { section: "site-images" }, update: { data }, create: { section: "site-images", data } });
+      return res.json({ ok: true });
+    }
+
+    // ── Image Upload (Cloudinary) ──────────────────────────────────────────────────
+    if (route === "upload/image") {
+      await requireAdmin(req);
+      const { base64, mimeType, folder = "gtmc" } = req.body as { base64: string; mimeType: string; folder?: string };
+      if (!base64 || !mimeType) return res.status(400).json({ message: "base64 and mimeType required" });
+      const dataUri = `data:${mimeType};base64,${base64}`;
+      const result = await cloudinary.uploader.upload(dataUri, {
+        folder,
+        resource_type: "image",
+        transformation: [{ quality: "auto", fetch_format: "auto" }],
+      });
+      return res.json({ url: result.secure_url, publicId: result.public_id });
     }
 
     // ── Students (Admin) ──────────────────────────────────────────────────────

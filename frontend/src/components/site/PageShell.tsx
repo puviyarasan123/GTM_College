@@ -3,10 +3,10 @@ import type { ReactNode } from "react";
 
 export function PageHero({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) {
   return (
-    <section className="relative bg-gradient-hero text-primary-foreground overflow-hidden">
+    <section className="relative bg-gradient-hero text-primary-foreground overflow-hidden w-full">
       <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_30%_20%,oklch(0.78_0.13_85/.5),transparent_50%)]" />
       <div className="absolute -top-32 -right-32 size-[500px] bg-gold/10 rounded-full blur-[120px]" />
-      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-8 py-24 md:py-32">
+      <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         {eyebrow && (
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-[11px] font-bold uppercase tracking-[0.3em] text-gold mb-4">
             {eyebrow}
@@ -26,7 +26,7 @@ export function PageHero({ eyebrow, title, subtitle }: { eyebrow?: string; title
 }
 
 export function Section({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <section className={`max-w-[1400px] mx-auto px-6 lg:px-8 py-20 md:py-28 ${className}`}>{children}</section>;
+  return <section className={`w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 ${className}`}>{children}</section>;
 }
 
 export function SectionHeader({ eyebrow, title, desc }: { eyebrow?: string; title: string; desc?: string }) {

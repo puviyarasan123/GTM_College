@@ -12,12 +12,22 @@ import {
   MapPin, Quote, Sparkles, Star, Trophy, Users,
 } from "lucide-react";
 import {
-  STATS, DEPARTMENTS, COURSES, RECRUITERS, PLACEMENT_HIGHLIGHTS,
-  FACULTY, NEWS, EVENTS, TESTIMONIALS, FACILITIES,
+  STATS, DEPARTMENTS, RECRUITERS, PLACEMENT_HIGHLIGHTS,
+  FACULTY, NEWS, EVENTS, FACILITIES,
 } from "@/lib/site-data";
 import { Reveal, Section, SectionHeader } from "@/components/site/PageShell";
+import { getSiteImages, getTestimonials, submitEnquiry } from "@/lib/content-fns";
+import type { SiteImages, Testimonial } from "@/lib/content-fns";
+import { useMutation } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/")({
+  loader: async (): Promise<{ images: SiteImages; testimonials: Testimonial[] }> => {
+    const [images, testimonials] = await Promise.all([
+      getSiteImages().catch(() => ({} as SiteImages)),
+      getTestimonials().catch(() => []),
+    ]);
+    return { images, testimonials };
+  },
   head: () => ({
     meta: [
       { title: "Govt. Thirumagal Mills College, Gudiyattam — Empowering Minds, Shaping Futures" },
@@ -30,7 +40,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const heroSlides = [
+const HERO_DEFAULTS = [
   {
     img: "/hero1.jpg",
     eyebrow: "Admissions 2025–26 Open",
@@ -76,7 +86,51 @@ function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: strin
   return <div ref={ref} className="text-4xl md:text-5xl font-extrabold text-primary">{n.toLocaleString()}{suffix}</div>;
 }
 
+function QuickEnquiryForm() {
+  const [form, setForm] = useState({ name: "", phone: "", email: "", course: "", message: "" });
+  const set = (k: string, v: string) => setForm((p) => ({ ...p, [k]: v }));
+  const mutation = useMutation({
+    mutationFn: () => submitEnquiry({ source: "homepage", ...form }),
+    onSuccess: () => setForm({ name: "", phone: "", email: "", course: "", message: "" }),
+  });
+  return mutation.isSuccess ? (
+    <div className="bg-card text-foreground rounded-2xl p-7 shadow-elegant text-center space-y-2">
+      <div className="text-3xl">✅</div>
+      <div className="font-bold text-primary">Enquiry submitted!</div>
+      <div className="text-sm text-muted-foreground">Our team will get back to you within one business day.</div>
+      <button onClick={() => mutation.reset()} className="mt-2 text-xs text-primary underline">Submit another</button>
+    </div>
+  ) : (
+    <form onSubmit={(e) => { e.preventDefault(); mutation.mutate(); }} className="bg-card text-foreground rounded-2xl p-7 shadow-elegant space-y-4">
+      <h3 className="font-extrabold text-primary text-lg">Quick Enquiry</h3>
+      <div className="grid sm:grid-cols-2 gap-3">
+        <input required value={form.name} onChange={(e) => set("name", e.target.value)} className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-none focus:ring-2 focus:ring-gold" placeholder="Full name" />
+        <input value={form.phone} onChange={(e) => set("phone", e.target.value)} className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-none focus:ring-2 focus:ring-gold" placeholder="Mobile" />
+      </div>
+      <input required type="email" value={form.email} onChange={(e) => set("email", e.target.value)} className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-none focus:ring-2 focus:ring-gold" placeholder="Email" />
+      <select value={form.course} onChange={(e) => set("course", e.target.value)} className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-none focus:ring-2 focus:ring-gold">
+        <option value="">Select a course</option>
+        <option>B.Sc. — Computer Science</option><option>B.Sc. — Mathematics</option><option>B.Com. — General</option><option>BBA</option><option>BCA</option><option>B.A. — English</option><option>M.Sc.</option><option>M.A.</option><option>M.Com.</option><option>Other</option>
+      </select>
+      <textarea required rows={3} value={form.message} onChange={(e) => set("message", e.target.value)} className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-none focus:ring-2 focus:ring-gold" placeholder="Tell us briefly what you'd like to know" />
+      {mutation.isError && <p className="text-xs text-red-400">{(mutation.error as Error).message}</p>}
+      <button type="submit" disabled={mutation.isPending} className="w-full py-3.5 rounded-xl bg-gradient-hero text-primary-foreground font-bold hover:opacity-95 disabled:opacity-60">
+        {mutation.isPending ? "Submitting..." : "Submit Enquiry"}
+      </button>
+    </form>
+  );
+}
+
 function Index() {
+  const { images: siteImages, testimonials } = Route.useLoaderData() as { images: SiteImages; testimonials: Testimonial[] };
+  const heroSlides = HERO_DEFAULTS.map((s, i) => ({
+    ...s,
+    img: (siteImages[`hero${i + 1}` as keyof SiteImages] as string | undefined) ?? s.img,
+    eyebrow: (siteImages[`hero${i + 1}Caption` as keyof SiteImages] as string | undefined) || s.eyebrow,
+  }));
+  const aboutImg = siteImages.aboutCampus ?? "/hello.jpg";
+  const welcomeImg = siteImages.welcomeImage ?? "/hello.jpg";
+
   return (
     <div>
       {/* HERO */}
@@ -102,12 +156,12 @@ function Index() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="relative h-full max-w-[1400px] mx-auto px-6 lg:px-8 flex flex-col justify-center">
+                <div className="relative h-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
                   <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl">
                     <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/15 border border-gold/40 text-gold text-[11px] font-bold uppercase tracking-[0.22em] backdrop-blur">
                       <Sparkles className="size-3.5" /> {s.eyebrow}
                     </span>
-                    <h1 className="mt-6 text-5xl md:text-7xl font-extrabold text-white leading-[1.05] tracking-tight text-balance">
+                    <h1 className="mt-6 text-3xl sm:text-5xl md:text-7xl font-extrabold text-white leading-[1.05] tracking-tight text-balance">
                       {s.title}
                     </h1>
                     <p className="mt-6 text-lg text-white/80 max-w-xl leading-relaxed">{s.sub}</p>
@@ -128,7 +182,7 @@ function Index() {
       </section>
 
       {/* STATS */}
-      <section className="relative -mt-20 z-10 max-w-[1400px] mx-auto px-6 lg:px-8">
+      <section className="relative -mt-20 z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="glass rounded-3xl shadow-elegant grid grid-cols-2 md:grid-cols-4 gap-px overflow-hidden bg-border/40">
           {STATS.map((s) => (
             <div key={s.label} className="bg-card p-8 text-center">
@@ -141,7 +195,7 @@ function Index() {
 
       {/* ACCREDITATIONS */}
       <section className="py-14">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8 flex flex-wrap justify-center items-center gap-x-14 gap-y-6 text-primary/60">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center items-center gap-x-8 gap-y-4 text-primary/60">
           {["NAAC Accredited", "Thiruvalluvar University Affiliated", "UGC Recognised", "Govt. of Tamil Nadu", "AISHE Registered", "Directorate of Collegiate Education"].map((b) => (
             <span key={b} className="text-[11px] font-bold uppercase tracking-[0.25em]">{b}</span>
           ))}
@@ -153,25 +207,26 @@ function Index() {
         <Reveal>
           <div className="relative w-full">
             <img
-              src="/hello.jpg"
-              alt="GTMC Campus"
+              src={welcomeImg}
+              alt="Welcome to GTMC"
               loading="lazy"
               decoding="async"
               className="rounded-3xl shadow-elegant w-full h-auto block"
             />
             <div className="absolute -bottom-6 -right-6 glass rounded-2xl p-6 shadow-elegant w-56 hidden md:block">
-              <div className="flex items-center gap-3"><Trophy className="size-6 text-gold-deep" /><div className="text-xs text-muted-foreground">Est. 1974</div></div>
-              <div className="text-2xl font-extrabold text-primary mt-2">50+ Years</div>
+              <div className="flex items-center gap-3"><Trophy className="size-6 text-gold-deep" /><div className="text-xs text-muted-foreground">Est. 1964</div></div>
+              <div className="text-2xl font-extrabold text-primary mt-2">60+ Years</div>
               <div className="text-xs text-muted-foreground">of academic excellence</div>
             </div>
           </div>
         </Reveal>
         <Reveal delay={0.1}>
-          <SectionHeader eyebrow="About the Institution" title="Serving Gudiyattam since 1974." />
+          <SectionHeader eyebrow="Welcome To Our College" title="Serving Gudiyattam since 1964." />
           <p className="text-muted-foreground leading-relaxed text-lg">
-            Govt. Thirumagal Mills College is a government co-educational institution in Gudiyattam, Vellore District,
-            affiliated to Thiruvalluvar University. We offer UG programmes in Science, Arts, Commerce and Management,
-            serving first-generation learners and rural students with quality education.
+            The college was started in the year 1964 with the aim of providing quality education for the students from the rural area. Science, Service and Sanctity forms the basis for a vital society. Keeping this in view the college provides education in the field of Arts and Science along with Value Education.
+          </p>
+          <p className="mt-4 text-muted-foreground leading-relaxed">
+            The academic activities of the college include teaching, research and placement. The courses of study are organized on semester programme and each semester provides for a minimum of 90 instructional days. The medium of Instructions are Tamil and English. The students are evaluated on a continuous basis throughout the semester.
           </p>
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
@@ -187,10 +242,61 @@ function Index() {
             ))}
           </div>
           <Link to="/about" className="mt-8 inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
-            Learn more about us <ArrowRight className="size-4" />
+            About More <ArrowRight className="size-4" />
           </Link>
         </Reveal>
       </Section>
+
+      {/* ABOUT THE COLLEGE — campus description */}
+      <section className="bg-gradient-soft border-y border-border">
+        <Section className="grid lg:grid-cols-2 gap-16 items-center">
+          <Reveal>
+            <SectionHeader eyebrow="About the College" title="A lush 47-acre campus built for excellence." />
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              GTM College strives to expand the research activities in various disciplines along with the PG courses. Special Lectures on varied topics of academic relevance are conducted to motivate and help the students to pursue higher studies in their field.
+            </p>
+            <p className="mt-4 text-muted-foreground leading-relaxed">
+              The campus spread over 47.26 acres of lush green campus which consists of all the academic departments, library and the computer centre. There are two separate buildings close to academic building for indoor games and gym. One playground beside the administrative office serves the purpose for conducting outdoor games. To ensure overall development of the students, the principal provides all the required facilities for students.
+            </p>
+            <div className="mt-8 grid sm:grid-cols-3 gap-4">
+              {[
+                { label: "47.26 Acres", desc: "Lush green campus" },
+                { label: "90+ Days", desc: "Per semester" },
+                { label: "TM & EM", desc: "Medium of instruction" },
+              ].map((s) => (
+                <div key={s.label} className="p-4 rounded-2xl bg-card border border-border text-center shadow-card">
+                  <div className="text-xl font-extrabold text-primary">{s.label}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{s.desc}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { label: "Student Feedback", to: "/feedback", search: { tab: "STUDENT" } },
+                { label: "Parents Feedback", to: "/feedback", search: { tab: "PARENT" } },
+                { label: "Alumni Feedback", to: "/feedback", search: { tab: "ALUMNI" } },
+                { label: "Teachers / Public Feedback", to: "/feedback", search: { tab: "TEACHER_PUBLIC" } },
+                { label: "Grievance Cell", to: "/activities/grievance", search: {} },
+                { label: "Alumni Association", to: "/alumni", search: {} },
+                { label: "Academic Calendar", to: "/calender", search: {} },
+                { label: "SSR 2022 Final", to: "/compliance/ssr-files", search: {} },
+              ].map((link) => (
+                <Link
+                  key={link.label}
+                  to={link.to}
+                  search={link.search}
+                  className="flex items-center gap-2 p-3 rounded-xl bg-card border border-border hover:border-gold/40 hover:shadow-card transition-all text-sm font-semibold text-primary group"
+                >
+                  <ChevronRight className="size-3.5 text-gold-deep shrink-0 group-hover:translate-x-0.5 transition-transform" />
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </Reveal>
+        </Section>
+      </section>
 
       {/* DEPARTMENTS */}
       <section className="bg-gradient-soft border-y border-border">
@@ -201,7 +307,7 @@ function Index() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {DEPARTMENTS.map((d, i) => (
-              <Reveal key={d.code} delay={i * 0.05}>
+              <Reveal key={d.name} delay={i * 0.05}>
                 <Link to="/departments" className="group block bg-card p-7 rounded-2xl shadow-card hover:shadow-elegant border border-border hover:border-gold/40 transition-all h-full">
                   <div className="size-12 rounded-xl bg-primary/5 grid place-items-center text-primary group-hover:bg-gradient-hero group-hover:text-gold transition-all">
                     <GraduationCap className="size-5" />
@@ -218,30 +324,6 @@ function Index() {
           </div>
         </Section>
       </section>
-
-      {/* COURSES */}
-      <Section>
-        <SectionHeader eyebrow="Programmes" title="Courses offered." desc="Undergraduate and postgraduate programmes across Science, Arts, Commerce and Management." />
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {COURSES.map((c, i) => (
-            <Reveal key={c.title} delay={i * 0.04}>
-              <div className="p-7 rounded-2xl border border-border bg-card shadow-card h-full flex flex-col">
-                <span className="self-start text-[10px] font-bold uppercase tracking-[0.2em] text-gold-deep">{c.level}</span>
-                <h3 className="mt-3 text-xl font-extrabold text-primary">{c.title}</h3>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {c.branches.slice(0, 5).map((b) => (
-                    <span key={b} className="text-[11px] px-2 py-1 rounded-md bg-secondary text-primary font-semibold">{b}</span>
-                  ))}
-                </div>
-                <div className="mt-6 pt-5 border-t border-border flex justify-between text-xs">
-                  <div><div className="text-muted-foreground">Duration</div><div className="font-bold text-primary mt-0.5">{c.duration}</div></div>
-                  <div className="text-right"><div className="text-muted-foreground">Seats</div><div className="font-bold text-primary mt-0.5">{c.seats}</div></div>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
 
       {/* PLACEMENTS */}
       <section className="bg-primary-deep text-primary-foreground relative overflow-hidden">
@@ -268,7 +350,7 @@ function Index() {
             </div>
           </div>
           {/* Recruiter marquee */}
-          <div className="mt-16 pt-10 border-t border-white/10 overflow-hidden">
+          <div className="mt-16 pt-10 border-t border-white/10 overflow-hidden w-full">
             <p className="text-center text-[10px] font-bold uppercase tracking-[0.4em] text-white/40 mb-6">Trusted by leading recruiters</p>
             <div className="flex animate-marquee gap-12 whitespace-nowrap">
               {[...RECRUITERS, ...RECRUITERS].map((r, i) => (
@@ -366,21 +448,25 @@ function Index() {
       <section className="bg-gradient-soft border-y border-border">
         <Section>
           <SectionHeader eyebrow="Alumni voices" title="Stories from our graduates." />
-          <Swiper modules={[Autoplay, Pagination]} autoplay={{ delay: 5000 }} pagination={{ clickable: true }} loop spaceBetween={24} breakpoints={{ 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }} className="pb-12">
-            {TESTIMONIALS.map((t, i) => (
-              <SwiperSlide key={i}>
-                <div className="p-7 rounded-2xl bg-card border border-border shadow-card h-full">
-                  <Quote className="size-7 text-gold-deep/40" />
-                  <p className="mt-4 text-sm text-foreground leading-relaxed">{t.quote}</p>
-                  <div className="mt-6 pt-5 border-t border-border">
-                    <div className="font-bold text-primary text-sm">{t.name}</div>
-                    <div className="text-xs text-muted-foreground">{t.batch}</div>
-                    <div className="text-xs text-gold-deep font-semibold mt-1">{t.company}</div>
+          {testimonials.length > 0 ? (
+            <Swiper modules={[Autoplay, Pagination]} autoplay={{ delay: 5000 }} pagination={{ clickable: true }} loop spaceBetween={24} breakpoints={{ 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }} className="pb-12">
+              {testimonials.map((t) => (
+                <SwiperSlide key={t.id}>
+                  <div className="p-7 rounded-2xl bg-card border border-border shadow-card h-full">
+                    <Quote className="size-7 text-gold-deep/40" />
+                    <p className="mt-4 text-sm text-foreground leading-relaxed">{t.quote}</p>
+                    <div className="mt-6 pt-5 border-t border-border">
+                      <div className="font-bold text-primary text-sm">{t.name}</div>
+                      <div className="text-xs text-muted-foreground">{t.batch}</div>
+                      <div className="text-xs text-gold-deep font-semibold mt-1">{t.company}</div>
+                    </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <p className="text-center text-muted-foreground py-8">No testimonials yet.</p>
+          )}
         </Section>
       </section>
 
@@ -392,25 +478,13 @@ function Index() {
             <div>
               <div className="text-[11px] font-bold uppercase tracking-[0.3em] text-gold mb-4">Admissions 2025–26</div>
               <h2 className="text-4xl md:text-5xl font-extrabold leading-tight text-balance">Your future starts with one application.</h2>
-              <p className="mt-5 text-white/80 max-w-md leading-relaxed">Talk to our admissions team, book a campus visit, or submit your enquiry — we'll respond within one working day.</p>
+              <p className="mt-5 text-white/80 max-w-md leading-relaxed">Admission is made purely on the basis of Merit subject to the rule of reservation of the Government of Tamil Nadu — 31% OC, 26.5% BC, 20% MBC/DNC, 15% SC, 3% SCA, 1% ST.</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link to="/admission" className="px-7 py-3.5 rounded-full bg-gold text-primary-deep font-bold hover:-translate-y-0.5 transition-transform">Apply Now</Link>
                 <Link to="/contact" className="px-7 py-3.5 rounded-full glass-dark text-white font-bold">Contact Us</Link>
               </div>
             </div>
-            <form onSubmit={(e) => e.preventDefault()} className="bg-card text-foreground rounded-2xl p-7 shadow-elegant space-y-4">
-              <h3 className="font-extrabold text-primary text-lg">Quick Enquiry</h3>
-              <div className="grid sm:grid-cols-2 gap-3">
-                <input className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-hidden focus:ring-2 focus:ring-gold" placeholder="Full name" />
-                <input className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-hidden focus:ring-2 focus:ring-gold" placeholder="Mobile" />
-              </div>
-              <input className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-hidden focus:ring-2 focus:ring-gold" placeholder="Email" />
-              <select className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-hidden focus:ring-2 focus:ring-gold">
-                <option>B.Sc. — Computer Science</option><option>B.Sc. — Mathematics</option><option>B.Com. — General</option><option>BBA</option><option>BCA</option><option>B.A. — English</option><option>M.Sc.</option><option>M.A.</option><option>M.Com.</option><option>Other</option>
-              </select>
-              <textarea rows={3} className="w-full px-4 py-3 rounded-xl bg-secondary text-sm focus:outline-hidden focus:ring-2 focus:ring-gold" placeholder="Tell us briefly what you'd like to know" />
-              <button type="submit" className="w-full py-3.5 rounded-xl bg-gradient-hero text-primary-foreground font-bold hover:opacity-95">Submit Enquiry</button>
-            </form>
+            <QuickEnquiryForm />
           </div>
         </div>
       </Section>

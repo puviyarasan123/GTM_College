@@ -1,182 +1,34 @@
-// import { useState, useEffect } from "react";
-// import { Link, useRouterState } from "@tanstack/react-router";
-// import { Menu, X, ChevronDown, Phone, Mail } from "lucide-react";
-// import { motion, AnimatePresence } from "framer-motion";
-// import { NAV } from "@/lib/site-data";
-
-// export function Navbar() {
-//   const [open, setOpen] = useState(false);
-//   const [active, setActive] = useState<string | null>(null);
-//   const [scrolled, setScrolled] = useState(false);
-//   const path = useRouterState({ select: (r) => r.location.pathname });
-
-//   useEffect(() => {
-//     const onScroll = () => setScrolled(window.scrollY > 10);
-//     onScroll();
-//     window.addEventListener("scroll", onScroll, { passive: true });
-//     return () => window.removeEventListener("scroll", onScroll);
-//   }, []);
-
-//   useEffect(() => {
-//     setOpen(false);
-//     setActive(null);
-//   }, [path]);
-
-//   return (
-//     <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled ? "shadow-elegant" : ""}`}>
-
-//       {/* ── Row 1: Logo banner ── */}
-//       <div className="bg-white border-b border-border/40">
-//         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 py-3">
-//           <Link to="/">
-//             <img
-//               src="/logonew.png"
-//               alt="Govt. Thirumagal Mills College"
-//               className="h-20 md:h-28 w-auto"
-//               style={{ imageRendering: "high-quality" }}
-//               decoding="async"
-//               fetchPriority="high"
-//             />
-//           </Link>
-//         </div>
-//       </div>
-
-//       {/* ── Row 2: Nav + contact + actions ── */}
-//       <div className="bg-primary text-primary-foreground hidden lg:block" onMouseLeave={() => setActive(null)}>
-//         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 flex items-center justify-between">
-
-//           {/* Nav links */}
-//           <nav className="flex items-center">
-//             {NAV.map((item) => {
-//               const isActive = path === item.to || (item.children?.some((c) => c.to === path));
-//               return (
-//                 <div key={item.label} className="relative" onMouseEnter={() => item.children && setActive(item.label)}>
-//                   <Link
-//                     to={item.to}
-//                     className={`flex items-center gap-1 px-4 py-3.5 text-sm font-semibold transition-colors border-b-2 whitespace-nowrap ${
-//                       isActive ? "border-gold text-gold" : "border-transparent text-white/90 hover:text-gold hover:border-gold/50"
-//                     }`}
-//                   >
-//                     {item.label}
-//                     {item.children && <ChevronDown className="size-3 opacity-70" />}
-//                   </Link>
-
-//                   <AnimatePresence>
-//                     {item.children && active === item.label && (
-//                       <motion.div
-//                         initial={{ opacity: 0, y: 6 }}
-//                         animate={{ opacity: 1, y: 0 }}
-//                         exit={{ opacity: 0, y: 6 }}
-//                         transition={{ duration: 0.15 }}
-//                         className="absolute left-0 top-full pt-1 z-50"
-//                       >
-//                         <div className="w-[270px] bg-white rounded-2xl shadow-elegant p-2 border border-border">
-//                           {item.children.map((c) => (
-//                             <Link key={c.to} to={c.to} className="block p-3 rounded-xl hover:bg-primary/5 transition-colors">
-//                               <div className="text-sm font-semibold text-primary">{c.label}</div>
-//                               {c.desc && <div className="text-xs text-muted-foreground mt-0.5">{c.desc}</div>}
-//                             </Link>
-//                           ))}
-//                         </div>
-//                       </motion.div>
-//                     )}
-//                   </AnimatePresence>
-//                 </div>
-//               );
-//             })}
-//           </nav>
-
-//           {/* Contact + actions */}
-//           <div className="flex items-center gap-4 pl-4 border-l border-white/20 shrink-0">
-//             <div className="flex flex-col gap-0.5 text-right">
-//               <span className="text-[11px] text-white/70 flex items-center gap-1 justify-end">
-//                 <Phone className="size-3" /> 04171-220162
-//               </span>
-//               <span className="text-[11px] text-white/70 flex items-center gap-1 justify-end">
-//                 <Mail className="size-3" /> principal@gtmc.edu.in
-//               </span>
-//               <span className="text-[10px] text-white/50">Gudiyattam, Vellore – 632 602</span>
-//             </div>
-//             <div className="flex items-center gap-2">
-//               <a
-//                 href="/student/login"
-//                 className="text-xs font-bold px-3 py-1.5 rounded-full border border-white/40 text-white hover:bg-white hover:text-primary transition-colors whitespace-nowrap"
-//               >
-//                 Student Login
-//               </a>
-//               <Link
-//                 to="/admission"
-//                 className="text-xs font-bold px-3 py-1.5 rounded-full bg-gold text-primary-deep hover:opacity-90 transition-opacity whitespace-nowrap"
-//               >
-//                 Apply Now
-//               </Link>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* ── Mobile: logo row already shown, hamburger here ── */}
-//       <div className="lg:hidden bg-primary px-4 py-2 flex items-center justify-between">
-//         <span className="text-xs text-white/70 font-medium">Gudiyattam – 632 602</span>
-//         <button
-//           onClick={() => setOpen((v) => !v)}
-//           className="size-9 grid place-items-center rounded-full bg-white/10 text-white"
-//           aria-label="Toggle menu"
-//         >
-//           {open ? <X className="size-5" /> : <Menu className="size-5" />}
-//         </button>
-//       </div>
-
-//       {/* ── Mobile menu ── */}
-//       <AnimatePresence>
-//         {open && (
-//           <motion.div
-//             initial={{ height: 0, opacity: 0 }}
-//             animate={{ height: "auto", opacity: 1 }}
-//             exit={{ height: 0, opacity: 0 }}
-//             className="lg:hidden overflow-hidden bg-background border-t border-border"
-//           >
-//             <div className="px-4 py-4 space-y-1 max-h-[75vh] overflow-y-auto">
-//               {NAV.map((item) => (
-//                 <div key={item.label} className="border-b border-border/40 last:border-0 py-1">
-//                   <Link to={item.to} className="block py-2.5 text-sm font-bold text-primary">{item.label}</Link>
-//                   {item.children && (
-//                     <div className="pl-3 pb-2 space-y-1">
-//                       {item.children.map((c) => (
-//                         <Link key={c.to} to={c.to} className="block py-1.5 text-sm text-muted-foreground hover:text-primary">{c.label}</Link>
-//                       ))}
-//                     </div>
-//                   )}
-//                 </div>
-//               ))}
-//               <div className="pt-3 space-y-2 text-xs text-muted-foreground">
-//                 <div className="flex items-center gap-2"><Phone className="size-3" /> 04171-220162</div>
-//                 <div className="flex items-center gap-2"><Mail className="size-3" /> principal@gtmc.edu.in</div>
-//               </div>
-//               <div className="pt-3 flex gap-2">
-//                 <a href="/student/login" className="flex-1 text-center py-2.5 rounded-full border border-border text-sm font-semibold">Login</a>
-//                 <Link to="/admission" className="flex-1 text-center py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-bold">Apply Now</Link>
-//               </div>
-//             </div>
-//           </motion.div>
-//         )}
-//       </AnimatePresence>
-//     </header>
-//   );
-// }
-
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X, ChevronDown, Phone, Mail } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV } from "@/lib/site-data";
+import { useQuery } from "@tanstack/react-query";
+import { getDynamicSections } from "@/lib/content-fns";
+import type { DynamicSection } from "@/lib/content-fns";
 
 export function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [active, setActive] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const path = useRouterState({ select: (r) => r.location.pathname });
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const { data: iqacItems = [] } = useQuery({ queryKey: ["nav-iqac"], queryFn: () => getDynamicSections("iqac"), staleTime: 60000 });
+  const { data: nirfItems = [] } = useQuery({ queryKey: ["nav-nirf"], queryFn: () => getDynamicSections("nirf"), staleTime: 60000 });
+  const { data: aqarItems = [] } = useQuery({ queryKey: ["nav-aqar"], queryFn: () => getDynamicSections("aqar"), staleTime: 60000 });
+
+  function buildChildren(items: DynamicSection[], prefix: string) {
+    return items.map((s) => ({ label: s.title, to: `/${prefix}/${s.slug}`, desc: s.subtitle }));
+  }
+
+  const dynamicNav = NAV.map((item) => {
+    if (item.label === "IQAC" && iqacItems.length > 0) return { ...item, children: buildChildren(iqacItems, "iqac") };
+    if (item.label === "NIRF" && nirfItems.length > 0) return { ...item, children: buildChildren(nirfItems, "nirf") };
+    if (item.label === "AQAR" && aqarItems.length > 0) return { ...item, children: buildChildren(aqarItems, "aqar") };
+    return item;
+  });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -186,80 +38,127 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    setOpen(false);
+    setMobileOpen(false);
+    setMobileExpanded(null);
     setActive(null);
   }, [path]);
 
-  return (
-    <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled ? "shadow-elegant" : ""}`}>
+  function handleMouseEnter(label: string) {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    setActive(label);
+  }
 
-      {/* ── Row 1: Logo banner ── */}
-      <div className="bg-white border-b border-border/40">
-        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 py-3">
-          <Link to="/">
-            <img
-              src="/logonew.png"
-              alt="Govt. Thirumagal Mills College"
-              className="h-20 md:h-28 w-auto"
-              style={{ imageRendering: "high-quality" }}
-              decoding="async"
-              fetchPriority="high"
-            />
+  function handleMouseLeave() {
+    leaveTimer.current = setTimeout(() => setActive(null), 120);
+  }
+
+  function toggleMobileItem(label: string) {
+    setMobileExpanded((v) => (v === label ? null : label));
+  }
+
+  return (
+    <header className={`sticky top-0 z-40 w-full transition-shadow duration-300 ${scrolled ? "shadow-elegant" : ""}`}>
+
+      {/* ── Logo row: full width image + buttons overlaid on right ── */}
+      <div className="relative w-full bg-white border-b border-border/40 overflow-hidden">
+        {/* Logo fills full width */}
+        <Link to="/" className="block w-full">
+          <img
+            src="/logonew.png"
+            alt="Govt. Thirumagal Mills College"
+            className="w-full h-auto block"
+            style={{ imageRendering: "high-quality", maxHeight: "120px", objectFit: "cover", objectPosition: "left center" }}
+            decoding="async"
+            fetchPriority="high"
+          />
+        </Link>
+
+        {/* Buttons overlaid on the right of the logo — desktop only */}
+        <div className="hidden lg:flex absolute right-6 top-1/2 -translate-y-1/2 flex-col items-stretch gap-2">
+          <a
+            href="/student/login"
+            className="text-sm font-semibold px-5 py-2 rounded-full border-2 border-primary text-primary bg-white hover:bg-primary hover:text-white transition-colors whitespace-nowrap shadow-sm text-center"
+          >
+            Student Login
+          </a>
+          <Link
+            to="/admission"
+            className="text-sm font-semibold px-5 py-2 rounded-full bg-gold text-primary-deep hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm text-center"
+          >
+            Apply Now
           </Link>
         </div>
+
+        {/* Mobile hamburger overlaid on right */}
+        <button
+          onClick={() => setMobileOpen((v) => !v)}
+          className="lg:hidden absolute right-4 top-1/2 -translate-y-1/2 size-10 grid place-items-center rounded-full bg-primary text-white"
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+        </button>
       </div>
 
-      {/* ── Row 2: Nav + contact + actions ── */}
-      <div className="bg-primary text-primary-foreground hidden lg:block" onMouseLeave={() => setActive(null)}>
-        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 flex items-center justify-between">
+      {/* ── Desktop nav bar — single row ── */}
+      <div className="bg-primary text-primary-foreground hidden lg:block w-full">
+        <div className="w-full px-2 xl:px-4">
+          <nav className="flex items-center justify-between flex-nowrap w-full">
+            {dynamicNav.map((item) => {
+              const isActive = path === item.to || item.children?.some((c) => c.to === path);
+              const isOpen = active === item.label;
 
-          {/* Nav links */}
-          <nav className="flex items-center">
-            {NAV.map((item) => {
-              const isActive = path === item.to || (item.children?.some((c) => c.to === path));
               return (
-                <div key={item.label} className="relative" onMouseEnter={() => item.children && setActive(item.label)}>
+                <div
+                  key={item.label}
+                  className="relative flex-1 text-center"
+                  onMouseEnter={() => item.children ? handleMouseEnter(item.label) : setActive(null)}
+                  onMouseLeave={handleMouseLeave}
+                >
                   <Link
                     to={item.to}
-                    className={`flex items-center gap-1 px-4 py-3.5 text-sm font-semibold transition-colors border-b-2 whitespace-nowrap ${
-                      isActive ? "border-gold text-gold" : "border-transparent text-white/90 hover:text-gold hover:border-gold/50"
+                    className={`flex items-center justify-center gap-0.5 px-1 py-3 text-[11px] xl:text-[12px] font-semibold transition-colors border-b-2 whitespace-nowrap w-full ${
+                      isActive
+                        ? "border-gold text-gold"
+                        : "border-transparent text-white/90 hover:text-gold hover:border-gold/50"
                     }`}
                   >
                     {item.label}
-                    {item.children && <ChevronDown className="size-3 opacity-70" />}
+                    {item.children && (
+                      <ChevronDown className={`size-3 opacity-70 shrink-0 transition-transform duration-150 ${isOpen ? "rotate-180" : ""}`} />
+                    )}
                   </Link>
 
+                  {/* Dropdown */}
                   <AnimatePresence>
-                    {item.children && active === item.label && (
+                    {item.children && isOpen && (
                       <motion.div
-                        initial={{ opacity: 0, y: 6 }}
+                        initial={{ opacity: 0, y: 4 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 6 }}
-                        transition={{ duration: 0.15 }}
-                        className="absolute left-0 top-full pt-1 z-50"
+                        exit={{ opacity: 0, y: 4 }}
+                        transition={{ duration: 0.13 }}
+                        onMouseEnter={() => { if (leaveTimer.current) clearTimeout(leaveTimer.current); }}
+                        onMouseLeave={handleMouseLeave}
+                        className="absolute top-full left-0 pt-1 z-50"
                       >
-                        <div className="w-[270px] bg-white rounded-2xl shadow-elegant p-2 border border-border">
-                          {item.children.map((c) => 
-                            // 🌟 DESKTOP SNAP-IN ROUTING INJECTION:
-                            'isExternal' in c && c.isExternal ? (
-                              <a 
+                        <div className="w-56 bg-white rounded-2xl shadow-elegant border border-border p-1.5 max-h-[70vh] overflow-y-auto">
+                          {item.children.map((c) =>
+                            "isExternal" in c && c.isExternal ? (
+                              <a
                                 key={c.to}
-                                href={c.to} 
-                                target="_blank" 
+                                href={c.to}
+                                target="_blank"
                                 rel="noopener noreferrer"
-                                className="block p-3 rounded-xl hover:bg-primary/5 transition-colors"
+                                className="block px-3 py-2 rounded-xl hover:bg-primary/5 transition-colors text-sm font-semibold text-primary"
                               >
-                                <div className="font-semibold text-sm text-primary">{c.label}</div>
-                                {c.desc && <div className="text-xs text-muted-foreground mt-0.5">{c.desc}</div>}
+                                {c.label} ↗
                               </a>
                             ) : (
-                              <Link 
-                                key={c.to} 
-                                to={c.to} 
-                                className="block p-3 rounded-xl hover:bg-primary/5 transition-colors"
+                              <Link
+                                key={c.to}
+                                to={c.to}
+                                className="block px-3 py-2 rounded-xl hover:bg-primary/5 transition-colors text-sm font-semibold text-primary"
                               >
-                                <div className="font-semibold text-sm text-primary">{c.label}</div>
-                                {c.desc && <div className="text-xs text-muted-foreground mt-0.5">{c.desc}</div>}
+                                {c.label}
                               </Link>
                             )
                           )}
@@ -271,97 +170,91 @@ export function Navbar() {
               );
             })}
           </nav>
-
-          {/* Contact + actions */}
-          <div className="flex items-center gap-4 pl-4 border-l border-white/20 shrink-0">
-            <div className="flex flex-col gap-0.5 text-right">
-              <span className="text-[11px] text-white/70 flex items-center gap-1 justify-end">
-                <Phone className="size-3" /> 04171-220162
-              </span>
-              <span className="text-[11px] text-white/70 flex items-center gap-1 justify-end">
-                <Mail className="size-3" /> principal@gtmc.edu.in
-              </span>
-              <span className="text-[10px] text-white/50">Gudiyattam, Vellore – 632 602</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <a
-                href="/student/login"
-                className="text-xs font-bold px-3 py-1.5 rounded-full border border-white/40 text-white hover:bg-white hover:text-primary transition-colors whitespace-nowrap"
-              >
-                Student Login
-              </a>
-              <Link
-                to="/admission"
-                className="text-xs font-bold px-3 py-1.5 rounded-full bg-gold text-primary-deep hover:opacity-90 transition-opacity whitespace-nowrap"
-              >
-                Apply Now
-              </Link>
-            </div>
-          </div>
         </div>
-      </div>
-
-      {/* ── Mobile: logo row already shown, hamburger here ── */}
-      <div className="lg:hidden bg-primary px-4 py-2 flex items-center justify-between">
-        <span className="text-xs text-white/70 font-medium">Gudiyattam – 632 602</span>
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="size-9 grid place-items-center rounded-full bg-white/10 text-white"
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
       </div>
 
       {/* ── Mobile menu ── */}
       <AnimatePresence>
-        {open && (
+        {mobileOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="lg:hidden overflow-hidden bg-background border-t border-border"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22, ease: "easeInOut" }}
+            className="lg:hidden overflow-hidden bg-background border-t border-border w-full"
           >
-            <div className="px-4 py-4 space-y-1 max-h-[75vh] overflow-y-auto">
-              {NAV.map((item) => (
-                <div key={item.label} className="border-b border-border/40 last:border-0 py-1">
-                  <Link to={item.to} className="block py-2.5 text-sm font-bold text-primary">{item.label}</Link>
-                  {item.children && (
-                    <div className="pl-3 pb-2 space-y-1">
-                      {item.children.map((c) => 
-                        // 🌟 MOBILE REPLICATED ROUTING FOR STABLE EXITS:
-                        'isExternal' in c && c.isExternal ? (
-                          <a 
-                            key={c.to} 
-                            href={c.to}
-                            target="_blank"
-                            rel="noopener noreferrer" 
-                            className="block py-1.5 text-sm text-muted-foreground hover:text-primary font-medium"
+            <div className="max-h-[78vh] overflow-y-auto divide-y divide-border/40">
+              {dynamicNav.map((item) => (
+                <div key={item.label}>
+                  {item.children ? (
+                    <>
+                      <button
+                        onClick={() => toggleMobileItem(item.label)}
+                        className="w-full flex items-center justify-between px-4 py-3 text-sm font-bold text-primary"
+                      >
+                        {item.label}
+                        <ChevronDown className={`size-4 text-muted-foreground transition-transform duration-200 ${mobileExpanded === item.label ? "rotate-180" : ""}`} />
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {mobileExpanded === item.label && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.18 }}
+                            className="overflow-hidden bg-secondary/40"
                           >
-                            {c.label} ↗
-                          </a>
-                        ) : (
-                          <Link 
-                            key={c.to} 
-                            to={c.to} 
-                            className="block py-1.5 text-sm text-muted-foreground hover:text-primary"
-                          >
-                            {c.label}
-                          </Link>
-                        )
-                      )}
-                    </div>
+                            <div className="px-4 py-2 space-y-0.5">
+                              {item.children.map((c) =>
+                                "isExternal" in c && c.isExternal ? (
+                                  <a
+                                    key={c.to}
+                                    href={c.to}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block py-2 px-2 text-sm text-muted-foreground hover:text-primary rounded-lg hover:bg-primary/5 transition-colors"
+                                  >
+                                    {c.label} ↗
+                                  </a>
+                                ) : (
+                                  <Link
+                                    key={c.to}
+                                    to={c.to}
+                                    className="block py-2 px-2 text-sm text-muted-foreground hover:text-primary rounded-lg hover:bg-primary/5 transition-colors"
+                                  >
+                                    {c.label}
+                                  </Link>
+                                )
+                              )}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  ) : (
+                    <Link
+                      to={item.to}
+                      className="block px-4 py-3 text-sm font-bold text-primary"
+                    >
+                      {item.label}
+                    </Link>
                   )}
                 </div>
               ))}
-              <div className="pt-3 space-y-2 text-xs text-muted-foreground">
-                <div className="flex items-center gap-2"><Phone className="size-3" /> 04171-220162</div>
-                <div className="flex items-center gap-2"><Mail className="size-3" /> principal@gtmc.edu.in</div>
-              </div>
-              <div className="pt-3 flex gap-2">
-                <a href="/student/login" className="flex-1 text-center py-2.5 rounded-full border border-border text-sm font-semibold">Login</a>
-                <Link to="/admission" className="flex-1 text-center py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-bold">Apply Now</Link>
+
+              <div className="px-4 py-4 flex gap-3">
+                <a
+                  href="/student/login"
+                  className="flex-1 text-center py-2.5 rounded-full border border-border text-sm font-semibold text-foreground"
+                >
+                  Student Login
+                </a>
+                <Link
+                  to="/admission"
+                  className="flex-1 text-center py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-bold"
+                >
+                  Apply Now
+                </Link>
               </div>
             </div>
           </motion.div>

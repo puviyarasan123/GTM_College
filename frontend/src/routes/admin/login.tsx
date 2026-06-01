@@ -25,7 +25,8 @@ function LoginPage() {
     setLoading(true);
     try {
       await adminLogin({ data: { email, password } });
-      router.navigate({ to: "/admin/dashboard" });
+      await router.invalidate();
+      router.navigate({ to: "/admin/dashboard", replace: true });
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {

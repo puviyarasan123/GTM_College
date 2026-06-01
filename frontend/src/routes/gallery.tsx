@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, Section, Reveal } from "@/components/site/PageShell";
 import { SITE } from "@/lib/site-data";
+import { getSiteImages } from "@/lib/content-fns";
+import type { SiteImages } from "@/lib/content-fns";
 import campus from "@/assets/about-campus.jpg";
 import lab from "@/assets/hero-lab.jpg";
 import lib from "@/assets/hero-library.jpg";
 import hero from "@/assets/hero-campus.jpg";
 
-const IMAGES = [
+const FALLBACK = [
   { src: hero, caption: "Convocation 2024" },
   { src: campus, caption: "Academic block at dusk" },
   { src: lab, caption: "Robotics laboratory" },
@@ -24,12 +26,25 @@ export const Route = createFileRoute("/gallery")({
     ],
     links: [{ rel: "canonical", href: "/gallery" }],
   }),
-  component: () => (
+  loader: async (): Promise<SiteImages> => {
+    try { return await getSiteImages(); } catch { return {}; }
+  },
+  component: GalleryPage,
+});
+
+function GalleryPage() {
+  const images = Route.useLoaderData() as SiteImages;
+  const items =
+    images.gallery && images.gallery.length > 0
+      ? images.gallery.map((g) => ({ src: g.url, caption: g.caption }))
+      : FALLBACK;
+
+  return (
     <>
       <PageHero eyebrow="Gallery" title="The campus, in moments." />
       <Section>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {IMAGES.map((im, i) => (
+          {items.map((im, i) => (
             <Reveal key={i} delay={(i % 3) * 0.05}>
               <figure className="group relative overflow-hidden rounded-2xl bg-muted">
                 <img src={im.src} alt={im.caption} className="aspect-[4/3] w-full object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -40,5 +55,5 @@ export const Route = createFileRoute("/gallery")({
         </div>
       </Section>
     </>
-  ),
-});
+  );
+}

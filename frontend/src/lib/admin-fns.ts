@@ -47,3 +47,60 @@ export const listStudents = (search?: string) => {
   const q = search ? `?search=${encodeURIComponent(search)}` : "";
   return api<{ id: string; name: string; email: string; phone: string; createdAt: string; _count: { applications: number } }[]>(`/api/students${q}`);
 };
+
+export type FeedbackCategory = "STUDENT" | "PARENT" | "ALUMNI" | "TEACHER_PUBLIC";
+
+export type FeedbackField = {
+  id: string;
+  label: string;
+  type: "text" | "textarea" | "select" | "radio" | "rating";
+  required: boolean;
+  options?: string[];
+};
+
+export type FeedbackForm = {
+  id: string;
+  category: FeedbackCategory;
+  fields: FeedbackField[];
+  active: boolean;
+  updatedAt: string;
+  _count?: { responses: number };
+};
+
+export type FeedbackResponse = {
+  id: string;
+  formId: string;
+  category: FeedbackCategory;
+  data: Record<string, string>;
+  submittedAt: string;
+};
+
+export const getFeedbackAdminForms = () => api<FeedbackForm[]>("/api/feedback/admin/forms");
+export const saveFeedbackForm = ({ data }: { data: { category: FeedbackCategory; fields: FeedbackField[]; active: boolean } }) =>
+  api<FeedbackForm>("/api/feedback/admin/form/save", data);
+export const getFeedbackResponses = (category?: FeedbackCategory) => {
+  const q = category ? `?category=${category}` : "";
+  return api<FeedbackResponse[]>(`/api/feedback/admin/responses${q}`);
+};
+export const deleteFeedbackResponse = ({ data }: { data: { id: string } }) =>
+  api<{ ok: boolean }>("/api/feedback/admin/response/delete", data);
+
+export type EnquiryItem = {
+  id: string;
+  source: string;
+  name: string;
+  email: string;
+  phone?: string | null;
+  course?: string | null;
+  message: string;
+  read: boolean;
+  submittedAt: string;
+};
+export const listEnquiries = (unread?: boolean) =>
+  api<EnquiryItem[]>(`/api/enquiry/list${unread ? "?unread=1" : ""}`);
+export const markEnquiryRead = ({ data }: { data: { id: string } }) =>
+  api<{ ok: boolean }>("/api/enquiry/mark-read", data);
+export const deleteEnquiry = ({ data }: { data: { id: string } }) =>
+  api<{ ok: boolean }>("/api/enquiry/delete", data);
+export const getEnquiryStats = () =>
+  api<{ total: number; unread: number }>("/api/enquiry/stats");

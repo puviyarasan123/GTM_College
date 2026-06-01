@@ -11,7 +11,7 @@ export const SITE = {
 export const NAV: { label: string; to: string; children?: { label: string; to: string; desc?: string; isExternal?: boolean }[] }[] = [
   {
     label: "Home",
-    to: "/home",
+    to: "/",
     children: [
       { label: "About Us", to: "/about", desc: "Our story, legacy & accreditations" },
       { label: "College Timeline", to: "/timeline", desc: "Year-by-year historical growth" },
@@ -21,7 +21,7 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
   },
   {
     label: "Academics",
-    to: "/academics",
+    to: "/calender",
     children: [
       { label: "Academic Calendar", to: "/calender", desc: "Official session timelines" },
       { label: "Departments", to: "/departments", desc: "Science, Arts, Commerce & Management" },
@@ -304,14 +304,12 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
     { label: "YRC report", to: "/reports/yrc-report", desc: "Youth Red Cross humanitarian programs, medical camps, and first-aid drills" },
   ],
 },
-  {
-    label: "News",
-    to: "/news",
-    children: [
+  { label: "News", to: "/news", children: [
       { label: "News & Announcements", to: "/news", desc: "Latest updates" },
       { label: "Events", to: "/events", desc: "Symposiums, fests & competitions" },
     ],
   },
+  { label: "Alumni", to: "/alumni" },
   { label: "Contact", to: "/contact" },
 ];
 

@@ -43,11 +43,11 @@ const cols = [
 
 export function Footer() {
   return (
-    <footer className="relative bg-primary-deep text-primary-foreground overflow-hidden">
+    <footer className="relative bg-primary-deep text-primary-foreground overflow-hidden w-full">
       <div className="absolute top-0 left-1/4 size-[500px] bg-gold/10 rounded-full blur-[140px] -translate-y-1/2 pointer-events-none" />
       <div className="absolute bottom-0 right-0 size-[400px] bg-primary-glow/30 rounded-full blur-[140px] translate-y-1/2 pointer-events-none" />
 
-      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-8 pt-20 pb-10">
+      <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
         <div className="grid lg:grid-cols-12 gap-12 pb-16 border-b border-white/10">
           <div className="lg:col-span-4">
             <Link to="/" className="block">

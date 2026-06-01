@@ -4,7 +4,7 @@ import { ArrowLeft, CloudLightning, FolderSync, CheckCircle2, Bookmark, Graduati
     Users, Dumbbell,Trophy, Sparkles,Droplet, Inbox, BrainCircuit,HeartPulse,Trash2, Scale,Gavel, AlertTriangle,ShieldAlert, Briefcase, MapPin } from "lucide-react";
 
 const PageHero = ({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle: string }) => (
-  <div className="bg-primary text-primary-foreground py-16 px-6 border-b border-border bg-gradient-to-br from-primary via-primary to-primary/90">
+  <div className="bg-primary text-primary-foreground py-16 px-4 sm:px-6 border-b border-border bg-gradient-to-br from-primary via-primary to-primary/90 w-full overflow-hidden">
     <div className="max-w-5xl mx-auto space-y-3">
       <span className="text-xs uppercase tracking-widest font-bold text-gold-deep bg-primary-foreground/10 px-3 py-1 rounded-full">{eyebrow}</span>
       <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">{title}</h1>

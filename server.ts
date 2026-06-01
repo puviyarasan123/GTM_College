@@ -1,10 +1,18 @@
 import "dotenv/config";
 import express from "express";
+import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { SignJWT, jwtVerify } from "jose";
 import bcrypt from "bcryptjs";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // ── Prisma ────────────────────────────────────────────────────────────────────
 const adapter = new PrismaPg(process.env.DIRECT_URL ?? process.env.DATABASE_URL!);
@@ -30,7 +38,8 @@ async function verifyStudentToken(token: string) {
 }
 
 const app = express();
-app.use(express.json());
+app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 app.use(cookieParser());
 
 app.all("/api/*splat", async (req, res) => {
@@ -250,6 +259,216 @@ app.all("/api/*splat", async (req, res) => {
       await requireAdmin();
       const { id, password } = req.body;
       await prisma.adminUser.update({ where: { id }, data: { password: await bcrypt.hash(password, 10) } });
+      return res.json({ ok: true });
+    }
+
+    // ── Image Upload (Cloudinary) ─────────────────────────────────────────────
+    if (route === "upload/image") {
+      await requireAdmin();
+      const { base64, mimeType, folder } = req.body as { base64: string; mimeType: string; folder?: string };
+      const isPdf = mimeType === "application/pdf";
+      const result = await cloudinary.uploader.upload(`data:${mimeType};base64,${base64}`, {
+        folder: folder ?? "gtmc",
+        resource_type: isPdf ? "raw" : "image",
+      });
+      return res.json({ url: result.secure_url });
+    }
+
+    // ── Site Images ───────────────────────────────────────────────────────────
+    if (route === "site-images") {
+      const row = await prisma.siteContent.findUnique({ where: { section: "site-images" } });
+      return res.json(row ? (row.data as object) : {});
+    }
+    if (route === "site-images/save") {
+      await requireAdmin();
+      const { data } = req.body;
+      await prisma.siteContent.upsert({
+        where: { section: "site-images" },
+        update: { data },
+        create: { section: "site-images", data },
+      });
+      return res.json({ ok: true });
+    }
+
+    // ── Faculty ───────────────────────────────────────────────────────────────
+    if (route === "faculty") {
+      const row = await prisma.siteContent.findUnique({ where: { section: "faculty" } });
+      return res.json(row ? (row.data as unknown[]) : []);
+    }
+    if (route === "faculty/save") {
+      await requireAdmin();
+      const { data } = req.body;
+      await prisma.siteContent.upsert({
+        where: { section: "faculty" },
+        update: { data },
+        create: { section: "faculty", data },
+      });
+      return res.json({ ok: true });
+    }
+
+    // ── Courses ───────────────────────────────────────────────────────────
+    if (route === "courses") {
+      const row = await prisma.siteContent.findUnique({ where: { section: "courses" } });
+      return res.json(row ? (row.data as object) : { ug: [], pg: [], research: [] });
+    }
+    if (route === "courses/save") {
+      await requireAdmin();
+      const { data } = req.body;
+      await prisma.siteContent.upsert({
+        where: { section: "courses" },
+        update: { data },
+        create: { section: "courses", data },
+      });
+      return res.json({ ok: true });
+    }
+
+    // ── Alumni ───────────────────────────────────────────────────────────
+    if (route === "alumni") {
+      const row = await prisma.siteContent.findUnique({ where: { section: "alumni" } });
+      return res.json(row ? (row.data as object) : null);
+    }
+    if (route === "alumni/save") {
+      await requireAdmin();
+      const { data } = req.body;
+      await prisma.siteContent.upsert({
+        where: { section: "alumni" },
+        update: { data },
+        create: { section: "alumni", data },
+      });
+      return res.json({ ok: true });
+    }
+
+    // ── Principal ─────────────────────────────────────────────────────────────
+    if (route === "principal") {
+      const row = await prisma.siteContent.findUnique({ where: { section: "principal" } });
+      return res.json(row ? (row.data as object) : null);
+    }
+    if (route === "principal/save") {
+      await requireAdmin();
+      const { data } = req.body;
+      await prisma.siteContent.upsert({
+        where: { section: "principal" },
+        update: { data },
+        create: { section: "principal", data },
+      });
+      return res.json({ ok: true });
+    }
+
+    // ── Dynamic Sections (IQAC / NIRF / AQAR) ────────────────────────────────
+    if (route === "dynamic-sections") {
+      const { group } = req.query as Record<string, string>;
+      const where = { ...(group ? { group } : {}), active: true };
+      return res.json(await prisma.dynamicSection.findMany({ where, orderBy: { order: "asc" } }));
+    }
+    if (route === "dynamic-sections/all") {
+      await requireAdmin();
+      const { group } = req.query as Record<string, string>;
+      return res.json(await prisma.dynamicSection.findMany({ where: group ? { group } : undefined, orderBy: [{ group: "asc" }, { order: "asc" }] }));
+    }
+    if (route === "dynamic-sections/get") {
+      const { group, slug } = req.query as Record<string, string>;
+      return res.json(await prisma.dynamicSection.findUnique({ where: { group_slug: { group, slug } } }));
+    }
+    if (route === "dynamic-sections/save") {
+      await requireAdmin();
+      const { id, group, slug, title, subtitle, content, pdfUrl, pdfs, order, active } = req.body;
+      const data = { group, slug, title, subtitle, content, pdfUrl: pdfUrl ?? "", pdfs: pdfs ?? [], order: order ?? 0, active: active ?? true };
+      if (id) {
+        return res.json(await prisma.dynamicSection.update({ where: { id }, data }));
+      }
+      return res.json(await prisma.dynamicSection.create({ data }));
+    }
+    if (route === "dynamic-sections/delete") {
+      await requireAdmin();
+      await prisma.dynamicSection.delete({ where: { id: req.body.id } });
+      return res.json({ ok: true });
+    }
+
+    // ── Enquiries ─────────────────────────────────────────────────────────────
+    if (route === "enquiry/submit") {
+      const { source, name, email, phone, course, message } = req.body;
+      const enquiry = await prisma.enquiry.create({ data: { source, name, email, phone, course, message } });
+      return res.json(enquiry);
+    }
+    if (route === "enquiry/list") {
+      await requireAdmin();
+      const { unread } = req.query as Record<string, string>;
+      const enquiries = await prisma.enquiry.findMany({
+        where: unread === "1" ? { read: false } : undefined,
+        orderBy: { submittedAt: "desc" },
+      });
+      return res.json(enquiries);
+    }
+    if (route === "enquiry/mark-read") {
+      await requireAdmin();
+      await prisma.enquiry.update({ where: { id: req.body.id }, data: { read: true } });
+      return res.json({ ok: true });
+    }
+    if (route === "enquiry/delete") {
+      await requireAdmin();
+      await prisma.enquiry.delete({ where: { id: req.body.id } });
+      return res.json({ ok: true });
+    }
+    if (route === "enquiry/stats") {
+      await requireAdmin();
+      const [total, unread] = await Promise.all([
+        prisma.enquiry.count(),
+        prisma.enquiry.count({ where: { read: false } }),
+      ]);
+      return res.json({ total, unread });
+    }
+
+    // ── Testimonials ─────────────────────────────────────────────────────────────
+    if (route === "testimonials") {
+      const all = req.query.all === "1";
+      return res.json(await prisma.testimonial.findMany({ where: all ? undefined : { active: true }, orderBy: { order: "asc" } }));
+    }
+    if (route === "testimonials/create") { await requireAdmin(); return res.json(await prisma.testimonial.create({ data: req.body })); }
+    if (route === "testimonials/update") { await requireAdmin(); const { id, ...data } = req.body; return res.json(await prisma.testimonial.update({ where: { id }, data })); }
+    if (route === "testimonials/delete") { await requireAdmin(); await prisma.testimonial.delete({ where: { id: req.body.id } }); return res.json({ ok: true }); }
+
+    // ── Feedback Forms (Public) ───────────────────────────────────────────────
+    if (route === "feedback/forms") {
+      const forms = await prisma.feedbackForm.findMany({ where: { active: true } });
+      return res.json(forms);
+    }
+    if (route === "feedback/submit") {
+      const { category, data } = req.body;
+      const form = await prisma.feedbackForm.findUnique({ where: { category } });
+      if (!form) return res.status(404).json({ message: "Form not found" });
+      const response = await prisma.feedbackResponse.create({ data: { formId: form.id, category, data } });
+      return res.json(response);
+    }
+
+    // ── Feedback Forms (Admin) ────────────────────────────────────────────────
+    if (route === "feedback/admin/forms") {
+      await requireAdmin();
+      const forms = await prisma.feedbackForm.findMany({ include: { _count: { select: { responses: true } } } });
+      return res.json(forms);
+    }
+    if (route === "feedback/admin/form/save") {
+      await requireAdmin();
+      const { category, fields, active } = req.body;
+      const form = await prisma.feedbackForm.upsert({
+        where: { category },
+        update: { fields, active },
+        create: { category, fields, active: active ?? true },
+      });
+      return res.json(form);
+    }
+    if (route === "feedback/admin/responses") {
+      await requireAdmin();
+      const { category } = req.query as Record<string, string>;
+      const responses = await prisma.feedbackResponse.findMany({
+        where: category ? { category: category as never } : undefined,
+        include: { form: { select: { category: true } } },
+        orderBy: { submittedAt: "desc" },
+      });
+      return res.json(responses);
+    }
+    if (route === "feedback/admin/response/delete") {
+      await requireAdmin();
+      await prisma.feedbackResponse.delete({ where: { id: req.body.id } });
       return res.json({ ok: true });
     }
 
