@@ -243,8 +243,8 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
   ],
 },
 {
-  label: "NAAC",
-  to: "/compliance/nirf", // Default landing page for the interactive compliance sections
+  label: "Compliance",
+  to: "/compliance/nirf",
   children: [
     { 
       label: "12B & 2F", 
@@ -315,9 +315,9 @@ export const NAV: { label: string; to: string; children?: { label: string; to: s
 
 export const TICKER = [
   "Admissions open 2025–26 — apply now for UG & PG programmes",
-  "Govt. Thirumagal Mills College, Gudiyattam — Est. 1974",
+  "Govt. Thirumagal Mills College, Gudiyattam — Est. 1964",
   "Affiliated to Thiruvalluvar University, Vellore",
-  "NAAC Accredited institution with quality education",
+  "Affiliated to Thiruvalluvar University — UGC Recognised institution",
   "Contact us: 04171-220162 | principal@gtmc.edu.in",
 ];
 
@@ -459,7 +459,7 @@ export const NEWS = [
   { date: "May 10, 2025", category: "Research", title: "GTMC faculty publishes research in national journals", excerpt: "Faculty members from Science departments publish research papers in peer-reviewed national publications." },
   { date: "Apr 28, 2025", category: "Placements", title: "TCS & Infosys recruit students from CS & IT departments", excerpt: "Annual campus recruitment drive concludes with excellent results across Computer Science and IT departments." },
   { date: "Apr 14, 2025", category: "Events", title: "Annual Science Symposium 2025 — Inter-collegiate event", excerpt: "Two-day event hosted students from 30+ colleges with project displays, paper presentations and competitions." },
-  { date: "Apr 02, 2025", category: "Awards", title: "NAAC Accreditation status maintained", excerpt: "Institution continues to maintain NAAC accreditation, reflecting commitment to quality education." },
+  { date: "Apr 02, 2025", category: "Awards", title: "UGC Recognition status maintained", excerpt: "Institution continues to maintain UGC recognition, reflecting commitment to quality education." },
 ];
 
 export const EVENTS = [

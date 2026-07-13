@@ -31,9 +31,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Govt. Thirumagal Mills College, Gudiyattam — Empowering Minds, Shaping Futures" },
-      { name: "description", content: "Govt. Thirumagal Mills College, Gudiyattam — Affiliated to Thiruvalluvar University. Quality UG programmes in Science, Arts, Commerce & Management. Est. 1974." },
+      { name: "description", content: "Govt. Thirumagal Mills College, Gudiyattam — Affiliated to Thiruvalluvar University. Quality UG programmes in Science, Arts, Commerce & Management. Est. 1964." },
       { property: "og:title", content: "Govt. Thirumagal Mills College, Gudiyattam" },
-      { property: "og:description", content: "Serving rural students with quality higher education since 1974. Admissions open for 2025–26." },
+      { property: "og:description", content: "Serving rural students with quality higher education since 1964. Admissions open for 2025–26." },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
@@ -45,7 +45,7 @@ const HERO_DEFAULTS = [
     img: "/hero1.jpg",
     eyebrow: "Admissions 2025–26 Open",
     title: "Empowering Minds, Shaping Futures.",
-    sub: "Govt. Thirumagal Mills College, Gudiyattam — serving rural students with quality higher education since 1974.",
+    sub: "Govt. Thirumagal Mills College, Gudiyattam — serving rural students with quality higher education since 1964.",
   },
   {
     img: "/hero2.jpg",
@@ -55,7 +55,7 @@ const HERO_DEFAULTS = [
   },
   {
     img: "/hero3.jpg",
-    eyebrow: "NAAC Accredited Institution",
+    eyebrow: "UGC Recognised Institution",
     title: "Discover. Learn. Grow.",
     sub: "Well-equipped labs, a rich library and vibrant campus life to nurture every student's potential.",
   },
@@ -196,7 +196,7 @@ function Index() {
       {/* ACCREDITATIONS */}
       <section className="py-14">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center items-center gap-x-8 gap-y-4 text-primary/60">
-          {["NAAC Accredited", "Thiruvalluvar University Affiliated", "UGC Recognised", "Govt. of Tamil Nadu", "AISHE Registered", "Directorate of Collegiate Education"].map((b) => (
+          {["Thiruvalluvar University Affiliated", "UGC Recognised", "Govt. of Tamil Nadu", "AISHE Registered", "Directorate of Collegiate Education"].map((b) => (
             <span key={b} className="text-[11px] font-bold uppercase tracking-[0.25em]">{b}</span>
           ))}
         </div>
@@ -230,7 +230,7 @@ function Index() {
           </p>
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
-              { i: Award, t: "NAAC Accredited" },
+              { i: Award, t: "UGC Recognised" },
               { i: Users, t: "100+ Qualified Faculty" },
               { i: Building2, t: "Government Institution" },
               { i: BookOpen, t: "12 Departments" },

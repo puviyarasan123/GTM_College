@@ -92,8 +92,8 @@ export const Route = createFileRoute("/about")({
 const pillars = [
   { 
     icon: Award, 
-    title: "NAAC Accredited (B+ Grade)", 
-    desc: "Accredited by the NAAC Executive Committee with a CGPA of 2.55 on September 12, 2017." 
+    title: "UGC Recognised", 
+    desc: "Recognised by the University Grants Commission, ensuring quality standards in higher education." 
   },
   { 
     icon: BookOpen, 

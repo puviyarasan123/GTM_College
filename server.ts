@@ -42,6 +42,8 @@ app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 app.use(cookieParser());
 
+app.get("/api/health", (_req, res) => res.json({ ok: true }));
+
 app.all("/api/*splat", async (req, res) => {
   const rawSplat = (req.params as { splat?: string | string[] }).splat;
   const route = Array.isArray(rawSplat) ? rawSplat.join("/") : (rawSplat ?? "");
