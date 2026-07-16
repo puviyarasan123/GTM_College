@@ -11,7 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Plus, Trash2, Pencil, X, Check, Upload, Loader2, FileText, ExternalLink } from "lucide-react";
+import { Plus, Trash2, Pencil, X, Check, Upload, Loader2, FileText, ExternalLink, ChevronUp, ChevronDown, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/_layout/dynamic-sections")({
@@ -55,10 +55,20 @@ async function uploadPdf(file: File): Promise<string> {
   });
 }
 
-// ── PDF List Editor ───────────────────────────────────────────────────────────
+// ── Document List Editor ──────────────────────────────────────────────────────
+/** Filename minus its extension, used as the default document title. */
+function titleFromFile(name: string) {
+  return name.replace(/\.(pdf|zip)$/i, "");
+}
+
 function PdfListEditor({ pdfs, onChange }: { pdfs: PdfEntry[]; onChange: (p: PdfEntry[]) => void }) {
-  const [uploading, setUploading] = useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
+  const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
+  const addRef = useRef<HTMLInputElement>(null);
+  const replaceRef = useRef<HTMLInputElement>(null);
+  // Held in a ref, not state: the file dialog is opened in the same tick as the
+  // click, before a state update would have been applied.
+  const replaceIdx = useRef<number | null>(null);
+  const busy = progress !== null;
 
   function updateTitle(i: number, title: string) {
     const next = [...pdfs];
@@ -70,54 +80,154 @@ function PdfListEditor({ pdfs, onChange }: { pdfs: PdfEntry[]; onChange: (p: Pdf
     onChange(pdfs.filter((_, idx) => idx !== i));
   }
 
-  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+  /** Swap a document with its neighbour — the list order is the display order. */
+  function move(i: number, dir: -1 | 1) {
+    const j = i + dir;
+    if (j < 0 || j >= pdfs.length) return;
+    const next = [...pdfs];
+    [next[i], next[j]] = [next[j], next[i]];
+    onChange(next);
+  }
+
+  async function handleAdd(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    if (!files.length) return;
+    setProgress({ done: 0, total: files.length });
+
+    const added: PdfEntry[] = [];
+    const failed: string[] = [];
+    for (const [k, file] of files.entries()) {
+      try {
+        added.push({ title: titleFromFile(file.name), url: await uploadPdf(file) });
+      } catch {
+        failed.push(file.name);
+      }
+      setProgress({ done: k + 1, total: files.length });
+    }
+
+    if (added.length) onChange([...pdfs, ...added]);
+    if (added.length) toast.success(`${added.length} document${added.length > 1 ? "s" : ""} uploaded`);
+    if (failed.length) toast.error(`Failed: ${failed.join(", ")} — check the file is a PDF/ZIP under 50MB`);
+
+    setProgress(null);
+    if (addRef.current) addRef.current.value = "";
+  }
+
+  async function handleReplace(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
+    const i = replaceIdx.current;
+    if (!file || i === null) return;
+    setProgress({ done: 0, total: 1 });
     try {
       const url = await uploadPdf(file);
-      onChange([...pdfs, { title: file.name.replace(/\.(pdf|zip)$/i, ""), url }]);
-      toast.success("Document uploaded!");
-    } catch { toast.error("Upload failed — check file size (max 50MB)"); }
-    finally { setUploading(false); if (fileRef.current) fileRef.current.value = ""; }
+      const next = [...pdfs];
+      // Keep any title the admin typed; fall back to the new filename.
+      next[i] = { title: next[i]?.title || titleFromFile(file.name), url };
+      onChange(next);
+      toast.success("Document replaced");
+    } catch {
+      toast.error("Replace failed — check the file is a PDF/ZIP under 50MB");
+    }
+    setProgress(null);
+    replaceIdx.current = null;
+    if (replaceRef.current) replaceRef.current.value = "";
+  }
+
+  function startReplace(i: number) {
+    replaceIdx.current = i;
+    replaceRef.current?.click();
   }
 
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <Label className="text-xs">PDF Documents</Label>
+        <Label className="text-xs">
+          Documents{pdfs.length > 0 && <span className="text-muted-foreground font-normal"> ({pdfs.length})</span>}
+        </Label>
         <button
           type="button"
-          onClick={() => fileRef.current?.click()}
-          disabled={uploading}
+          onClick={() => addRef.current?.click()}
+          disabled={busy}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-secondary text-xs font-semibold hover:bg-secondary/80 disabled:opacity-60"
         >
-          {uploading ? <Loader2 className="size-3.5 animate-spin" /> : <Upload className="size-3.5" />}
-          {uploading ? "Uploading..." : "Upload Document"}
+          {busy ? <Loader2 className="size-3.5 animate-spin" /> : <Upload className="size-3.5" />}
+          {busy ? `Uploading ${progress.done}/${progress.total}...` : "Upload Documents"}
         </button>
-        <input ref={fileRef} type="file" accept="application/pdf,application/zip,.pdf,.zip" className="hidden" onChange={handleFile} />
+        <input
+          ref={addRef}
+          type="file"
+          multiple
+          accept="application/pdf,application/zip,.pdf,.zip"
+          className="hidden"
+          onChange={handleAdd}
+        />
+        <input
+          ref={replaceRef}
+          type="file"
+          accept="application/pdf,application/zip,.pdf,.zip"
+          className="hidden"
+          onChange={handleReplace}
+        />
       </div>
 
-      {pdfs.length === 0 && (
-        <p className="text-xs text-muted-foreground py-2 text-center border border-dashed rounded-lg">
-          No PDFs yet. Click "Upload PDF" to add one.
+      {pdfs.length === 0 && !busy && (
+        <p className="text-xs text-muted-foreground py-3 text-center border border-dashed rounded-lg">
+          No documents yet. Click "Upload Documents" — you can select several at once.
         </p>
       )}
 
       <div className="space-y-2">
         {pdfs.map((pdf, i) => (
           <div key={i} className="flex items-center gap-2 p-2 rounded-lg border bg-muted/30">
-            <FileText className="size-4 text-red-500 shrink-0" />
+            <div className="flex flex-col shrink-0">
+              <button
+                type="button"
+                onClick={() => move(i, -1)}
+                disabled={i === 0 || busy}
+                title="Move up"
+                className="text-muted-foreground hover:text-foreground disabled:opacity-25 disabled:hover:text-muted-foreground"
+              >
+                <ChevronUp className="size-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => move(i, 1)}
+                disabled={i === pdfs.length - 1 || busy}
+                title="Move down"
+                className="text-muted-foreground hover:text-foreground disabled:opacity-25 disabled:hover:text-muted-foreground"
+              >
+                <ChevronDown className="size-3.5" />
+              </button>
+            </div>
+
+            <FileText className={`size-4 shrink-0 ${pdf.url.endsWith(".zip") ? "text-amber-500" : "text-red-500"}`} />
+
             <Input
               value={pdf.title}
               onChange={(e) => updateTitle(i, e.target.value)}
               placeholder="Document title"
               className="flex-1 h-7 text-xs"
             />
-            <a href={pdf.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80">
+
+            <button
+              type="button"
+              onClick={() => startReplace(i)}
+              disabled={busy}
+              title="Replace file"
+              className="text-muted-foreground hover:text-primary disabled:opacity-40"
+            >
+              <RefreshCw className="size-3.5" />
+            </button>
+            <a href={pdf.url} target="_blank" rel="noopener noreferrer" title="Open file" className="text-primary hover:text-primary/80">
               <ExternalLink className="size-3.5" />
             </a>
-            <button type="button" onClick={() => remove(i)} className="text-red-500 hover:text-red-600">
+            <button
+              type="button"
+              onClick={() => remove(i)}
+              disabled={busy}
+              title="Remove document"
+              className="text-red-500 hover:text-red-600 disabled:opacity-40"
+            >
               <Trash2 className="size-3.5" />
             </button>
           </div>
@@ -268,7 +378,7 @@ function GroupTab({ group }: { group: string }) {
                     {!s.active && <Badge variant="secondary" className="text-[10px]">Hidden</Badge>}
                     {(s.pdfs as PdfEntry[])?.length > 0 && (
                       <Badge variant="outline" className="text-[10px] gap-1">
-                        <FileText className="size-2.5" /> {(s.pdfs as PdfEntry[]).length} PDF{(s.pdfs as PdfEntry[]).length > 1 ? "s" : ""}
+                        <FileText className="size-2.5" /> {(s.pdfs as PdfEntry[]).length} doc{(s.pdfs as PdfEntry[]).length > 1 ? "s" : ""}
                       </Badge>
                     )}
                   </div>
