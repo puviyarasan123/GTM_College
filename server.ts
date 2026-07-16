@@ -14,6 +14,21 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+/**
+ * Builds a public_id for a Cloudinary `raw` upload that keeps its file
+ * extension, so the delivery URL carries the right Content-Type. A timestamp
+ * prefix keeps re-uploads of the same filename from overwriting each other.
+ */
+function rawPublicId(filename: string | undefined, mimeType: string) {
+  const ext = mimeType === "application/zip" ? "zip" : "pdf";
+  const base = (filename ?? `document.${ext}`)
+    .replace(/\.[^.]+$/, "")
+    .replace(/[^\w-]+/g, "_")
+    .replace(/^_+|_+$/g, "")
+    .slice(0, 80) || "document";
+  return `${Date.now()}-${base}.${ext}`;
+}
+
 // ── Prisma ────────────────────────────────────────────────────────────────────
 const adapter = new PrismaPg(process.env.DIRECT_URL ?? process.env.DATABASE_URL!);
 const prisma = new PrismaClient({ adapter });
@@ -267,11 +282,15 @@ app.all("/api/*splat", async (req, res) => {
     // ── Image Upload (Cloudinary) ─────────────────────────────────────────────
     if (route === "upload/image") {
       await requireAdmin();
-      const { base64, mimeType, folder } = req.body as { base64: string; mimeType: string; folder?: string };
-      const isPdf = mimeType === "application/pdf";
+      const { base64, mimeType, folder, filename } = req.body as { base64: string; mimeType: string; folder?: string; filename?: string };
+      const isRaw = mimeType === "application/pdf" || mimeType === "application/zip";
       const result = await cloudinary.uploader.upload(`data:${mimeType};base64,${base64}`, {
         folder: folder ?? "gtmc",
-        resource_type: isPdf ? "raw" : "image",
+        resource_type: isRaw ? "raw" : "image",
+        // Keep the extension on raw assets — Cloudinary derives Content-Type
+        // from the delivery URL, and an extensionless one downloads as
+        // application/octet-stream instead of opening in the browser.
+        ...(isRaw ? { public_id: rawPublicId(filename, mimeType) } : {}),
       });
       return res.json({ url: result.secure_url });
     }

@@ -42,6 +42,21 @@ async function verifyStudentToken(token: string) {
   catch { return null; }
 }
 
+/**
+ * Builds a public_id for a Cloudinary `raw` upload that keeps its file
+ * extension, so the delivery URL carries the right Content-Type. A timestamp
+ * prefix keeps re-uploads of the same filename from overwriting each other.
+ */
+function rawPublicId(filename: string | undefined, mimeType: string) {
+  const ext = mimeType === "application/zip" ? "zip" : "pdf";
+  const base = (filename ?? `document.${ext}`)
+    .replace(/\.[^.]+$/, "")
+    .replace(/[^\w-]+/g, "_")
+    .replace(/^_+|_+$/g, "")
+    .slice(0, 80) || "document";
+  return `${Date.now()}-${base}.${ext}`;
+}
+
 function getCookie(req: VercelRequest, name: string) {
   const match = (req.headers.cookie ?? "").match(new RegExp(`${name}=([^;]+)`));
   return match ? match[1] : null;
@@ -241,6 +256,36 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.json(await prisma.siteContent.upsert({ where: { section }, update: { data }, create: { section, data } }));
     }
 
+    // ── Dynamic Sections (IQAC / NIRF / AQAR) ─────────────────────────────────
+    if (route === "dynamic-sections") {
+      const { group } = req.query as Record<string, string>;
+      const where = { ...(group ? { group } : {}), active: true };
+      return res.json(await prisma.dynamicSection.findMany({ where, orderBy: { order: "asc" } }));
+    }
+    if (route === "dynamic-sections/all") {
+      await requireAdmin(req);
+      const { group } = req.query as Record<string, string>;
+      return res.json(await prisma.dynamicSection.findMany({ where: group ? { group } : undefined, orderBy: [{ group: "asc" }, { order: "asc" }] }));
+    }
+    if (route === "dynamic-sections/get") {
+      const { group, slug } = req.query as Record<string, string>;
+      return res.json(await prisma.dynamicSection.findUnique({ where: { group_slug: { group, slug } } }));
+    }
+    if (route === "dynamic-sections/save") {
+      await requireAdmin(req);
+      const { id, group, slug, title, subtitle, content, pdfUrl, pdfs, order, active } = req.body;
+      const data = { group, slug, title, subtitle, content, pdfUrl: pdfUrl ?? "", pdfs: pdfs ?? [], order: order ?? 0, active: active ?? true };
+      if (id) {
+        return res.json(await prisma.dynamicSection.update({ where: { id }, data }));
+      }
+      return res.json(await prisma.dynamicSection.create({ data }));
+    }
+    if (route === "dynamic-sections/delete") {
+      await requireAdmin(req);
+      await prisma.dynamicSection.delete({ where: { id: req.body.id } });
+      return res.json({ ok: true });
+    }
+
     // ── Faculty ───────────────────────────────────────────────────────────────
     if (route === "faculty") {
       const row = await prisma.siteContent.findUnique({ where: { section: "faculty" } });
@@ -280,13 +325,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // ── Image Upload (Cloudinary) ──────────────────────────────────────────────────
     if (route === "upload/image") {
       await requireAdmin(req);
-      const { base64, mimeType, folder = "gtmc" } = req.body as { base64: string; mimeType: string; folder?: string };
+      const { base64, mimeType, folder = "gtmc", filename } = req.body as { base64: string; mimeType: string; folder?: string; filename?: string };
       if (!base64 || !mimeType) return res.status(400).json({ message: "base64 and mimeType required" });
       const dataUri = `data:${mimeType};base64,${base64}`;
+      // Documents must go up as `raw` — image transformations would corrupt them.
+      const isRaw = mimeType === "application/pdf" || mimeType === "application/zip";
       const result = await cloudinary.uploader.upload(dataUri, {
         folder,
-        resource_type: "image",
-        transformation: [{ quality: "auto", fetch_format: "auto" }],
+        resource_type: isRaw ? "raw" : "image",
+        // For `raw` assets Cloudinary derives Content-Type from the delivery URL,
+        // so the public_id must keep its extension or browsers download the file
+        // as application/octet-stream with no extension.
+        ...(isRaw ? { public_id: rawPublicId(filename, mimeType) } : { transformation: [{ quality: "auto", fetch_format: "auto" }] }),
       });
       return res.json({ url: result.secure_url, publicId: result.public_id });
     }
@@ -325,6 +375,111 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       await requireAdmin(req);
       const { id, password } = req.body;
       await prisma.adminUser.update({ where: { id }, data: { password: await bcrypt.hash(password, 10) } });
+      return res.json({ ok: true });
+    }
+
+    // ── Courses ───────────────────────────────────────────────────────────────
+    if (route === "courses") {
+      const row = await prisma.siteContent.findUnique({ where: { section: "courses" } });
+      return res.json(row ? (row.data as object) : { ug: [], pg: [], research: [] });
+    }
+    if (route === "courses/save") {
+      await requireAdmin(req);
+      const { data } = req.body;
+      await prisma.siteContent.upsert({ where: { section: "courses" }, update: { data }, create: { section: "courses", data } });
+      return res.json({ ok: true });
+    }
+
+    // ── Alumni ────────────────────────────────────────────────────────────────
+    if (route === "alumni") {
+      const row = await prisma.siteContent.findUnique({ where: { section: "alumni" } });
+      return res.json(row ? (row.data as object) : null);
+    }
+    if (route === "alumni/save") {
+      await requireAdmin(req);
+      const { data } = req.body;
+      await prisma.siteContent.upsert({ where: { section: "alumni" }, update: { data }, create: { section: "alumni", data } });
+      return res.json({ ok: true });
+    }
+
+    // ── Testimonials ──────────────────────────────────────────────────────────
+    if (route === "testimonials") {
+      const all = req.query.all === "1";
+      return res.json(await prisma.testimonial.findMany({ where: all ? undefined : { active: true }, orderBy: { order: "asc" } }));
+    }
+    if (route === "testimonials/create") { await requireAdmin(req); return res.json(await prisma.testimonial.create({ data: req.body })); }
+    if (route === "testimonials/update") { await requireAdmin(req); const { id, ...data } = req.body; return res.json(await prisma.testimonial.update({ where: { id }, data })); }
+    if (route === "testimonials/delete") { await requireAdmin(req); await prisma.testimonial.delete({ where: { id: req.body.id } }); return res.json({ ok: true }); }
+
+    // ── Enquiries ─────────────────────────────────────────────────────────────
+    if (route === "enquiry/submit") {
+      const { source, name, email, phone, course, message } = req.body;
+      return res.json(await prisma.enquiry.create({ data: { source, name, email, phone, course, message } }));
+    }
+    if (route === "enquiry/list") {
+      await requireAdmin(req);
+      const { unread } = req.query as Record<string, string>;
+      return res.json(await prisma.enquiry.findMany({
+        where: unread === "1" ? { read: false } : undefined,
+        orderBy: { submittedAt: "desc" },
+      }));
+    }
+    if (route === "enquiry/mark-read") {
+      await requireAdmin(req);
+      await prisma.enquiry.update({ where: { id: req.body.id }, data: { read: true } });
+      return res.json({ ok: true });
+    }
+    if (route === "enquiry/delete") {
+      await requireAdmin(req);
+      await prisma.enquiry.delete({ where: { id: req.body.id } });
+      return res.json({ ok: true });
+    }
+    if (route === "enquiry/stats") {
+      await requireAdmin(req);
+      const [total, unread] = await Promise.all([
+        prisma.enquiry.count(),
+        prisma.enquiry.count({ where: { read: false } }),
+      ]);
+      return res.json({ total, unread });
+    }
+
+    // ── Feedback Forms (Public) ───────────────────────────────────────────────
+    if (route === "feedback/forms") {
+      return res.json(await prisma.feedbackForm.findMany({ where: { active: true } }));
+    }
+    if (route === "feedback/submit") {
+      const { category, data } = req.body;
+      const form = await prisma.feedbackForm.findUnique({ where: { category } });
+      if (!form) return res.status(404).json({ message: "Form not found" });
+      return res.json(await prisma.feedbackResponse.create({ data: { formId: form.id, category, data } }));
+    }
+
+    // ── Feedback Forms (Admin) ────────────────────────────────────────────────
+    if (route === "feedback/admin/forms") {
+      await requireAdmin(req);
+      return res.json(await prisma.feedbackForm.findMany({ include: { _count: { select: { responses: true } } } }));
+    }
+    if (route === "feedback/admin/form/save") {
+      await requireAdmin(req);
+      const { category, fields, active } = req.body;
+      return res.json(await prisma.feedbackForm.upsert({
+        where: { category },
+        update: { fields, active },
+        create: { category, fields, active: active ?? true },
+      }));
+    }
+    if (route === "feedback/admin/responses") {
+      await requireAdmin(req);
+      const { category } = req.query as Record<string, string>;
+      return res.json(await prisma.feedbackResponse.findMany({
+        where: category ? { category: category as never } : undefined,
+        include: { form: { select: { category: true } } },
+        orderBy: { submittedAt: "desc" },
+      }));
+    }
+    if (route === "feedback/admin/response/delete") {
+      await requireAdmin(req);
+      await prisma.feedbackResponse.delete({ where: { id: req.body.id } });
       return res.json({ ok: true });
     }
 

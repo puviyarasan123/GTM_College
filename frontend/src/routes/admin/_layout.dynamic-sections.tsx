@@ -43,7 +43,7 @@ async function uploadPdf(file: File): Promise<string> {
         const res = await fetch("/api/upload/image", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ base64, mimeType, folder: "gtmc/docs" }),
+          body: JSON.stringify({ base64, mimeType, folder: "gtmc/docs", filename: file.name }),
         });
         if (!res.ok) throw new Error("Upload failed");
         const data = await res.json();
@@ -76,8 +76,8 @@ function PdfListEditor({ pdfs, onChange }: { pdfs: PdfEntry[]; onChange: (p: Pdf
     setUploading(true);
     try {
       const url = await uploadPdf(file);
-      onChange([...pdfs, { title: file.name.replace(".pdf", ""), url }]);
-      toast.success("PDF uploaded!");
+      onChange([...pdfs, { title: file.name.replace(/\.(pdf|zip)$/i, ""), url }]);
+      toast.success("Document uploaded!");
     } catch { toast.error("Upload failed — check file size (max 50MB)"); }
     finally { setUploading(false); if (fileRef.current) fileRef.current.value = ""; }
   }
@@ -93,9 +93,9 @@ function PdfListEditor({ pdfs, onChange }: { pdfs: PdfEntry[]; onChange: (p: Pdf
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-secondary text-xs font-semibold hover:bg-secondary/80 disabled:opacity-60"
         >
           {uploading ? <Loader2 className="size-3.5 animate-spin" /> : <Upload className="size-3.5" />}
-          {uploading ? "Uploading..." : "Upload PDF"}
+          {uploading ? "Uploading..." : "Upload Document"}
         </button>
-        <input ref={fileRef} type="file" accept="application/pdf" className="hidden" onChange={handleFile} />
+        <input ref={fileRef} type="file" accept="application/pdf,application/zip,.pdf,.zip" className="hidden" onChange={handleFile} />
       </div>
 
       {pdfs.length === 0 && (
