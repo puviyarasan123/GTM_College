@@ -4,6 +4,15 @@ import { useQuery } from "@tanstack/react-query";
 import { getDynamicSection } from "@/lib/content-fns";
 import type { PdfEntry } from "@/lib/content-fns";
 
+/**
+ * Browsers ignore the `download` attribute on cross-origin links, so a plain
+ * Cloudinary URL opens the file instead of saving it. `fl_attachment` makes
+ * Cloudinary send Content-Disposition: attachment, which does save it.
+ */
+function toDownloadUrl(url: string) {
+  return url.includes("/raw/upload/") ? url.replace("/raw/upload/", "/raw/upload/fl_attachment/") : url;
+}
+
 function PdfTable({ pdfs, title }: { pdfs: PdfEntry[]; title: string }) {
   if (!pdfs || pdfs.length === 0) return null;
   return (
@@ -44,7 +53,7 @@ function PdfTable({ pdfs, title }: { pdfs: PdfEntry[]; title: string }) {
                     <ExternalLink className="size-3.5" /> View
                   </a>
                   <a
-                    href={pdf.url}
+                    href={toDownloadUrl(pdf.url)}
                     download
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-secondary text-xs font-semibold hover:bg-secondary/80 transition-colors"
                   >
