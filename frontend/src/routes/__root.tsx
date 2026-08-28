@@ -1,8 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
+import { Outlet, Link, createRootRouteWithContext, useRouter, useRouterState } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { AnnouncementTicker } from "@/components/site/AnnouncementTicker";
+import { BackToTop } from "@/components/site/BackToTop";
 
 function NotFoundComponent() {
   return (
@@ -69,7 +70,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const isAdmin = typeof window !== "undefined" && window.location.pathname.startsWith("/admin");
+  // Read the path from the router, not `window` — the latter is not reactive,
+  // so the admin panel could briefly render inside the public shell.
+  const pathname = useRouterState({ select: (r) => r.location.pathname });
+  const isAdmin = pathname.startsWith("/admin");
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -83,6 +87,7 @@ function RootComponent() {
             <Outlet />
           </main>
           <Footer />
+          <BackToTop />
         </div>
       )}
     </QueryClientProvider>

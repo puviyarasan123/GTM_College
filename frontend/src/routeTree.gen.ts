@@ -62,6 +62,7 @@ import { Route as AdminLayoutFacultyRouteImport } from './routes/admin/_layout.f
 import { Route as AdminLayoutEventsRouteImport } from './routes/admin/_layout.events'
 import { Route as AdminLayoutEnquiriesRouteImport } from './routes/admin/_layout.enquiries'
 import { Route as AdminLayoutDynamicSectionsRouteImport } from './routes/admin/_layout.dynamic-sections'
+import { Route as AdminLayoutDepartmentsRouteImport } from './routes/admin/_layout.departments'
 import { Route as AdminLayoutDashboardRouteImport } from './routes/admin/_layout.dashboard'
 import { Route as AdminLayoutCoursesRouteImport } from './routes/admin/_layout.courses'
 import { Route as AdminLayoutContentRouteImport } from './routes/admin/_layout.content'
@@ -335,6 +336,11 @@ const AdminLayoutDynamicSectionsRoute =
     path: '/dynamic-sections',
     getParentRoute: () => AdminLayoutRoute,
   } as any)
+const AdminLayoutDepartmentsRoute = AdminLayoutDepartmentsRouteImport.update({
+  id: '/departments',
+  path: '/departments',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
 const AdminLayoutDashboardRoute = AdminLayoutDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -416,6 +422,7 @@ export interface FileRoutesByFullPath {
   '/admin/content': typeof AdminLayoutContentRoute
   '/admin/courses': typeof AdminLayoutCoursesRoute
   '/admin/dashboard': typeof AdminLayoutDashboardRoute
+  '/admin/departments': typeof AdminLayoutDepartmentsRoute
   '/admin/dynamic-sections': typeof AdminLayoutDynamicSectionsRoute
   '/admin/enquiries': typeof AdminLayoutEnquiriesRoute
   '/admin/events': typeof AdminLayoutEventsRoute
@@ -477,6 +484,7 @@ export interface FileRoutesByTo {
   '/admin/content': typeof AdminLayoutContentRoute
   '/admin/courses': typeof AdminLayoutCoursesRoute
   '/admin/dashboard': typeof AdminLayoutDashboardRoute
+  '/admin/departments': typeof AdminLayoutDepartmentsRoute
   '/admin/dynamic-sections': typeof AdminLayoutDynamicSectionsRoute
   '/admin/enquiries': typeof AdminLayoutEnquiriesRoute
   '/admin/events': typeof AdminLayoutEventsRoute
@@ -539,6 +547,7 @@ export interface FileRoutesById {
   '/admin/_layout/content': typeof AdminLayoutContentRoute
   '/admin/_layout/courses': typeof AdminLayoutCoursesRoute
   '/admin/_layout/dashboard': typeof AdminLayoutDashboardRoute
+  '/admin/_layout/departments': typeof AdminLayoutDepartmentsRoute
   '/admin/_layout/dynamic-sections': typeof AdminLayoutDynamicSectionsRoute
   '/admin/_layout/enquiries': typeof AdminLayoutEnquiriesRoute
   '/admin/_layout/events': typeof AdminLayoutEventsRoute
@@ -602,6 +611,7 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/courses'
     | '/admin/dashboard'
+    | '/admin/departments'
     | '/admin/dynamic-sections'
     | '/admin/enquiries'
     | '/admin/events'
@@ -663,6 +673,7 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/courses'
     | '/admin/dashboard'
+    | '/admin/departments'
     | '/admin/dynamic-sections'
     | '/admin/enquiries'
     | '/admin/events'
@@ -724,6 +735,7 @@ export interface FileRouteTypes {
     | '/admin/_layout/content'
     | '/admin/_layout/courses'
     | '/admin/_layout/dashboard'
+    | '/admin/_layout/departments'
     | '/admin/_layout/dynamic-sections'
     | '/admin/_layout/enquiries'
     | '/admin/_layout/events'
@@ -1155,6 +1167,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLayoutDynamicSectionsRouteImport
       parentRoute: typeof AdminLayoutRoute
     }
+    '/admin/_layout/departments': {
+      id: '/admin/_layout/departments'
+      path: '/departments'
+      fullPath: '/admin/departments'
+      preLoaderRoute: typeof AdminLayoutDepartmentsRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
     '/admin/_layout/dashboard': {
       id: '/admin/_layout/dashboard'
       path: '/dashboard'
@@ -1207,6 +1226,7 @@ interface AdminLayoutRouteChildren {
   AdminLayoutContentRoute: typeof AdminLayoutContentRoute
   AdminLayoutCoursesRoute: typeof AdminLayoutCoursesRoute
   AdminLayoutDashboardRoute: typeof AdminLayoutDashboardRoute
+  AdminLayoutDepartmentsRoute: typeof AdminLayoutDepartmentsRoute
   AdminLayoutDynamicSectionsRoute: typeof AdminLayoutDynamicSectionsRoute
   AdminLayoutEnquiriesRoute: typeof AdminLayoutEnquiriesRoute
   AdminLayoutEventsRoute: typeof AdminLayoutEventsRoute
@@ -1227,6 +1247,7 @@ const AdminLayoutRouteChildren: AdminLayoutRouteChildren = {
   AdminLayoutContentRoute: AdminLayoutContentRoute,
   AdminLayoutCoursesRoute: AdminLayoutCoursesRoute,
   AdminLayoutDashboardRoute: AdminLayoutDashboardRoute,
+  AdminLayoutDepartmentsRoute: AdminLayoutDepartmentsRoute,
   AdminLayoutDynamicSectionsRoute: AdminLayoutDynamicSectionsRoute,
   AdminLayoutEnquiriesRoute: AdminLayoutEnquiriesRoute,
   AdminLayoutEventsRoute: AdminLayoutEventsRoute,

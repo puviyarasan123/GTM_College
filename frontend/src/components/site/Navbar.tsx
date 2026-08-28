@@ -1,13 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Phone, Mail, MapPin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { NAV } from "@/lib/site-data";
+import { NAV, SITE } from "@/lib/site-data";
 import { useQuery } from "@tanstack/react-query";
-import { getDynamicSections } from "@/lib/content-fns";
+import { getDynamicSections, getDepartments } from "@/lib/content-fns";
 import type { DynamicSection } from "@/lib/content-fns";
 
+/**
+ * Header banner, tried in order — the file just needs to be dropped into
+ * `frontend/public/`. The fallbacks mean a `.jpg` (or a missing file) still
+ * leaves a working header rather than a broken image.
+ */
+const BANNER_SOURCES = ["/banner.png", "/banner.jpg", "/banner.jpeg", "/banner.webp", "/logonew.png"];
+
 export function Navbar() {
+  const [bannerIndex, setBannerIndex] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [active, setActive] = useState<string | null>(null);
@@ -18,6 +26,7 @@ export function Navbar() {
   const { data: iqacItems = [] } = useQuery({ queryKey: ["nav-iqac"], queryFn: () => getDynamicSections("iqac"), staleTime: 60000 });
   const { data: nirfItems = [] } = useQuery({ queryKey: ["nav-nirf"], queryFn: () => getDynamicSections("nirf"), staleTime: 60000 });
   const { data: aqarItems = [] } = useQuery({ queryKey: ["nav-aqar"], queryFn: () => getDynamicSections("aqar"), staleTime: 60000 });
+  const { data: departments = [] } = useQuery({ queryKey: ["nav-departments"], queryFn: getDepartments, staleTime: 60000 });
 
   function buildChildren(items: DynamicSection[], prefix: string) {
     return items.map((s) => ({ label: s.title, to: `/${prefix}/${s.slug}`, desc: s.subtitle }));
@@ -27,6 +36,18 @@ export function Navbar() {
     if (item.label === "IQAC" && iqacItems.length > 0) return { ...item, children: buildChildren(iqacItems, "iqac") };
     if (item.label === "NIRF" && nirfItems.length > 0) return { ...item, children: buildChildren(nirfItems, "nirf") };
     if (item.label === "AQAR" && aqarItems.length > 0) return { ...item, children: buildChildren(aqarItems, "aqar") };
+    // Departments are managed in the admin panel — mirror them into the menu.
+    if (item.label === "Departments" && departments.length > 0) {
+      return {
+        ...item,
+        to: `/departments/${departments[0].slug}`,
+        children: departments.map((d) => ({
+          label: d.name,
+          to: `/departments/${d.slug}`,
+          desc: d.summary || `Department of ${d.name}`,
+        })),
+      };
+    }
     return item;
   });
 
@@ -59,48 +80,71 @@ export function Navbar() {
   return (
     <header className={`sticky top-0 z-40 w-full transition-shadow duration-300 ${scrolled ? "shadow-elegant" : ""}`}>
 
-      {/* ── Logo row: full width image + buttons overlaid on right ── */}
-      <div className="relative w-full bg-white border-b border-border/40 overflow-hidden">
-        {/* Logo fills full width */}
-        <Link to="/" className="block w-full">
+      {/* ── Banner row: the sign board fills the full width ── */}
+      <div className="w-full bg-white">
+        <Link to="/" className="block w-full max-w-[1400px] mx-auto" aria-label="Govt. Thirumagal Mills College — home">
           <img
-            src="/logonew.png"
-            alt="Govt. Thirumagal Mills College"
-            className="w-full h-auto block"
-            style={{ imageRendering: "high-quality", maxHeight: "120px", objectFit: "cover", objectPosition: "left center" }}
+            src={BANNER_SOURCES[bannerIndex]}
+            onError={() => setBannerIndex((i) => Math.min(i + 1, BANNER_SOURCES.length - 1))}
+            alt="Government Thirumagal Mills College, Gudiyattam — NAAC Accredited B+ Grade College, affiliated to Thiruvalluvar University"
+            className="site-banner"
+            style={{ imageRendering: "high-quality" as const } as unknown as React.CSSProperties}
             decoding="async"
             fetchPriority="high"
           />
         </Link>
+      </div>
 
-        {/* Buttons overlaid on the right of the logo — desktop only */}
-        <div className="hidden lg:flex absolute right-6 top-1/2 -translate-y-1/2 flex-col items-stretch gap-2">
-          <a
-            href="/student/login"
-            className="text-sm font-semibold px-5 py-2 rounded-full border-2 border-primary text-primary bg-white hover:bg-primary hover:text-white transition-colors whitespace-nowrap shadow-sm text-center"
-          >
-            Student Login
-          </a>
-          <Link
-            to="/admission"
-            className="text-sm font-semibold px-5 py-2 rounded-full bg-gold text-primary-deep hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm text-center"
-          >
-            Apply Now
-          </Link>
+      {/* ── Contact + actions strip, directly under the banner ── */}
+      <div className="w-full bg-white border-b border-border/40">
+        <div className="max-w-[1400px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-primary min-w-0">
+            <a
+              href={`tel:${SITE.phone.replace(/[^\d+]/g, "")}`}
+              className="flex items-center gap-2 text-sm font-semibold hover:text-primary-glow transition-colors"
+            >
+              <Phone className="size-4 text-gold-deep shrink-0" />
+              {SITE.phone}
+            </a>
+            <a
+              href={`mailto:${SITE.email}`}
+              className="flex items-center gap-2 text-sm font-semibold hover:text-primary-glow transition-colors min-w-0"
+            >
+              <Mail className="size-4 text-gold-deep shrink-0" />
+              <span className="truncate">{SITE.email}</span>
+            </a>
+            <span className="hidden md:flex items-center gap-2 text-xs text-muted-foreground">
+              <MapPin className="size-4 text-gold-deep shrink-0" />
+              {SITE.address}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            <a
+              href="/student/login"
+              className="text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 rounded-full border-2 border-primary text-primary bg-white hover:bg-primary hover:text-white transition-colors whitespace-nowrap shadow-sm"
+            >
+              Student Login
+            </a>
+            <Link
+              to="/admission"
+              className="text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 rounded-full bg-gold text-primary-deep hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm"
+            >
+              Apply Now
+            </Link>
+            <button
+              onClick={() => setMobileOpen((v) => !v)}
+              className="xl:hidden shrink-0 size-9 grid place-items-center rounded-full bg-primary text-white"
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
         </div>
-
-        {/* Mobile hamburger overlaid on right */}
-        <button
-          onClick={() => setMobileOpen((v) => !v)}
-          className="lg:hidden absolute right-4 top-1/2 -translate-y-1/2 size-10 grid place-items-center rounded-full bg-primary text-white"
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
       </div>
 
       {/* ── Desktop nav bar — single row ── */}
-      <div className="bg-primary text-primary-foreground hidden lg:block w-full">
+      <div className="bg-primary text-primary-foreground hidden xl:block w-full">
         <div className="w-full px-2 xl:px-4">
           <nav className="flex items-center justify-between flex-nowrap w-full">
             {dynamicNav.map((item) => {
@@ -181,7 +225,7 @@ export function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22, ease: "easeInOut" }}
-            className="lg:hidden overflow-hidden bg-background border-t border-border w-full"
+            className="xl:hidden overflow-hidden bg-background border-t border-border w-full"
           >
             <div className="max-h-[78vh] overflow-y-auto divide-y divide-border/40">
               {dynamicNav.map((item) => (

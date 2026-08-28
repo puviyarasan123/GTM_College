@@ -120,7 +120,7 @@ function AdminPrincipalPage() {
             <div key={key}>
               <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground block mb-1.5">{label}</label>
               <input
-                value={(form as Record<string, string | null>)[key] ?? ""}
+                value={(form as unknown as Record<string, string | null>)[key] ?? ""}
                 onChange={(e) => setField(key as keyof PrincipalData, e.target.value)}
                 placeholder={placeholder}
                 className="w-full px-4 py-2.5 rounded-xl bg-secondary text-sm focus:outline-none focus:ring-2 focus:ring-primary border border-transparent focus:border-primary"

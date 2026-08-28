@@ -24,26 +24,65 @@ model SiteContent {
 }
 
 model News {
-  id        String   @id @default(cuid())
-  date      String
-  category  String
-  title     String
-  excerpt   String
-  published Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  date        String
+  category    String
+  title       String
+  excerpt     String
+  /// Full message body shown on the news page. Blank keeps the excerpt-only layout.
+  content     String   @default("")
+  /// [{ name, url, type }] — PDF/JPG/PNG files attached to the article.
+  attachments Json     @default("[]")
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Event {
-  id        String   @id @default(cuid())
-  day       String
-  month     String
-  title     String
-  venue     String
-  time      String
-  published Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  day         String
+  month       String
+  title       String
+  venue       String
+  time        String
+  /// Optional longer description shown on the events page.
+  description String   @default("")
+  /// Real calendar date, used to sort upcoming events ahead of past ones.
+  eventDate   DateTime?
+  /// [{ name, url, type }] — brochures / posters attached to the event.
+  attachments Json     @default("[]")
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Department {
+  id                 String   @id @default(cuid())
+  slug               String   @unique
+  name               String
+  /// Degree code shown on cards — B.Sc, B.A, B.Com, BBA, BCA…
+  code               String   @default("")
+  /// lucide-react icon name used on the department cards.
+  icon               String   @default("GraduationCap")
+  /// One-line description used on the home page and departments index.
+  summary            String   @default("")
+  eyebrow            String   @default("")
+  heroTitle          String   @default("")
+  heroSubtitle       String   @default("")
+  /// Ordered content blocks — see DeptBlock in frontend/src/lib/department-content.ts
+  blocks             Json     @default("[]")
+  staffHeading       String   @default("")
+  /// [{ sno, name, qualification, designation, shift, email }]
+  staff              Json     @default("[]")
+  supervisorsHeading String   @default("")
+  /// [{ sno, name, qualification, designation, mphil, phd }]
+  supervisors        Json     @default("[]")
+  /// Extra URL slugs that resolve to this department (legacy links).
+  aliases            Json     @default("[]")
+  order              Int      @default(0)
+  active             Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model Announcement {

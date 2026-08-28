@@ -55,7 +55,7 @@ export function Footer() {
                 src="/logonew.png"
                 alt="Govt. Thirumagal Mills College"
                 className="h-14 w-auto"
-                style={{ imageRendering: "high-quality" }}
+                style={{ imageRendering: "high-quality" as const } as unknown as React.CSSProperties}
                 decoding="async"
               />
             </Link>

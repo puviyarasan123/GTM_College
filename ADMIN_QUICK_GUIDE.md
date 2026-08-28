@@ -231,27 +231,70 @@ Check:
 
 ## 📱 Content Management
 
+Everything below is live content: the home page, the departments menu and the
+public pages all read straight from these screens. Save and the site is updated.
+
+### Managing Departments and Staff
+1. Go to the **Departments** section — every department page is listed
+2. Click the ✏️ icon to open a department. It has four tabs:
+   - **Details** — name, URL, degree code, card icon, card summary, hero text
+   - **Page content** — the write-up blocks that make up the page. Add a
+     *Text section* (paragraphs), a *Bullet list*, or *Highlight cards*, and use
+     the ↑ ↓ buttons to reorder them. Tick "Half width" on two neighbouring
+     blocks to place them side by side (used for Vision / Mission)
+   - **Staff details** — the staff table shown on the page. Edit any cell
+     directly, use ↑ ↓ to reorder, 🗑 to remove, "Add staff member" to append.
+     The SL. NO column is renumbered automatically on save
+   - **Supervisors** — the approved M.Phil / Ph.D. supervisors table
+3. Click **Save** (stays open) or **Save & close**
+4. Use 👁 in the list to hide a department from the website without deleting it,
+   and ↑ ↓ to change the order of the cards and the Departments menu
+
+Formatting tip: inside page content, `**text**` shows as **bold** and `*text*`
+as *italic*. Leave a blank line between paragraphs.
+
+If a department page used to have a different address, put the old name in
+"Alternate slugs" so existing links keep working.
+
 ### Managing News
 1. Go to "News" section
-2. Click "Add News" to create
-3. Fill: Date, Category, Title, Excerpt
-4. Toggle "Published" to make visible on website
-5. Click "Save"
+2. Click "New Article"
+3. Fill in:
+   - **Date** — pick from the calendar; the site shows it as "May 18, 2026"
+   - **Category** — e.g. Admissions, Placements, Notice
+   - **Title**
+   - **Short summary** — the line shown on cards and the home page
+   - **Message content** — the full announcement. Readers open it with
+     "Read full message". Leave a blank line between paragraphs
+   - **Attach a file** — upload a PDF or JPG (up to 10MB). Add as many as you
+     need; visitors get a download button for each one
+4. Toggle "Published" to make it visible on the website
+5. Click "Save" — it appears on the home page and the News page immediately
 
 ### Managing Events
 1. Go to "Events" section
-2. Click "Add Event"
-3. Fill: Day, Month, Title, Venue, Time
-4. Toggle "Published" to make visible
-5. Click "Save"
+2. Click "New Event"
+3. Set the **Event date** first — this fills in the day/month badge and keeps
+   upcoming events at the top of the home page and the Events page
+4. Fill: Title, Venue, Time, and an optional Description
+5. Attach a brochure or poster (PDF / JPG) if there is one
+6. Toggle "Published" to make it visible
+7. Click "Save"
+
+Events without a date are flagged "No date set" in the admin list — add one, or
+they sort below the dated events and never move to "past".
 
 ### Managing Announcements
 1. Go to "Announcements" section
-2. Click "Add Announcement"
-3. Enter announcement text
-4. Set order (lower numbers appear first)
-5. Toggle "Active" to show on website
-6. Click "Save"
+2. Click "New Announcement"
+3. Enter the announcement text
+4. Click "Save"
+5. Use ↑ ↓ to set the order they scroll in, and the toggle to show/hide one
+6. The **Live preview** at the top of the page is exactly what visitors see in
+   the scrolling bar at the top of the site
+
+If every announcement is switched off, the site falls back to its built-in
+default messages rather than showing an empty bar.
 
 ---
 

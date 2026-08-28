@@ -9,24 +9,44 @@ import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import {
   ArrowRight, Award, BookOpen, Building2, Calendar, ChevronRight, GraduationCap,
-  MapPin, Quote, Sparkles, Star, Trophy, Users,
+  MapPin, Paperclip, Quote, Sparkles, Star, Trophy, Users,
 } from "lucide-react";
 import {
-  STATS, DEPARTMENTS, RECRUITERS, PLACEMENT_HIGHLIGHTS,
-  FACULTY, NEWS, EVENTS, FACILITIES,
+  STATS, RECRUITERS, PLACEMENT_HIGHLIGHTS,
+  FACULTY, FACILITIES,
 } from "@/lib/site-data";
 import { Reveal, Section, SectionHeader } from "@/components/site/PageShell";
-import { getSiteImages, getTestimonials, submitEnquiry } from "@/lib/content-fns";
-import type { SiteImages, Testimonial } from "@/lib/content-fns";
+import {
+  getSiteImages, getTestimonials, submitEnquiry, getNews, getEvents, getDepartments, getFaculty,
+} from "@/lib/content-fns";
+import type { SiteImages, Testimonial, NewsItem, EventItem, Department, FacultyMember } from "@/lib/content-fns";
+import { DEPARTMENT_CONTENT } from "@/lib/department-content";
+import { getIcon } from "@/lib/icons";
+import { Marquee } from "@/components/site/Marquee";
 import { useMutation } from "@tanstack/react-query";
 
+type HomeData = {
+  images: SiteImages;
+  testimonials: Testimonial[];
+  news: NewsItem[];
+  events: EventItem[];
+  departments: Department[];
+  faculty: FacultyMember[];
+};
+
 export const Route = createFileRoute("/")({
-  loader: async (): Promise<{ images: SiteImages; testimonials: Testimonial[] }> => {
-    const [images, testimonials] = await Promise.all([
-      getSiteImages().catch(() => ({} as SiteImages)),
+  // Everything the home page shows is admin-managed, so it is all fetched here
+  // rather than read from the bundled sample data.
+  loader: async (): Promise<HomeData> => {
+    const [images, testimonials, news, events, departments, faculty] = await Promise.all([
+      getSiteImages().catch(() => ({}) as SiteImages),
       getTestimonials().catch(() => []),
+      getNews(4).catch(() => []),
+      getEvents(4).catch(() => []),
+      getDepartments().catch(() => []),
+      getFaculty().catch(() => []),
     ]);
-    return { images, testimonials };
+    return { images, testimonials, news, events, departments, faculty };
   },
   head: () => ({
     meta: [
@@ -122,7 +142,17 @@ function QuickEnquiryForm() {
 }
 
 function Index() {
-  const { images: siteImages, testimonials } = Route.useLoaderData() as { images: SiteImages; testimonials: Testimonial[] };
+  const {
+    images: siteImages, testimonials, news, events,
+    departments: dbDepartments, faculty: dbFaculty,
+  } = Route.useLoaderData() as HomeData;
+  // The bundled copy is only a safety net for a cold/unreachable database.
+  const departments = dbDepartments.length > 0
+    ? dbDepartments
+    : (DEPARTMENT_CONTENT.filter((d) => d.active).map((d) => ({ id: d.slug, ...d })) as Department[]);
+  const faculty = dbFaculty.length > 0
+    ? dbFaculty
+    : (FACULTY.map((f, i) => ({ id: String(i + 1), ...f, image: null })) as FacultyMember[]);
   const heroSlides = HERO_DEFAULTS.map((s, i) => ({
     ...s,
     img: (siteImages[`hero${i + 1}` as keyof SiteImages] as string | undefined) ?? s.img,
@@ -149,7 +179,7 @@ function Index() {
                 <img
                   src={s.img}
                   alt="GTMC Campus"
-                  className="absolute inset-0 w-full h-full"
+                  className="absolute inset-0 w-full h-full animate-kenburns"
                   style={{ objectFit: "cover", objectPosition: "center", display: "block" }}
                   fetchPriority={i === 0 ? "high" : "auto"}
                   decoding="async"
@@ -302,25 +332,36 @@ function Index() {
       <section className="bg-gradient-soft border-y border-border">
         <Section>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <SectionHeader eyebrow="Academics" title="Departments built for your future." desc="Ten specialised departments across Science, Arts, Commerce and Management." />
+            <SectionHeader
+              eyebrow="Academics"
+              title="Departments built for your future."
+              desc={`${departments.length} specialised departments across Science, Arts, Commerce and Management.`}
+            />
             <Link to="/departments" className="text-sm font-bold text-gold-deep underline underline-offset-8 shrink-0">View all departments</Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {DEPARTMENTS.map((d, i) => (
-              <Reveal key={d.name} delay={i * 0.05}>
-                <Link to="/departments" className="group block bg-card p-7 rounded-2xl shadow-card hover:shadow-elegant border border-border hover:border-gold/40 transition-all h-full">
-                  <div className="size-12 rounded-xl bg-primary/5 grid place-items-center text-primary group-hover:bg-gradient-hero group-hover:text-gold transition-all">
-                    <GraduationCap className="size-5" />
-                  </div>
-                  <div className="mt-5 text-[10px] font-bold uppercase tracking-[0.2em] text-gold-deep">{d.code}</div>
-                  <h3 className="mt-1 font-bold text-primary text-lg leading-tight">{d.name}</h3>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{d.desc}</p>
-                  <div className="mt-5 text-xs font-bold text-primary inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                    Explore <ChevronRight className="size-3.5" />
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
+            {departments.slice(0, 8).map((d, i) => {
+              const Icon = getIcon(d.icon);
+              return (
+                <Reveal key={d.slug} delay={Math.min(i * 0.05, 0.35)}>
+                  <Link
+                    to="/departments/$deptId"
+                    params={{ deptId: d.slug }}
+                    className="group block bg-card p-7 rounded-2xl shadow-card hover:shadow-elegant border border-border hover:border-gold/40 hover:-translate-y-1 transition-all h-full"
+                  >
+                    <div className="size-12 rounded-xl bg-primary/5 grid place-items-center text-primary group-hover:bg-gradient-hero group-hover:text-gold transition-all">
+                      <Icon className="size-5" />
+                    </div>
+                    {d.code && <div className="mt-5 text-[10px] font-bold uppercase tracking-[0.2em] text-gold-deep">{d.code}</div>}
+                    <h3 className="mt-1 font-bold text-primary text-lg leading-tight">{d.name}</h3>
+                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-3">{d.summary}</p>
+                    <div className="mt-5 text-xs font-bold text-primary inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                      Explore <ChevronRight className="size-3.5" />
+                    </div>
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
         </Section>
       </section>
@@ -352,50 +393,75 @@ function Index() {
           {/* Recruiter marquee */}
           <div className="mt-16 pt-10 border-t border-white/10 overflow-hidden w-full">
             <p className="text-center text-[10px] font-bold uppercase tracking-[0.4em] text-white/40 mb-6">Trusted by leading recruiters</p>
-            <div className="flex animate-marquee gap-12 whitespace-nowrap">
-              {[...RECRUITERS, ...RECRUITERS].map((r, i) => (
-                <span key={i} className="text-xl md:text-2xl font-extrabold tracking-tight text-white/40 hover:text-gold transition-colors">{r}</span>
+            <Marquee durationSeconds={38} groupClassName="gap-12 pr-12">
+              {RECRUITERS.map((r) => (
+                <span key={r} className="text-xl md:text-2xl font-extrabold tracking-tight text-white/40 hover:text-gold transition-colors whitespace-nowrap">{r}</span>
               ))}
-            </div>
+            </Marquee>
           </div>
         </Section>
       </section>
 
-      {/* NEWS + EVENTS */}
+      {/* NEWS + EVENTS — both live from the admin panel */}
       <Section className="grid lg:grid-cols-3 gap-10">
         <div className="lg:col-span-2">
-          <SectionHeader eyebrow="Newsroom" title="Latest news & announcements." />
+          <div className="flex items-end justify-between gap-4">
+            <SectionHeader eyebrow="Newsroom" title="Latest news & announcements." />
+            {news.length > 0 && (
+              <Link to="/news" className="mb-12 text-sm font-bold text-gold-deep underline underline-offset-8 shrink-0">All news</Link>
+            )}
+          </div>
           <div className="space-y-4">
-            {NEWS.slice(0, 4).map((n, i) => (
-              <Reveal key={i} delay={i * 0.05}>
+            {news.map((n, i) => (
+              <Reveal key={n.id} delay={Math.min(i * 0.05, 0.3)}>
                 <Link to="/news" className="block group p-6 rounded-2xl border border-border hover:border-gold/40 bg-card hover:shadow-elegant transition-all">
-                  <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-gold-deep">
+                  <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-gold-deep flex-wrap">
                     <span>{n.date}</span><span className="size-1 rounded-full bg-border" /><span>{n.category}</span>
+                    {(n.attachments ?? []).length > 0 && (
+                      <span className="inline-flex items-center gap-1 text-muted-foreground normal-case tracking-normal">
+                        <Paperclip className="size-3" /> {(n.attachments ?? []).length} file{(n.attachments ?? []).length === 1 ? "" : "s"}
+                      </span>
+                    )}
                   </div>
                   <h3 className="mt-2 font-bold text-primary text-lg leading-snug group-hover:text-primary-glow">{n.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{n.excerpt}</p>
                 </Link>
               </Reveal>
             ))}
+            {news.length === 0 && (
+              <div className="p-8 rounded-2xl border border-dashed border-border text-sm text-muted-foreground text-center">
+                No news published yet.
+              </div>
+            )}
           </div>
         </div>
         <div>
-          <SectionHeader eyebrow="What's on" title="Upcoming events." />
+          <div className="flex items-end justify-between gap-4">
+            <SectionHeader eyebrow="What's on" title="Upcoming events." />
+            {events.length > 0 && (
+              <Link to="/events" className="mb-12 text-sm font-bold text-gold-deep underline underline-offset-8 shrink-0">All</Link>
+            )}
+          </div>
           <div className="space-y-3">
-            {EVENTS.map((e, i) => (
-              <Reveal key={i} delay={i * 0.05}>
-                <div className="p-5 rounded-2xl bg-secondary flex gap-4 items-center hover:bg-primary/5 transition-colors">
+            {events.map((e, i) => (
+              <Reveal key={e.id} delay={Math.min(i * 0.05, 0.3)}>
+                <Link to="/events" className="flex p-5 rounded-2xl bg-secondary gap-4 items-center hover:bg-primary/5 transition-colors">
                   <div className="shrink-0 size-16 rounded-xl bg-gradient-hero text-primary-foreground grid place-items-center text-center">
-                    <div><div className="text-xl font-extrabold leading-none">{e.date.d}</div><div className="text-[10px] text-gold font-bold tracking-widest mt-0.5">{e.date.m}</div></div>
+                    <div><div className="text-xl font-extrabold leading-none">{e.day}</div><div className="text-[10px] text-gold font-bold tracking-widest mt-0.5">{e.month}</div></div>
                   </div>
                   <div className="min-w-0">
                     <h4 className="font-bold text-primary text-sm leading-tight">{e.title}</h4>
-                    <div className="mt-1 text-xs text-muted-foreground flex items-center gap-2"><Calendar className="size-3" />{e.time}</div>
-                    <div className="text-xs text-muted-foreground flex items-center gap-2"><MapPin className="size-3" />{e.venue}</div>
+                    <div className="mt-1 text-xs text-muted-foreground flex items-center gap-2"><Calendar className="size-3 shrink-0" />{e.time}</div>
+                    <div className="text-xs text-muted-foreground flex items-center gap-2"><MapPin className="size-3 shrink-0" />{e.venue}</div>
                   </div>
-                </div>
+                </Link>
               </Reveal>
             ))}
+            {events.length === 0 && (
+              <div className="p-8 rounded-2xl border border-dashed border-border text-sm text-muted-foreground text-center">
+                No upcoming events scheduled.
+              </div>
+            )}
           </div>
         </div>
       </Section>
@@ -422,12 +488,16 @@ function Index() {
       <Section>
         <SectionHeader eyebrow="Mentors" title="Faculty highlights." desc="Experienced scholars and practitioners dedicated to student success." />
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {FACULTY.slice(0, 6).map((f, i) => (
-            <Reveal key={f.name} delay={i * 0.04}>
-              <div className="p-6 rounded-2xl border border-border bg-card hover:shadow-elegant transition-all">
+          {faculty.slice(0, 6).map((f, i) => (
+            <Reveal key={f.id} delay={Math.min(i * 0.04, 0.25)}>
+              <div className="p-6 rounded-2xl border border-border bg-card hover:shadow-elegant hover:-translate-y-0.5 transition-all h-full">
                 <div className="flex items-center gap-4">
-                  <div className="size-14 rounded-full bg-gradient-hero grid place-items-center text-gold font-extrabold text-lg">
-                    {f.name.split(" ").slice(-1)[0][0]}
+                  <div className="size-14 rounded-full bg-gradient-hero grid place-items-center text-gold font-extrabold text-lg overflow-hidden shrink-0">
+                    {f.image ? (
+                      <img src={f.image} alt={f.name} className="w-full h-full object-cover object-top" loading="lazy" />
+                    ) : (
+                      (f.name.split(" ").filter(Boolean).slice(-1)[0]?.[0] ?? "?")
+                    )}
                   </div>
                   <div className="min-w-0">
                     <h4 className="font-bold text-primary leading-tight">{f.name}</h4>
@@ -436,7 +506,7 @@ function Index() {
                 </div>
                 <div className="mt-4 pt-4 border-t border-border text-xs space-y-1">
                   <div className="text-muted-foreground">{f.qual}</div>
-                  <div className="font-semibold text-primary">Focus — {f.focus}</div>
+                  {f.focus && <div className="font-semibold text-primary">Focus — {f.focus}</div>}
                 </div>
               </div>
             </Reveal>

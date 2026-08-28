@@ -1,3 +1,5 @@
+import type { DeptBlock, DeptStaff, DeptSupervisor } from "./department-content";
+
 async function api<T>(path: string, body?: unknown): Promise<T> {
   const res = await fetch(path, body !== undefined ? {
     method: "POST",
@@ -11,18 +13,41 @@ async function api<T>(path: string, body?: unknown): Promise<T> {
   return res.json();
 }
 
-export type NewsItem = { id: string; date: string; category: string; title: string; excerpt: string; published: boolean; createdAt: string };
-export type EventItem = { id: string; day: string; month: string; title: string; venue: string; time: string; published: boolean; createdAt: string };
+export type Attachment = { name: string; url: string; type: string };
+export type NewsItem = {
+  id: string;
+  date: string;
+  category: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  attachments: Attachment[];
+  published: boolean;
+  createdAt: string;
+};
+export type EventItem = {
+  id: string;
+  day: string;
+  month: string;
+  title: string;
+  venue: string;
+  time: string;
+  description: string;
+  eventDate: string | null;
+  attachments: Attachment[];
+  published: boolean;
+  createdAt: string;
+};
 export type Announcement = { id: string; text: string; active: boolean; order: number };
 export type SiteContent = { section: string; data: unknown } | null;
 
-export const getNews = () => api<NewsItem[]>("/api/news");
+export const getNews = (limit?: number) => api<NewsItem[]>(`/api/news${limit ? `?limit=${limit}` : ""}`);
 export const getAllNews = () => api<NewsItem[]>("/api/news?all=1");
 export const createNews = ({ data }: { data: Omit<NewsItem, "id" | "createdAt"> }) => api("/api/news/create", data);
 export const updateNews = ({ data }: { data: { id: string; data: Partial<NewsItem> } }) => api("/api/news/update", data);
 export const deleteNews = ({ data }: { data: { id: string } }) => api("/api/news/delete", data);
 
-export const getEvents = () => api<EventItem[]>("/api/events");
+export const getEvents = (limit?: number) => api<EventItem[]>(`/api/events${limit ? `?limit=${limit}` : ""}`);
 export const getAllEvents = () => api<EventItem[]>("/api/events?all=1");
 export const createEvent = ({ data }: { data: Omit<EventItem, "id" | "createdAt"> }) => api("/api/events/create", data);
 export const updateEvent = ({ data }: { data: { id: string; data: Partial<EventItem> } }) => api("/api/events/update", data);
@@ -52,22 +77,33 @@ export const getSiteImages = () => api<SiteImages>("/api/site-images");
 export const saveSiteImages = ({ data }: { data: SiteImages }) =>
   api("/api/site-images/save", { data });
 
-// ── Image Upload (Cloudinary) ─────────────────────────────────────────────────
-export async function uploadImage(file: File, folder = "gtmc"): Promise<string> {
-  return new Promise((resolve, reject) => {
+// ── Uploads (Cloudinary) ──────────────────────────────────────────────────────
+
+/**
+ * Uploads any supported file (JPG/PNG/WEBP or PDF) and returns the hosted URL.
+ * The original filename is forwarded so PDFs keep a readable, extensioned URL.
+ */
+export async function uploadFile(file: File, folder = "gtmc"): Promise<Attachment> {
+  const dataUrl = await new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = async () => {
-      const dataUrl = reader.result as string;
-      const [meta, base64] = dataUrl.split(",");
-      const mimeType = meta.replace("data:", "").replace(";base64", "");
-      try {
-        const result = await api<{ url: string }>("/api/upload/image", { base64, mimeType, folder });
-        resolve(result.url);
-      } catch (e) { reject(e); }
-    };
+    reader.onload = () => resolve(reader.result as string);
     reader.onerror = () => reject(new Error("Failed to read file"));
     reader.readAsDataURL(file);
   });
+  const [meta, base64] = dataUrl.split(",");
+  const mimeType = meta.replace("data:", "").replace(";base64", "");
+  const result = await api<{ url: string }>("/api/upload/image", {
+    base64,
+    mimeType,
+    folder,
+    filename: file.name,
+  });
+  return { name: file.name, url: result.url, type: mimeType };
+}
+
+export async function uploadImage(file: File, folder = "gtmc"): Promise<string> {
+  const { url } = await uploadFile(file, folder);
+  return url;
 }
 
 // ── Faculty ───────────────────────────────────────────────────────────────────
@@ -175,3 +211,35 @@ export const saveDynamicSection = ({ data }: { data: Partial<DynamicSection> }) 
   api<DynamicSection>("/api/dynamic-sections/save", data);
 export const deleteDynamicSection = ({ data }: { data: { id: string } }) =>
   api<{ ok: boolean }>("/api/dynamic-sections/delete", data);
+
+// ── Departments ───────────────────────────────────────────────────────────────
+export type Department = {
+  id: string;
+  slug: string;
+  name: string;
+  code: string;
+  icon: string;
+  summary: string;
+  eyebrow: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  blocks: DeptBlock[];
+  staffHeading: string;
+  staff: DeptStaff[];
+  supervisorsHeading: string;
+  supervisors: DeptSupervisor[];
+  aliases: string[];
+  order: number;
+  active: boolean;
+};
+
+export const getDepartments = () => api<Department[]>("/api/departments");
+export const getAllDepartments = () => api<Department[]>("/api/departments/all");
+export const getDepartment = (slug: string) =>
+  api<Department | null>(`/api/departments/get?slug=${encodeURIComponent(slug)}`);
+export const saveDepartment = ({ data }: { data: Partial<Department> }) =>
+  api<Department>("/api/departments/save", data);
+export const deleteDepartment = ({ data }: { data: { id: string } }) =>
+  api<{ ok: boolean }>("/api/departments/delete", data);
+export const reorderDepartments = ({ data }: { data: { ids: string[] } }) =>
+  api<{ ok: boolean }>("/api/departments/reorder", data);

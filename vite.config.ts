@@ -26,10 +26,10 @@ export default defineConfig({
   },
   server: {
     host: "::",
-    port: 8080,
+    port: Number(process.env.VITE_PORT ?? 8080),
     proxy: {
       "/api": {
-        target: "http://localhost:3001",
+        target: `http://localhost:${process.env.API_PORT ?? 3001}`,
         changeOrigin: true,
         configure: (proxy) => {
           proxy.on("error", (err, _req, res) => {

@@ -200,11 +200,40 @@
   .text-balance { text-wrap: balance; }
 }
 
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+/*
+ * Seamless marquee.
+ *
+ * The track holds N identical copies of the content and slides left by exactly
+ * one copy (-100%/N), so the loop point is invisible. Sizing must stay
+ * content-driven: a percentage width on the copies makes the track collapse to
+ * a single copy's width and the loop then jumps by half the content.
+ * `--marquee-copies` is set by the Marquee component once it has measured how
+ * many copies are needed to cover the viewport.
+ */
+@keyframes marquee-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-100% / var(--marquee-copies, 2))); }
 }
-.animate-marquee { animation: marquee 45s linear infinite; }
+
+.marquee-viewport { overflow: hidden; width: 100%; }
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-slide var(--marquee-duration, 40s) linear infinite;
+  will-change: transform;
+}
+
+.marquee-viewport:hover .marquee-track,
+.marquee-track:focus-within { animation-play-state: paused; }
+
+.marquee-group { display: flex; align-items: center; flex: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .marquee-group:not(:first-child) { display: none; }
+  .marquee-viewport { overflow-x: auto; }
+}
 
 @keyframes float-y {
   0%, 100% { transform: translateY(0); }
@@ -223,6 +252,31 @@
   50% { opacity: 1; }
 }
 .animate-glow { animation: glow-pulse 4s ease-in-out infinite; }
+
+/*
+ * Header banner.
+ *
+ * Full width while that keeps it under the height cap — which is the case on
+ * phones and small tablets. Past that the cap takes over and the sign board
+ * centres at its own proportions, so the header stays shallow on a laptop
+ * instead of running to ~360px deep.
+ */
+.site-banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 180px;
+  object-fit: contain;
+  object-position: center;
+  margin-inline: auto;
+}
+
+/* Decorative motion is opt-out for anyone who asks for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-kenburns,
+  .animate-glow { animation: none; }
+}
 
 /* Swiper overrides */
 .swiper-pagination-bullet { background: var(--gold) !important; opacity: 0.5; }

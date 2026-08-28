@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
 export function PageHero({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) {
@@ -40,6 +40,9 @@ export function SectionHeader({ eyebrow, title, desc }: { eyebrow?: string; titl
 }
 
 export function Reveal({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
+  // Visitors who ask for reduced motion get the content immediately.
+  const reduced = useReducedMotion();
+  if (reduced) return <div>{children}</div>;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
