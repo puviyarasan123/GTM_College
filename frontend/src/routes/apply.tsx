@@ -146,12 +146,12 @@ export default function ApplyPage() {
               <Field label="Address">
                 <textarea value={form.address} onChange={(e) => set("address", e.target.value)} required rows={2} placeholder="Street address" className={inputCls + " resize-none"} />
               </Field>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="City"><input value={form.city} onChange={(e) => set("city", e.target.value)} required placeholder="Chennai" className={inputCls} /></Field>
                 <Field label="State"><input value={form.state} onChange={(e) => set("state", e.target.value)} required placeholder="Tamil Nadu" className={inputCls} /></Field>
               </div>
               <Field label="Pincode"><input value={form.pincode} onChange={(e) => set("pincode", e.target.value)} required placeholder="600001" className={inputCls} /></Field>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Guardian Name"><input value={form.guardianName} onChange={(e) => set("guardianName", e.target.value)} required placeholder="Parent / Guardian" className={inputCls} /></Field>
                 <Field label="Guardian Phone"><input value={form.guardianPhone} onChange={(e) => set("guardianPhone", e.target.value)} required placeholder="+91 XXXXX XXXXX" className={inputCls} /></Field>
               </div>

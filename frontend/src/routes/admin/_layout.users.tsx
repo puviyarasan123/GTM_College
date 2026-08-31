@@ -64,47 +64,50 @@ function UsersPage() {
       </div>
 
       <div className="bg-card rounded-2xl border border-border overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-secondary">
-            <tr>
-              {["Name", "Email", "Role", "Created", "Actions"].map((h) => (
-                <th key={h} className="px-5 py-3.5 text-left text-xs font-bold uppercase tracking-widest text-muted-foreground">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {users.map((u: { id: string; name: string; email: string; role: string; createdAt: string }) => (
-              <tr key={u.id} className="hover:bg-secondary/50 transition-colors">
-                <td className="px-5 py-4 font-medium text-foreground flex items-center gap-2">
-                  <div className="size-8 rounded-full bg-primary/10 grid place-items-center text-primary font-bold text-xs">
-                    {u.name[0]}
-                  </div>
-                  {u.name}
-                </td>
-                <td className="px-5 py-4 text-muted-foreground">{u.email}</td>
-                <td className="px-5 py-4">
-                  <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${u.role === "SUPER_ADMIN" ? "bg-gold/15 text-gold-deep" : "bg-secondary text-muted-foreground"}`}>
-                    {u.role === "SUPER_ADMIN" ? <Shield className="size-3" /> : <User className="size-3" />}
-                    {u.role}
-                  </span>
-                </td>
-                <td className="px-5 py-4 text-muted-foreground text-xs">
-                  {new Date(u.createdAt).toLocaleDateString()}
-                </td>
-                <td className="px-5 py-4">
-                  <div className="flex items-center gap-2">
-                    <button onClick={() => { setPwModal(u.id); setNewPw(""); }} className="p-1.5 rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">
-                      <KeyRound className="size-4" />
-                    </button>
-                    <button onClick={() => handleDelete(u.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-muted-foreground hover:text-red-500 transition-colors">
-                      <Trash2 className="size-4" />
-                    </button>
-                  </div>
-                </td>
+        {/* Narrow screens scroll the table instead of clipping it. */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-secondary">
+              <tr>
+                {["Name", "Email", "Role", "Created", "Actions"].map((h) => (
+                  <th key={h} className="px-5 py-3.5 text-left text-xs font-bold uppercase tracking-widest text-muted-foreground">{h}</th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {users.map((u: { id: string; name: string; email: string; role: string; createdAt: string }) => (
+                <tr key={u.id} className="hover:bg-secondary/50 transition-colors">
+                  <td className="px-5 py-4 font-medium text-foreground flex items-center gap-2">
+                    <div className="size-8 rounded-full bg-primary/10 grid place-items-center text-primary font-bold text-xs">
+                      {u.name[0]}
+                    </div>
+                    {u.name}
+                  </td>
+                  <td className="px-5 py-4 text-muted-foreground">{u.email}</td>
+                  <td className="px-5 py-4">
+                    <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${u.role === "SUPER_ADMIN" ? "bg-gold/15 text-gold-deep" : "bg-secondary text-muted-foreground"}`}>
+                      {u.role === "SUPER_ADMIN" ? <Shield className="size-3" /> : <User className="size-3" />}
+                      {u.role}
+                    </span>
+                  </td>
+                  <td className="px-5 py-4 text-muted-foreground text-xs">
+                    {new Date(u.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="px-5 py-4">
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => { setPwModal(u.id); setNewPw(""); }} className="p-1.5 rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">
+                        <KeyRound className="size-4" />
+                      </button>
+                      <button onClick={() => handleDelete(u.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-muted-foreground hover:text-red-500 transition-colors">
+                        <Trash2 className="size-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Create Modal */}

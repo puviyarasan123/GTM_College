@@ -78,7 +78,7 @@ function FormBuilder({ category, form }: { category: FeedbackCategory; form?: Fe
               <div className="flex items-center gap-2">
                 <GripVertical className="size-4 text-muted-foreground shrink-0" />
                 <span className="text-xs text-muted-foreground font-mono">#{idx + 1}</span>
-                <div className="flex-1 grid grid-cols-2 gap-2">
+                <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <Input
                     placeholder="Field label"
                     value={field.label}
@@ -228,7 +228,7 @@ function AdminFeedbackPage() {
       </div>
 
       <Tabs defaultValue="STUDENT">
-        <TabsList className="grid grid-cols-4 mb-4">
+        <TabsList className="grid grid-cols-2 sm:grid-cols-4 mb-4">
           {CATEGORIES.map((c) => (
             <TabsTrigger key={c.value} value={c.value} className="text-xs">{c.label}</TabsTrigger>
           ))}

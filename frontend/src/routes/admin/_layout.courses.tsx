@@ -106,7 +106,7 @@ function ResearchDeptRow({
   return (
     <div className="rounded-xl border border-border bg-secondary/30 overflow-hidden">
       <div className="flex items-center gap-3 p-3">
-        <div className="flex-1 grid grid-cols-2 gap-2">
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div>
             <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-1">Department</label>
             <input value={dept.department} onChange={(e) => onChange({ ...dept, department: e.target.value })} className={INPUT} />
@@ -129,7 +129,7 @@ function ResearchDeptRow({
       {open && (
         <div className="px-3 pb-3 space-y-2 border-t border-border pt-3">
           {dept.programs.map((prog, i) => (
-            <div key={i} className="grid grid-cols-3 gap-2 items-end">
+            <div key={i} className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-end">
               {(["degree", "type", "established"] as (keyof ResearchProgram)[]).map((f) => (
                 <div key={f}>
                   <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-1">{f}</label>

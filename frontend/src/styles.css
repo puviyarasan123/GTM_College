@@ -158,9 +158,12 @@
     box-sizing: border-box;
   }
 
+  /* `clip`, not `hidden`: both stop sideways scrolling, but `hidden` makes the
+   * element a scroll container, and that silently breaks `position: sticky` for
+   * everything inside it — which is why the header never used to pin. */
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100%;
   }
 
@@ -169,7 +172,7 @@
     color: var(--color-foreground);
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100%;
     width: 100%;
   }
@@ -256,19 +259,14 @@
 /*
  * Header banner.
  *
- * Full width while that keeps it under the height cap — which is the case on
- * phones and small tablets. Past that the cap takes over and the sign board
- * centres at its own proportions, so the header stays shallow on a laptop
- * instead of running to ~360px deep.
+ * Edge to edge at the sign board's own proportions — no height cap, so nothing
+ * is letterboxed or cropped. That makes it ~390px deep on a laptop, which is
+ * why the banner sits outside the sticky bar in `Navbar.tsx` and scrolls away.
  */
 .site-banner {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 180px;
-  object-fit: contain;
-  object-position: center;
-  margin-inline: auto;
 }
 
 /* Decorative motion is opt-out for anyone who asks for reduced motion. */

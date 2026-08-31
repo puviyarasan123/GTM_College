@@ -140,7 +140,7 @@ function LibraryPage() {
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           
           {/* Left Column: Borrowing Schedule Table */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-6 min-w-0">
             <Reveal>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-xs font-medium mb-2">
                 <CalendarDays className="size-3.5 text-gold-deep" /> Weekly Borrowing Slots
@@ -151,24 +151,27 @@ function LibraryPage() {
               </p>
 
               <div className="border border-border rounded-xl overflow-hidden mt-4 bg-card shadow-sm">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-muted text-xs uppercase tracking-wider text-muted-foreground border-b border-border">
-                      <th className="p-4 font-semibold">Day</th>
-                      <th className="p-4 font-semibold">Eligible Students</th>
-                      <th className="p-4 font-semibold text-right">Quota</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-border text-sm">
-                    {schedule.map((item) => (
-                      <tr key={item.day} className="hover:bg-muted/30 transition-colors">
-                        <td className="p-4 font-semibold text-gold-deep">{item.day}</td>
-                        <td className="p-4 text-foreground font-medium">{item.level}</td>
-                        <td className="p-4 text-right text-muted-foreground font-medium">{item.books}</td>
+                {/* Narrow screens scroll the table instead of clipping it. */}
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="bg-muted text-xs uppercase tracking-wider text-muted-foreground border-b border-border">
+                        <th className="p-4 font-semibold">Day</th>
+                        <th className="p-4 font-semibold">Eligible Students</th>
+                        <th className="p-4 font-semibold text-right">Quota</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-border text-sm">
+                      {schedule.map((item) => (
+                        <tr key={item.day} className="hover:bg-muted/30 transition-colors">
+                          <td className="p-4 font-semibold text-gold-deep">{item.day}</td>
+                          <td className="p-4 text-foreground font-medium">{item.level}</td>
+                          <td className="p-4 text-right text-muted-foreground font-medium">{item.books}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </Reveal>
 
@@ -184,7 +187,7 @@ function LibraryPage() {
           </div>
 
           {/* Right Column: Library Guidelines Cards */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-6 min-w-0">
             <Reveal>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-xs font-medium mb-2">
                 <AlertCircle className="size-3.5 text-gold-deep" /> Terms & Regulations
