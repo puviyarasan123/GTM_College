@@ -5,8 +5,8 @@
  * the local dev server (`server.ts`), so the two can never drift apart.
  */
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { handleApiRequest } from "./_handler";
-import type { ApiContext } from "./_handler";
+import { handleApiRequest } from "./_handler.js";
+import type { ApiContext } from "./_handler.js";
 
 function readCookie(req: VercelRequest, name: string) {
   const match = (req.headers.cookie ?? "").match(new RegExp(`(?:^|;\\s*)${name}=([^;]*)`));
@@ -14,34 +14,44 @@ function readCookie(req: VercelRequest, name: string) {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const rawPath = req.query.path;
-  const route = rawPath
-    ? (Array.isArray(rawPath) ? rawPath.join("/") : rawPath)
-    // Fallback for direct hits: /api/auth/login → auth/login
-    : (req.url ?? "").replace(/^\/?api\//, "").split("?")[0];
+  // Nothing may throw out of this function: an unhandled rejection reaches the
+  // browser as an opaque `FUNCTION_INVOCATION_FAILED` with no clue what broke.
+  try {
+    const rawPath = req.query.path;
+    const route = rawPath
+      ? (Array.isArray(rawPath) ? rawPath.join("/") : rawPath)
+      // Fallback for direct hits: /api/auth/login → auth/login
+      : (req.url ?? "").replace(/^\/?api\//, "").split("?")[0];
 
-  const ctx: ApiContext = {
-    route,
-    method: req.method ?? "GET",
-    query: req.query as Record<string, string | undefined>,
-    body: (req.body ?? {}) as ApiContext["body"],
-    cookie: (name) => readCookie(req, name),
-    authHeader: req.headers.authorization ?? null,
-  };
+    const ctx: ApiContext = {
+      route,
+      method: req.method ?? "GET",
+      query: req.query as Record<string, string | undefined>,
+      body: (req.body ?? {}) as ApiContext["body"],
+      cookie: (name) => readCookie(req, name),
+      authHeader: req.headers.authorization ?? null,
+    };
 
-  if (route === "health") return res.json({ ok: true });
+    if (route === "health") return res.json({ ok: true });
 
-  const result = await handleApiRequest(ctx);
+    const result = await handleApiRequest(ctx);
 
-  if (result.cookie) {
-    const { name, value, maxAge } = result.cookie;
-    res.setHeader("Set-Cookie", `${name}=${value}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Lax; Secure`);
+    if (result.cookie) {
+      const { name, value, maxAge } = result.cookie;
+      res.setHeader("Set-Cookie", `${name}=${value}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Lax; Secure`);
+    }
+
+    if (result.kind === "xml") {
+      res.setHeader("Content-Type", "application/xml");
+      return res.status(result.status).send(result.body);
+    }
+    res.setHeader("Content-Type", "application/json");
+    return res.status(result.status).json(result.data);
+  } catch (err: unknown) {
+    console.error(`[api] ${req.method} ${req.url} crashed:`, err);
+    res.setHeader("Content-Type", "application/json");
+    return res.status(500).json({
+      message: err instanceof Error ? err.message : "Internal server error",
+    });
   }
-
-  if (result.kind === "xml") {
-    res.setHeader("Content-Type", "application/xml");
-    return res.status(result.status).send(result.body);
-  }
-  res.setHeader("Content-Type", "application/json");
-  return res.status(result.status).json(result.data);
 }

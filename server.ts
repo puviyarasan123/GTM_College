@@ -8,8 +8,8 @@ import "dotenv/config";
 import express from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import { handleApiRequest } from "./api/_handler";
-import type { ApiContext } from "./api/_handler";
+import { handleApiRequest } from "./api/_handler.js";
+import type { ApiContext } from "./api/_handler.js";
 
 const app = express();
 app.use(bodyParser.json({ limit: "100mb" }));

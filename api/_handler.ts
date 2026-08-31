@@ -201,10 +201,12 @@ function sortEvents<T extends SortableEvent>(rows: T[]): T[] {
 // ── Router ────────────────────────────────────────────────────────────────────
 
 export async function handleApiRequest(ctx: ApiContext): Promise<ApiResult> {
-  const prisma = getPrisma();
   const { route } = ctx;
 
   try {
+    // Inside the try: a missing DATABASE_URL must surface as a readable JSON 500,
+    // not an unhandled rejection that Vercel reports as FUNCTION_INVOCATION_FAILED.
+    const prisma = getPrisma();
     // ── Admin Auth ────────────────────────────────────────────────────────────
     if (route === "auth/session") {
       const token = ctx.cookie("admin_token");
