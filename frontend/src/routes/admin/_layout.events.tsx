@@ -202,7 +202,7 @@ function EventsPage() {
                   <CalendarClock className="size-3" /> Sets the date badge and keeps upcoming events at the top of the site.
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className={label}>Day badge</label>
                   <input value={form.day} onChange={(e) => set({ day: e.target.value })} required placeholder="14" className={field} />

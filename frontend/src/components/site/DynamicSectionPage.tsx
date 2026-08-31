@@ -22,49 +22,52 @@ function PdfTable({ pdfs, title }: { pdfs: PdfEntry[]; title: string }) {
         <h3 className="font-bold text-sm">{title} — Documents</h3>
         <span className="ml-auto text-xs text-muted-foreground">{pdfs.length} file{pdfs.length > 1 ? "s" : ""}</span>
       </div>
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-border bg-muted/20">
-            <th className="text-left px-5 py-3 text-xs font-bold uppercase tracking-wider text-muted-foreground w-10">#</th>
-            <th className="text-left px-5 py-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">Document Title</th>
-            <th className="text-right px-5 py-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">Actions</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-border">
-          {pdfs.map((pdf, i) => (
-            <tr key={i} className="hover:bg-muted/20 transition-colors">
-              <td className="px-5 py-3.5 text-muted-foreground text-xs">{i + 1}</td>
-              <td className="px-5 py-3.5">
-                <div className="flex items-center gap-2">
-                  <div className="size-8 rounded-lg bg-red-500/10 grid place-items-center shrink-0">
-                    <FileText className="size-4 text-red-500" />
-                  </div>
-                  <span className="font-medium text-foreground">{pdf.title}</span>
-                </div>
-              </td>
-              <td className="px-5 py-3.5">
-                <div className="flex items-center gap-2 justify-end">
-                  <a
-                    href={pdf.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-opacity"
-                  >
-                    <ExternalLink className="size-3.5" /> View
-                  </a>
-                  <a
-                    href={toDownloadUrl(pdf.url)}
-                    download
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-secondary text-xs font-semibold hover:bg-secondary/80 transition-colors"
-                  >
-                    <Download className="size-3.5" /> Download
-                  </a>
-                </div>
-              </td>
+      {/* Narrow screens scroll the table instead of clipping it. */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-border bg-muted/20">
+              <th className="text-left px-5 py-3 text-xs font-bold uppercase tracking-wider text-muted-foreground w-10">#</th>
+              <th className="text-left px-5 py-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">Document Title</th>
+              <th className="text-right px-5 py-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {pdfs.map((pdf, i) => (
+              <tr key={i} className="hover:bg-muted/20 transition-colors">
+                <td className="px-5 py-3.5 text-muted-foreground text-xs">{i + 1}</td>
+                <td className="px-5 py-3.5">
+                  <div className="flex items-center gap-2">
+                    <div className="size-8 rounded-lg bg-red-500/10 grid place-items-center shrink-0">
+                      <FileText className="size-4 text-red-500" />
+                    </div>
+                    <span className="font-medium text-foreground">{pdf.title}</span>
+                  </div>
+                </td>
+                <td className="px-5 py-3.5">
+                  <div className="flex items-center gap-2 justify-end">
+                    <a
+                      href={pdf.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-opacity"
+                    >
+                      <ExternalLink className="size-3.5" /> View
+                    </a>
+                    <a
+                      href={toDownloadUrl(pdf.url)}
+                      download
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-secondary text-xs font-semibold hover:bg-secondary/80 transition-colors"
+                    >
+                      <Download className="size-3.5" /> Download
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

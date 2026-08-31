@@ -35,7 +35,7 @@ function CalendarPage() {
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           
           {/* Left Side: Table Area (8 Columns) */}
-          <div className="lg:col-span-8 space-y-6">
+          <div className="lg:col-span-8 space-y-6 min-w-0">
             <Reveal>
               <div className="border border-border rounded-2xl overflow-hidden bg-card shadow-sm">
                 <div className="p-5 border-b border-border bg-muted/30 flex items-center gap-3">

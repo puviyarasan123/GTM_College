@@ -80,7 +80,7 @@ function RootComponent() {
       {isAdmin ? (
         <Outlet />
       ) : (
-        <div className="min-h-screen flex flex-col bg-background w-full overflow-x-hidden">
+        <div className="min-h-screen flex flex-col bg-background w-full overflow-x-clip">
           <AnnouncementTicker />
           <Navbar />
           <main className="flex-1">

@@ -91,49 +91,52 @@ function ApplicationsPage() {
 
       {/* Table */}
       <div className="bg-card rounded-2xl border border-border overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-secondary">
-            <tr>
-              {["Applicant", "Programme", "Exam / Score", "Board %", "Applied", "Status", "Actions"].map((h) => (
-                <th key={h} className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-widest text-muted-foreground">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {apps.map((app) => (
-              <tr key={app.id} className="hover:bg-secondary/50 transition-colors">
-                <td className="px-4 py-4">
-                  <div className="font-bold text-foreground">{app.student?.name}</div>
-                  <div className="text-xs text-muted-foreground">{app.student?.email}</div>
-                </td>
-                <td className="px-4 py-4">
-                  <div className="font-medium">{app.programme}</div>
-                  <div className="text-xs text-muted-foreground">{app.branch}</div>
-                </td>
-                <td className="px-4 py-4">
-                  <div className="font-medium">{app.entranceExam}</div>
-                  <div className="text-xs text-muted-foreground">{app.entranceScore}</div>
-                </td>
-                <td className="px-4 py-4 font-medium">{app.boardPercent}%</td>
-                <td className="px-4 py-4 text-xs text-muted-foreground">{new Date(app.submittedAt).toLocaleDateString("en-IN")}</td>
-                <td className="px-4 py-4">
-                  <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${STATUS_COLORS[app.status]}`}>
-                    {STATUS_LABELS[app.status]}
-                  </span>
-                </td>
-                <td className="px-4 py-4">
-                  <button onClick={() => { setSelected(app); setNote(app.adminNote ?? ""); }}
-                    className="p-1.5 rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">
-                    <Eye className="size-4" />
-                  </button>
-                </td>
+        {/* Narrow screens scroll the table instead of clipping it. */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-secondary">
+              <tr>
+                {["Applicant", "Programme", "Exam / Score", "Board %", "Applied", "Status", "Actions"].map((h) => (
+                  <th key={h} className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-widest text-muted-foreground">{h}</th>
+                ))}
               </tr>
-            ))}
-            {apps.length === 0 && (
-              <tr><td colSpan={7} className="px-4 py-12 text-center text-muted-foreground">No applications found</td></tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {apps.map((app) => (
+                <tr key={app.id} className="hover:bg-secondary/50 transition-colors">
+                  <td className="px-4 py-4">
+                    <div className="font-bold text-foreground">{app.student?.name}</div>
+                    <div className="text-xs text-muted-foreground">{app.student?.email}</div>
+                  </td>
+                  <td className="px-4 py-4">
+                    <div className="font-medium">{app.programme}</div>
+                    <div className="text-xs text-muted-foreground">{app.branch}</div>
+                  </td>
+                  <td className="px-4 py-4">
+                    <div className="font-medium">{app.entranceExam}</div>
+                    <div className="text-xs text-muted-foreground">{app.entranceScore}</div>
+                  </td>
+                  <td className="px-4 py-4 font-medium">{app.boardPercent}%</td>
+                  <td className="px-4 py-4 text-xs text-muted-foreground">{new Date(app.submittedAt).toLocaleDateString("en-IN")}</td>
+                  <td className="px-4 py-4">
+                    <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${STATUS_COLORS[app.status]}`}>
+                      {STATUS_LABELS[app.status]}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4">
+                    <button onClick={() => { setSelected(app); setNote(app.adminNote ?? ""); }}
+                      className="p-1.5 rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">
+                      <Eye className="size-4" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {apps.length === 0 && (
+                <tr><td colSpan={7} className="px-4 py-12 text-center text-muted-foreground">No applications found</td></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Detail Modal */}
@@ -148,7 +151,7 @@ function ApplicationsPage() {
               <span className={`px-3 py-1 rounded-full text-xs font-bold ${STATUS_COLORS[selected.status]}`}>{STATUS_LABELS[selected.status]}</span>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-sm">
               {[
                 ["Programme", `${selected.programme} — ${selected.branch}`],
                 ["Entrance Exam", `${selected.entranceExam} | ${selected.entranceScore}`],

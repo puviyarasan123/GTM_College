@@ -39,49 +39,52 @@ function StudentsPage() {
       </div>
 
       <div className="bg-card rounded-2xl border border-border overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-secondary">
-            <tr>
-              {["Student", "Phone", "Applications", "Registered"].map((h) => (
-                <th key={h} className="px-5 py-3.5 text-left text-xs font-bold uppercase tracking-widest text-muted-foreground">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {students.map((s) => (
-              <tr key={s.id} className="hover:bg-secondary/50 transition-colors">
-                <td className="px-5 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="size-9 rounded-full bg-primary/10 grid place-items-center text-primary font-bold text-sm shrink-0">
-                      {s.name[0]}
-                    </div>
-                    <div>
-                      <div className="font-bold text-foreground">{s.name}</div>
-                      <div className="text-xs text-muted-foreground">{s.email}</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-5 py-4 text-muted-foreground">{s.phone}</td>
-                <td className="px-5 py-4">
-                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${s._count.applications > 0 ? "bg-green-50 text-green-700" : "bg-secondary text-muted-foreground"}`}>
-                    <FileText className="size-3" /> {s._count.applications} application{s._count.applications !== 1 ? "s" : ""}
-                  </span>
-                </td>
-                <td className="px-5 py-4 text-xs text-muted-foreground">
-                  {new Date(s.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
-                </td>
-              </tr>
-            ))}
-            {students.length === 0 && (
+        {/* Narrow screens scroll the table instead of clipping it. */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-secondary">
               <tr>
-                <td colSpan={4} className="px-5 py-12 text-center text-muted-foreground">
-                  <GraduationCap className="size-10 mx-auto mb-3 opacity-30" />
-                  No students found
-                </td>
+                {["Student", "Phone", "Applications", "Registered"].map((h) => (
+                  <th key={h} className="px-5 py-3.5 text-left text-xs font-bold uppercase tracking-widest text-muted-foreground">{h}</th>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {students.map((s) => (
+                <tr key={s.id} className="hover:bg-secondary/50 transition-colors">
+                  <td className="px-5 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="size-9 rounded-full bg-primary/10 grid place-items-center text-primary font-bold text-sm shrink-0">
+                        {s.name[0]}
+                      </div>
+                      <div>
+                        <div className="font-bold text-foreground">{s.name}</div>
+                        <div className="text-xs text-muted-foreground">{s.email}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-5 py-4 text-muted-foreground">{s.phone}</td>
+                  <td className="px-5 py-4">
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${s._count.applications > 0 ? "bg-green-50 text-green-700" : "bg-secondary text-muted-foreground"}`}>
+                      <FileText className="size-3" /> {s._count.applications} application{s._count.applications !== 1 ? "s" : ""}
+                    </span>
+                  </td>
+                  <td className="px-5 py-4 text-xs text-muted-foreground">
+                    {new Date(s.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                  </td>
+                </tr>
+              ))}
+              {students.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="px-5 py-12 text-center text-muted-foreground">
+                    <GraduationCap className="size-10 mx-auto mb-3 opacity-30" />
+                    No students found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

@@ -45,7 +45,7 @@ function ScholarshipsPage() {
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           
           {/* Left Column: Schemes Directory List (7 Columns) */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-6 min-w-0">
             <Reveal>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-xs font-medium mb-2">
                 <Landmark className="size-3.5 text-gold-deep" /> Statutory Financial Aids
